@@ -6,7 +6,7 @@ permalink: /sdk/index.html
 toc: false # table of contents
 ---
 
-- [Android](/sdk/android)
-- [iOS](/sdk/ios)
-- [React Native](/sdk/react-native)
-- [Unity](/sdk/unity)
+- Android
+- iOS
+- React Native
+- Unity
