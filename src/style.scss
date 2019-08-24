@@ -1,0 +1,94 @@
+@charset "UTF-8";
+@import 'bootstrap';
+@import 'sass/fonts';
+@import 'sass/variables';
+@import 'sass/mixins';
+@import 'sass/utils';
+@import 'sass/general';
+@import 'sass/header';
+@import 'sass/_oldshouldremove/spacing';
+@import 'sass/_oldshouldremove/buttons';
+@import 'sass/_oldshouldremove/jquery.navgoco';
+@import 'sass/_oldshouldremove/mobile';
+@import 'sass/sidebar';
+@import 'sass/instantsearch';
+
+// General
+
+#hits-template {
+	display: block;
+	max-width: 1180px;
+	margin: 50px auto 0 auto;
+}
+
+.text-center-small-float-right {
+	float: right;
+	@media screen and (max-width: $screen-sm) {
+		text-align: center;
+		float: none;
+	}
+}
+
+.text-center-small-float-left {
+	float: left;
+	@media screen and (max-width: $screen-sm) {
+		text-align: center;
+		float: none;
+	}
+}
+
+.logo-small {
+	max-width: $logo-width-small;
+}
+
+// Search bar
+#site-search {
+	padding-bottom: 30px;
+
+	input {
+		margin: 0;
+		padding: 0 1em;
+	}
+
+	.algolia-autocomplete {
+		width: 100%;
+	}
+
+	.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
+		left: 0 !important;
+		right: none !important;
+	}
+}
+
+// Article
+@import 'sass/article';
+
+div.align-center {
+	img {
+		max-width: 90%;
+		text-align: center;
+	}
+}
+
+/***** Widgets ****************************************************************/
+//
+//*****************************************************************************/
+
+.alert-danger a {
+	color: #843534;
+	font-weight: bold;
+}
+/***** End - Widgets **********************************************************/
+//
+//*****************************************************************************/
+
+.list-2cols {
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+@import 'sass/footer';
+
+// Pages
+@import 'sass/home';
+@import 'sass/syntax-highlighter-monokai';

@@ -9,9 +9,6 @@
   "prettier.singleQuote": true,
   "prettier.tslintIntegration": false,
   "files.exclude": {
-    // "images": true,
-    "css": true,
-    "js": true,
     ".bundle": true,
     "vendor": true
   }
