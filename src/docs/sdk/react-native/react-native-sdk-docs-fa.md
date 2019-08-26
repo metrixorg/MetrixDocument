@@ -363,3 +363,10 @@ Metrix.setOnAttributionChangedListener(attributionModel => {
 ```javascript
 Metrix.setDefaultTracker(trackerToken);
 ```
+
+### ۱۹. تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+```javascript
+Metrix.setStore("store name");
+```

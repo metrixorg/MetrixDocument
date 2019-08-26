@@ -234,7 +234,7 @@ Metrix.SetDefaultTracker("trackerToken");
 ### ۱۶. امضاء sdk
 
 اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
-```java
+```csharp
 Metrix.SetAppSecret("secretId", "info1", "info2", "info3", "info4");
 ```
 
