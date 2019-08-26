@@ -235,5 +235,12 @@ Metrix.SetDefaultTracker("trackerToken");
 
 اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
 ```java
-Metrix.SetAppSecret(secretId, info1, info2, info3, info4);
+Metrix.SetAppSecret("secretId", "info1", "info2", "info3", "info4");
+```
+
+### ۱۷. تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+```csharp
+Metrix.SetStore("store name");
 ```

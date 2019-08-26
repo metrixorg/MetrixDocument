@@ -229,6 +229,14 @@ If the SDK signature has already been enabled on your account and you have acces
 
 An App Secret is set by calling setAppSecret on your config instance:
 ```csharp
-Metrix.SetAppSecret(secretId, info1, info2, info3, info4);
+Metrix.SetAppSecret("secretId", "info1", "info2", "info3", "info4");
+```
+
+### Separation based on app stores
+
+If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
+
+```csharp
+Metrix.SetStore("store name");
 ```
 
