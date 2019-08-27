@@ -25,8 +25,7 @@ module.exports = {
       default: '_config.yml',
       development: '_config_development.yml',
       production: ''
-    },
-    posts: 'src/docs'
+    }
   },
 
   sass: {
