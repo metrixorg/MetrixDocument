@@ -6,8 +6,9 @@ permalink: /sdk/android/index.html
 toc: true # table of contents
 ---
 
-<!-- [![CircleCI](https://circleci.com/gh/metrixorg/MetrixSDK-AndroidSample.svg?style=svg)](https://circleci.com/gh/metrixorg/MetrixSDK-AndroidSample)
-[ ![Download](https://api.bintray.com/packages/metrixorg/maven/metrix-sdk-android/images/download.svg) ](https://bintray.com/metrixorg/maven/metrix-sdk-android/_latestVersion) -->
+# SDK Implementation Video Tutorial
+
+<div id="4620389899"><script type="text/JavaScript" src="https://www.aparat.com/embed/DLr4Q?data[rnddiv]=4620389899&data[responsive]=yes"></script></div>
 
 ## Basic integration
 
@@ -476,10 +477,10 @@ An account manager must activate the Metrix SDK Signature.
 If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
 
 An App Secret is set by calling setAppSecret on your config instance:
+
 ```java
 Metrix.getInstastance().setAppSecret(secretId, info1, info2, info3, info4);
 ```
-
 
 ### Separation based on app stores
 
@@ -519,6 +520,7 @@ If a user has your app installed and you want it to launch after they engage wit
     </intent-filter>
 </activity>
 ```
+
 Deeplink content information within your desired activity is delivered via the `Intent` object, via either the activity's `onCreate` or `onNewIntent` methods. Once you've launched your app and have triggered one of these methods, you will be able to receive the actual deeplink passed in the `deep_link` parameter in the click URL. You can then use this information to conduct some additional logic in your app.
 
 You can extract deeplink content from either two methods like so:
@@ -552,7 +554,6 @@ The Metrix SDK opens the deferred deep link by default. There is no extra config
 #### Deferred deep linking callback
 
 If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
-
 
 ```java
 Metrix.getInstance().setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {

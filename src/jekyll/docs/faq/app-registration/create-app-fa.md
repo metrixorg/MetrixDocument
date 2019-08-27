@@ -22,4 +22,4 @@ toc: true # table of contents
 
 پس از ورود به اکانت خود، کافیست روی «افزودن اپ» / 'Create an app' کلیک کرده و مشخصات آن را وارد کرده و روی ایجاد / Create کلیک کنید.
 
-<img src="app-registration.png" alt="create application"/>
+<img src="{{ '/images/app-registration-1.png' | relative_url }}" alt="create application"/>
