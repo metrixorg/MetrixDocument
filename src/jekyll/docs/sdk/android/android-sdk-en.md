@@ -6,7 +6,7 @@ permalink: /sdk/android/index.html
 toc: true # table of contents
 ---
 
-# SDK Implementation Video Tutorial
+## SDK Implementation Video Tutorial
 
 <div id="4620389899"><script type="text/JavaScript" src="https://www.aparat.com/embed/DLr4Q?data[rnddiv]=4620389899&data[responsive]=yes"></script></div>
 
