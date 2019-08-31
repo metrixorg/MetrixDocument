@@ -50,7 +50,8 @@ The Google Play Store `INSTALL_REFERRER` intent should be captured with a broadc
 Initialize Metrix according to the code below:
 
 ```csharp
-Metrix.Initialize("APP_ID");
+MetrixConfig metrixConfig = new MetrixConfig("APP_ID");
+Metirx.OnCreate(metrixConfig);
 ```
 
 Replace `APP_ID` with your application id. You can find that in your Metrix's dashboard.  
@@ -71,8 +72,9 @@ There are three types of events in Metrix:
 Using the following functions, you can inform Metrix that you wish to send information about the location of the user (In order for these methods to work properly, the optional permissions explained earlier must be enabled).
 
 ```csharp
-Metrix.EnableLocationListening();
-Metrix.DisableLocationListening();
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLocationListening(locationListening);
+Metirx.OnCreate(metrixConfig);
 ```
 
 ### Limitation in number of events to upload
@@ -80,7 +82,9 @@ Metrix.DisableLocationListening();
 Using the following function, you can specify that each time the number of your buffered events reaches the threshold, the Metrix SDK should send them to the server:
 
 ```csharp
-Metrix.SetEventUploadThreshold(50);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadThreshold(50);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 events.)
@@ -90,7 +94,9 @@ Metrix.SetEventUploadThreshold(50);
 Using this function, you can specify the maximum number of out-going events per request as shown below:
 
 ```csharp
-Metrix.SetEventUploadMaxBatchSize(100);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadMaxBatchSize(100);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -100,7 +106,9 @@ Metrix.SetEventUploadMaxBatchSize(100);
 Using the following function, you can specify the maximum number of events that are buffered in the SDK (for example, if the user's device loses internet connection, the events will be buffered in the library until there is a chance to send the events and empty the buffer) and if the number of buffered events in the library passes this amount, old events are destroyed by SDK to make space for new events:
 
 ```csharp
-Metrix.SetEventMaxCount(1000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventMaxCount(1000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -110,7 +118,9 @@ Metrix.SetEventMaxCount(1000);
 By using this function, you can specify the timeout period of requests for sending events:
 
 ```csharp
-Metrix.SetEventUploadPeriodMillis(30000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadPeriodMillis(30000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 seconds.)
@@ -120,7 +130,9 @@ Metrix.SetEventUploadPeriodMillis(30000);
 Using this function, you can specify the limit of session length in your application in unit of miliseconds. For example, if this value is 10,000 and the user interacts with the application for 70 seconds, Metrix calculates this interaction as seven sessions.
 
 ```csharp
-Metrix.SetSessionTimeoutMillis(1800000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionTimeoutMillis(1800000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 minutes.)
@@ -130,7 +142,9 @@ Metrix.SetSessionTimeoutMillis(1800000);
 Note that you should set this value to `false` before the release of your application:
 
 ```csharp
-Metrix.EnableLogging(true);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.EnableLogging(true);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
@@ -140,7 +154,9 @@ Metrix.EnableLogging(true);
 Using this function, you can specify what level of logs to be printed in `logcat`, for example, the following command will display all logs except `VERBOSE` in `logcat`:
 
 ```csharp
-Metrix.SetLogLevel(3);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLogLevel(3);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is `Log.INFO`.)
@@ -161,10 +177,45 @@ ASSERT = 7;
 Using this function, you can specify whether when the application is closed, all events buffered in the device, should be sent or not:
 
 ```csharp
-Metrix.SetFlushEventsOnClose(false);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetFlushEventsOnClose(false);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
+
+### Pre-installed trackers
+
+If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetDefaultTracker("trackerToken");
+Metirx.OnCreate(metrixConfig);
+```
+
+### Sdk signature
+
+An account manager must activate the Metrix SDK Signature.
+
+If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
+
+An App Secret is set by calling setAppSecret on your config instance:
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
+Metirx.OnCreate(metrixConfig);
+```
+
+### Separation based on app stores
+
+If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetStore("store name");
+Metirx.OnCreate(metrixConfig);
+```
 
 ### Current session number
 
@@ -192,7 +243,7 @@ The input of this function is String.
 If your users can generate revenue by tapping on advertisements or making in-app purchases, you can track those revenues too with events. You can also add an optional order ID to avoid tracking duplicate revenues. By doing so, the last ten order IDs will be remembered and revenue events with duplicate order IDs are skipped. This is especially useful for tracking in-app purchases. You can see an example below where a tap is worth 12,000 IRR:
 
 ```csharp
-Metrix.NewRevenue("my_event_slug", 12000, 0, "2");
+Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 ```
 
 The first parameter is the slug you get from the dashboard.
@@ -212,31 +263,3 @@ Using this function, you can inform the Metrix to gather information about user'
 ```csharp
 Metrix.ScreenDisplayed("First Screen");
 ```
-
-### Pre-installed trackers
-
-If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
-
-```csharp
-Metrix.SetDefaultTracker("trackerToken");
-```
-
-### Sdk signature
-
-An account manager must activate the Metrix SDK Signature.
-
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by calling setAppSecret on your config instance:
-```csharp
-Metrix.SetAppSecret("secretId", "info1", "info2", "info3", "info4");
-```
-
-### Separation based on app stores
-
-If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
-
-```csharp
-Metrix.SetStore("store name");
-```
-

@@ -99,17 +99,16 @@ public void onReceive(Context context, Intent intent) {
 ۲. ابتدا ماژول متریکس را به کد خود اضافه کنید:
 
 ```javascript
-import Metrix from '@metrixorg/react-native-metrix';
+import {Metrix, MetrixConfig} from '@metrixorg/react-native-metrix';
 ```
 
 ۳. سپس برای مقداردهی اولیه ، تابع زیر را با ورودی کلید اپ خود صدا بزنید.
 توجه نمایید که حتما داخل متد `constructor` کامپوننت اصلی پروژه خود متد زیر را صدا بزنید.
 
 ```javascript
-Metrix.initialize('app id');
+let metrixConfig = new MetrixConfig('APP_ID');
+Metrix.onCreate(metrixConfig);
 ```
-
-<img src="https://storage.backtory.com/metricx/images/init.png"/>
 
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.
 
@@ -130,9 +129,9 @@ Metrix.initialize('app id');
 می‌توانید با استفاده از دو تابع زیر به کتابخانه متریکس اعلام کنید که در رویدادها اطلاعات مربوط به مکان کاربر را به همراه دیگر اطلاعات ارسال کند یا نکند. (برای اینکه این متد به درستی عمل کند دسترسی‌های اختیاری که بالاتر ذکر شد باید فعال باشند)
 
 ```javascript
-Metrix.enableLocationListening();
-
-Metrix.disableLocationListening();
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setLocationListening(isLocationListeningEnable);
+Metrix.onCreate(metrixConfig);
 ```
 
 ### ۳. تعیین سقف تعداد رویدادها برای ارسال به سمت سرور
@@ -140,7 +139,9 @@ Metrix.disableLocationListening();
 با استفاده از تابع زیر می‌توانید مشخص کنید که هر موقع تعداد رویدادهای ذخیره شده شما به تعداد مورد نظر شما رسید کتابخانه رویدادها را برای سرور ارسال کند:
 
 ```javascript
-Metrix.setEventUploadThreshold(50);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setEventUploadThreshold(50);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ رویداد است.)
@@ -150,7 +151,9 @@ Metrix.setEventUploadThreshold(50);
 با استفاده از این تابع می‌توانید حداکثر تعداد رویداد ارسالی در هر درخواست را به شکل زیر مشخص کنید:
 
 ```javascript
-Metrix.setEventUploadMaxBatchSize(100);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setEventUploadMaxBatchSize(100);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰ رویداد است.)
@@ -160,7 +163,9 @@ Metrix.setEventUploadMaxBatchSize(100);
 با استفاده از تابع زیر می‌توانید مشخص کنید که حداکثر تعداد رویدادهای ذخیر شده در کتابخانه متریکس چقدر باشد (به عنوان مثال اگر دستگاه کاربر اتصال خود به اینترنت را از دست داد رویدادها تا مقداری که شما مشخص می‌کنید در کتابخانه ذخیره خواهند شد) و اگر تعداد رویدادهای ذخیره شده در کتابخانه از این مقدار بگذرد رویدادهای قدیمی توسط sdk نگهداری نشده و از بین می‌روند:
 
 ```javascript
-Metrix.setEventMaxCount(1000);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setEventMaxCount(1000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰۰ رویداد است.)
@@ -170,7 +175,9 @@ Metrix.setEventMaxCount(1000);
 با استفاده از این تابع می‌توانید مشخص کنید که درخواست آپلود رویدادها بعد از گذشت چند میلی‌ثانیه فرستاده شود:
 
 ```javascript
-Metrix.setEventUploadPeriodMillis(30000);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setEventUploadPeriodMillis(30000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ ثانیه است.)
@@ -180,7 +187,9 @@ Metrix.setEventUploadPeriodMillis(30000);
 با استفاده از این تابع می‌توانید حد نشست‌ها را در اپلیکیشن خود مشخص کنید که هر نشست حداکثر چند ثانیه محاسبه شود. به عنوان مثال اگر مقدار این تابع را ۱۰۰۰۰ وارد کنید اگر کاربر در اپلیکیشن ۷۰ ثانیه تعامل داشته باشد، کتابخانه متریکس این تعامل را ۷ نشست محاسبه می‌کند.
 
 ```javascript
-Metrix.setSessionTimeoutMillis(1800000);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setSessionTimeoutMillis(1800000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ دقیقه است.)
@@ -190,7 +199,9 @@ Metrix.setSessionTimeoutMillis(1800000);
 توجه داشته باشید که موقع release اپلیکیشن خود مقدار این تابع را false قرار دهید:
 
 ```javascript
-Metrix.enableLogging(true);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.enableLogging(true);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
@@ -200,7 +211,9 @@ Metrix.enableLogging(true);
 با استفاده از این تابع می‌توانید مشخص کنید که چه سطحی از لاگ‌ها در `logcat` چاپ شود، به عنوان مثال دستور زیر همه‌ی سطوح لاگ‌ها به جز `VERBOSE` در `logcat` نمایش داده شود:
 
 ```javascript
-Metrix.setLogLevel(3);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setLogLevel(3);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه `INFO` است.)
@@ -221,12 +234,34 @@ ASSERT = 7;
 با استفاده از این تابع می‌توانید مشخص کنید که زمانی که اپلیکیشن بسته می‌شود همه رویدادهای ذخیره شده در کتابخانه ارسال شود یا نشود:
 
 ```javascript
-Metrix.setFlushEventsOnClose(false);
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setFlushEventsOnClose(false);
+Metrix.onCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
 
-### ۱۱. اطلاع یافتن از شماره نشست جاری
+
+### ۱۱. مشخص کردن Pre-installed Tracker
+
+با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
+
+```javascript
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setDefaultTracker(trackerToken);
+Metrix.onCreate(metrixConfig);
+```
+
+### ۱۲. تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+```javascript
+let metrixConfig = new  MetrixConfig(yourAppId);
+metrixConfig.setStore("store name");
+Metrix.onCreate(metrixConfig);
+```
+
+### ۱۳. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -236,7 +271,7 @@ Metrix.getSessionNum(function(sessionNum) {
 });
 ```
 
-### ۱۲. ساختن یک رویداد سفارشی
+### ۱۴. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -274,7 +309,7 @@ Metrix.newEvent('purchase_event_slug', attributes, metrics);
 - **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
 
-### ۱۳. ساختن رویداد درآمدی
+### ۱۵. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -298,7 +333,7 @@ Metrix.newRevenue('my_event_slug', 12000, 0, '2');
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
-### ۱۴. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+### ۱۶. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -309,7 +344,7 @@ attributes['manufacturer'] = 'Nike';
 Metrix.addUserAttributes(attributes);
 ```
 
-### ۱۵. مشخص کردن Metric‌های پیش‌فرض همه‌ی رویدادها
+### ۱۷. مشخص کردن Metric‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -317,7 +352,7 @@ Metrix.addUserAttributes(attributes);
 var metrics = {};
 metrics['perchase_time'] = current_time;
 
-Metrix.setUserMetrics(metrics);
+Metrix.addUserMetrics(metrics);
 ```
 
 ### ۱۶. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
@@ -328,7 +363,7 @@ Metrix.setUserMetrics(metrics);
 Metrix.screenDisplayed('First Screen');
 ```
 
-### ۱۷. دریافت اطلاعات کمپین
+### ۱۸. دریافت اطلاعات کمپین
 
 با مقداردهی این تابعه میتوانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده اید را دریافت کنید.
 
@@ -355,18 +390,3 @@ Metrix.setOnAttributionChangedListener(attributionModel => {
 2. `NOT_ATTRIBUTED_YET` هنوز اتربیوت نشده
 3. `ATTRIBUTION_NOT_NEEDED` نیاز به اتربیوت ندارد
 4. `UNKNOWN` حالت ناشناخته
-
-### ۱۸. مشخص کردن Pre-installed Tracker
-
-با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
-
-```javascript
-Metrix.setDefaultTracker(trackerToken);
-```
-
-### ۱۹. تفکیک بر‌اساس استور های اپلیکیشن
-
-اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
-```javascript
-Metrix.setStore("store name");
-```

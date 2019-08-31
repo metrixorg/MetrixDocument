@@ -49,7 +49,8 @@ android:exported="true" >
 کتابخانه متریکس را در ابتدای برنامه‌ی خود به این روش initialize کنید:
 
 ```csharp
-Metrix.Initialize("APP_ID");
+MetrixConfig metrixConfig = new MetrixConfig("APP_ID");
+Metirx.OnCreate(metrixConfig);
 ```
 
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.
@@ -73,9 +74,9 @@ Metrix.Initialize("APP_ID");
 می‌توانید با استفاده از دو تابع زیر به کتابخانه متریکس اعلام کنید که در رویدادها اطلاعات مربوط به مکان کاربر را به همراه دیگر اطلاعات ارسال کند یا نکند. (برای اینکه این متد به درستی عمل کند دسترسی‌های اختیاری که بالاتر ذکر شد باید فعال باشند)
 
 ```csharp
-Metrix.EnableLocationListening();
-
-Metrix.DisableLocationListening();
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLocationListening(locationListening);
+Metirx.OnCreate(metrixConfig);
 ```
 
 ### ۳. تعیین سقف تعداد رویدادها برای ارسال به سمت سرور
@@ -83,7 +84,9 @@ Metrix.DisableLocationListening();
 با استفاده از تابع زیر می‌توانید مشخص کنید که هر موقع تعداد رویدادهای ذخیره شده شما به تعداد مورد نظر شما رسید کتابخانه رویدادها را برای سرور ارسال کند:
 
 ```csharp
-Metrix.SetEventUploadThreshold(50);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadThreshold(50);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ رویداد است.)
@@ -93,7 +96,9 @@ Metrix.SetEventUploadThreshold(50);
 با استفاده از این تابع می‌توانید حداکثر تعداد رویداد ارسالی در هر درخواست را به شکل زیر مشخص کنید:
 
 ```csharp
-Metrix.SetEventUploadMaxBatchSize(100);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadMaxBatchSize(100);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰ رویداد است.)
@@ -103,7 +108,9 @@ Metrix.SetEventUploadMaxBatchSize(100);
 با استفاده از تابع زیر می‌توانید مشخص کنید که حداکثر تعداد رویدادهای ذخیر شده در کتابخانه متریکس چقدر باشد (به عنوان مثال اگر دستگاه کاربر اتصال خود به اینترنت را از دست داد رویدادها تا مقداری که شما مشخص می‌کنید در کتابخانه ذخیره خواهند شد) و اگر تعداد رویدادهای ذخیره شده در کتابخانه از این مقدار بگذرد رویدادهای قدیمی توسط sdk نگهداری نشده و از بین می‌روند:
 
 ```csharp
-Metrix.SetEventMaxCount(1000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventMaxCount(1000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰۰ رویداد است.)
@@ -113,7 +120,9 @@ Metrix.SetEventMaxCount(1000);
 با استفاده از این تابع می‌توانید مشخص کنید که درخواست آپلود رویدادها بعد از گذشت چند میلی‌ثانیه فرستاده شود:
 
 ```csharp
-Metrix.SetEventUploadPeriodMillis(30000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadPeriodMillis(30000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ ثانیه است.)
@@ -123,7 +132,9 @@ Metrix.SetEventUploadPeriodMillis(30000);
 با استفاده از این تابع می‌توانید حد نشست‌ها را در اپلیکیشن خود مشخص کنید که هر نشست حداکثر چند ثانیه محاسبه شود. به عنوان مثال اگر مقدار این تابع را ۱۰۰۰۰ وارد کنید اگر کاربر در اپلیکیشن ۷۰ ثانیه تعامل داشته باشد، کتابخانه متریکس این تعامل را ۷ نشست محاسبه می‌کند.
 
 ```csharp
-Metrix.SetSessionTimeoutMillis(1800000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionTimeoutMillis(1800000);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ دقیقه است.)
@@ -133,7 +144,9 @@ Metrix.SetSessionTimeoutMillis(1800000);
 توجه داشته باشید که موقع release اپلیکیشن خود مقدار این تابع را false قرار دهید:
 
 ```csharp
-Metrix.EnableLogging(true);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.EnableLogging(true);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
@@ -143,7 +156,9 @@ Metrix.EnableLogging(true);
 با استفاده از این تابع می‌توانید مشخص کنید که چه سطحی از لاگ‌ها در `logcat` چاپ شود، به عنوان مثال دستور زیر همه‌ی سطوح لاگ‌ها به جز `VERBOSE` در `logcat` نمایش داده شود:
 
 ```csharp
-Metrix.SetLogLevel(3);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLogLevel(3);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه `INFO` است.)
@@ -164,12 +179,42 @@ ASSERT = 7;
 با استفاده از این تابع می‌توانید مشخص کنید که زمانی که اپلیکیشن بسته می‌شود همه رویدادهای ذخیره شده در کتابخانه ارسال شود یا نشود:
 
 ```csharp
-Metrix.SetFlushEventsOnClose(false);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetFlushEventsOnClose(false);
+Metirx.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
 
-### ۱۱. اطلاع یافتن از شماره نشست جاری
+### ۱۱. مشخص کردن Pre-installed Tracker
+
+با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetDefaultTracker("trackerToken");
+Metirx.OnCreate(metrixConfig);
+```
+
+### ۱۲. امضاء sdk
+
+اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
+```csharp
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
+Metirx.OnCreate(metrixConfig);
+```
+
+### ۱۳. تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetStore("store name");
+Metirx.OnCreate(metrixConfig);
+```
+### ۱۴. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -177,7 +222,7 @@ Metrix.SetFlushEventsOnClose(false);
 Metrix.GetSessionNum();
 ```
 
-### ۱۲. ساختن یک رویداد سفارشی
+### ۱۵. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -191,7 +236,7 @@ Metrix.NewEvent("my_event_slug");
 
 ورودی این تابع از جنس String است
 
-### ۱۳. ساختن رویداد درآمدی
+### ۱۶. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -200,7 +245,7 @@ Metrix.NewEvent("my_event_slug");
 ۱. یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
 
 ```csharp
-Metrix.NewRevenue("my_event_slug", 12000, 0, "2");
+Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 ```
 
 ورودی اول همان نامکی است که از داشبورد دریافت می‌کنید.
@@ -215,32 +260,10 @@ Metrix.NewRevenue("my_event_slug", 12000, 0, "2");
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
-### ۱۴. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
+### ۱۷. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
 
 با اضافه کردن تابع زیر صفحات خود میتوانید از حرکت کاربر بین صفحات اطلاع پیدا کنید:
 
 ```csharp
 Metrix.ScreenDisplayed("First Screen");
-```
-
-### ۱۵. مشخص کردن Pre-installed Tracker
-
-با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
-
-```csharp
-Metrix.SetDefaultTracker("trackerToken");
-```
-
-### ۱۶. امضاء sdk
-
-اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
-```csharp
-Metrix.SetAppSecret("secretId", "info1", "info2", "info3", "info4");
-```
-
-### ۱۷. تفکیک بر‌اساس استور های اپلیکیشن
-
-اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
-```csharp
-Metrix.SetStore("store name");
 ```
