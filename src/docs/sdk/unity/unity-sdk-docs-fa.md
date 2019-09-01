@@ -199,8 +199,8 @@ Metirx.OnCreate(metrixConfig);
 ### ۱۲. امضاء sdk
 
 اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
-```csharp
 
+```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
 Metirx.OnCreate(metrixConfig);

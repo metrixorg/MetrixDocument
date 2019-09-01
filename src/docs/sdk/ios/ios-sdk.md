@@ -20,7 +20,7 @@ toc: true # table of contents
 اگر از CocoaPods استفاده می‌کنید، می‌توانید خط زیر را به Podfile خود اضافه کنید:
 
 ```ruby
-pod 'MetrixSdk', '1.1.0'
+pod 'MetrixSdk', '1.1.1'
 ```
 
 ---
