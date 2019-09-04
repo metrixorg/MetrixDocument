@@ -1,0 +1,55 @@
+en:
+  - name: FAQ
+    # link: faq
+    icon: m-help
+    # children:
+    #   - name: Introduction
+    #     link: 2.0/
+    #     children:
+    #       - name: CI/CD Overview
+    #         link: 2.0/about-circleci/
+fa:
+  - name: سوالات متداول
+    icon: m-help
+    children:
+      - name: سوالات عمومی
+        link: /faq/general-questions
+
+      - name: ثبت اپلیکیشن در داشبورد
+        link: /faq/setup-app
+
+      - name: مدیریت اعضا
+        link: /faq/account-settings
+
+      - name: رخدادها
+        link: /faq/in-app-events
+
+      - name: مدیریت ترکرها
+        link: /faq/attribution
+
+      - name: تنظیمات اتریبیوشن
+        link: /faq/attribution-settings
+
+      - name: مدیریت کال‌بک‌ها
+        link: /faq/callbacks
+
+      - name: مقابله با تقلب
+        link: /faq/fraud-prevention
+
+  - name: مستندات فنی
+    icon: m-sdk
+    children:
+      - name: iOS
+        link: /sdk/ios
+
+      - name: Android
+        link: /sdk/android
+
+      - name: Unity
+        link: /sdk/unity
+
+      - name: React Native
+        link: /sdk/react-native
+
+      - name: Flutter
+        link: /sdk/flutter
