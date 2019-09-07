@@ -36,6 +36,9 @@ fa:
       - name: مقابله با تقلب
         link: /faq/fraud-prevention
 
+      - name: امضای SDK
+        link: /faq/sdk-signature  
+
   - name: مستندات فنی
     icon: m-sdk
     children:
