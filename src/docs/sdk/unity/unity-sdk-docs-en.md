@@ -263,3 +263,54 @@ Using this function, you can inform the Metrix to gather information about user'
 ```csharp
 Metrix.ScreenDisplayed("First Screen");
 ```
+
+## Deep linking
+
+### Deep linking Overview
+
+If you are using Metrix tracker URLs with deeplinking enabled, it is possible to receive information about the deeplink URL and its content. Users may interact with the URL regardless of whether they have your app installed on their device (standard deep linking scenario) or not (deferred deep linking scenario). In the standard deep linking scenario, the Android platform natively offers the possibility for you to receive deep link content information. The Android platform does not automatically support deferred deep linking scenario; in this case, the Metrix SDK offers the mechanism you need to get the information about the deep link content.
+
+### Standard deep linking scenario
+
+برای پیاده سازی سناریو استاندارد می‌توانید از  [این](https://github.com/metrixorg/UnityDeeplinks) کتابخانه استفاده کنید، همچنین یک برنچ نمونه برای پیاده سازی سناریو استاندارد دیپ‌لینک در [اینجا](https://github.com/metrixorg/MetrixSDK-UnitySample/tree/deeplink) وجود دارد.
+
+### Deferred deep linking scenario
+
+Deferred deeplinking scenario occurs when a user clicks on an Metrix tracker URL with a `deep_link` parameter contained in it, but does not have the app installed on the device at click time. When the user clicks the URL, they will be redirected to the Play Store to download and install your app. After opening it for the first time, `deep_link` parameter content will be delivered to your app.
+
+The Metrix SDK opens the deferred deep link by default. There is no extra configuration needed.
+
+#### Deferred deep linking callback
+
+If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
+
+```csharp
+void deferredDeeplink(string deeplink) {
+  //do any thing with deferred deeplink
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetShouldLaunchDeeplink(true);
+metrixConfig.SetDeferredDeeplinkDelegate(deferredDeeplink);
+Metirx.OnCreate(metrixConfig);
+```
+
+After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the delegate and expect the `boolean` set value from you. This value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).
+
+If you set `true`, we will launch it, triggering the scenario described in the Standard deep linking scenario chapter. If you do not want the SDK to launch the activity, set `false` from the `SetShouldLaunchDeeplink` method, and (based on the deep link content) decide on your own what to do next in your app.
+
+### Reattribution via deeplinks
+
+Metrix enables you to run re-engagement campaigns with deeplinks. For more information.
+
+If you are using this feature, you need to make one additional call to the Metrix SDK in your app for us to properly reattribute your users.
+
+Once you have received the deeplink content in your app, add a call to the `Metrix.AppWillOpenUrl(Uri)` method. By making this call, the Metrix SDK will send information to the Metrix backend to check if there is any new attribution information inside of the deeplink. If your user is reattributed due to a click on the Metrix tracker URL with deeplink content.
+
+Here's how the call to `Metrix.AppWillOpenUrl(Uri)` should look:
+
+```csharp
+void onDeeplink(string deeplink) {
+  Metrix.AppWillOpenUrl(deeplink);
+}
+```
