@@ -18,16 +18,16 @@ fa:
       - name: ثبت اپلیکیشن در داشبورد
         link: /faq/setup-app
 
-      - name: مدیریت حساب
+      - name: مدیریت اعضا
         link: /faq/account-settings
 
-      - name: رخدادهای درون برنامه‌ای
+      - name: رخدادها
         link: /faq/in-app-events
 
-      - name: اتریبیوشن
+      - name: مدیریت ترکرها
         link: /faq/attribution
 
-      - name: مدیریت اتریبیوشن
+      - name: تنظیمات اتریبیوشن
         link: /faq/attribution-settings
 
       - name: مدیریت کال‌بک‌ها
@@ -35,6 +35,9 @@ fa:
 
       - name: مقابله با تقلب
         link: /faq/fraud-prevention
+
+      - name: امضای SDK
+        link: /faq/sdk-signature
 
   - name: مستندات فنی
     icon: m-sdk
