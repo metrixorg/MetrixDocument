@@ -1,6 +1,6 @@
 ---
 layout: classic-docs
-title: کال‌بک‌ها
+title: مدیریت کال‌بک‌ها
 lang: fa
 permalink: /faq/callbacks/index.html
 toc: true # table of contents
