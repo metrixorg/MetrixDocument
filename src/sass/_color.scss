@@ -1,11 +1,11 @@
-$enable-rounded: true;
-$enable-shadows: true;
+$enable-rounded: false;
+$enable-shadows: false;
 $enable-gradients: true;
 $enable-transitions: true;
 
 $theme-colors: (
-  'primary': #673ab7,
-  'secondary': #9c27b0,
+  'primary': #2196f3,
+  'secondary': #009688,
   'danger': #f44336,
   'warning': #ffc107,
   'success': #4caf50,
