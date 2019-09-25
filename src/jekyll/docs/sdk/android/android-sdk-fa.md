@@ -205,7 +205,7 @@ public void onReceive(Context context, Intent intent) {
 </application>
 ```
 
-<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Manifest.png">
+![image-alternative]({{site.baseurl}}/images/image-test.jpeg)
 
 ۴. در متد `onCreate` کلاس `Application` خود، مطابق قطعه کد زیر sdk متریکس را `initialize` کنید:
 
