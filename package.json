@@ -1,13 +1,13 @@
 {
   "name": "frasco",
-  "version": "0.8.17",
+  "version": "0.8.24",
   "description": "Jekyll starter project including full setup for gulp, Sass, Autoprefixer, PostCSS, webpack, imagemin, Browsersync etc.",
   "main": "gulpfile.js",
   "scripts": {
     "preinstall": "bundle install --path vendor/bundle",
     "start": "bundle exec gulp",
     "build": "bundle exec gulp build --jekyllEnv='production' --mode='production'",
-    "deploy": "git checkout prod && git merge master",
+    "deploy": "git checkout prod && git pull && git merge master",
     "postversion": "git push && git push --tags"
   },
   "repository": {

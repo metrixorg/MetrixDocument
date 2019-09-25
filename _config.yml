@@ -2,10 +2,10 @@
 
 ########### Global Variables ###########
 title: 'Frasco: Jekyll Starter Project'
-email: your-email@domain.com
+email: info@metrix.ir
 description: >-
   Metrix is a mobile marketing measurement platform that unifies mobile attribution and analytics into one powerful platform.
-baseurl: '' # the subpath of your site, e.g. /docs
+baseurl: '/docs' # the subpath of your site, e.g. /docs
 url: 'https://metrix.ir'
 twitter_username: Metrix_ir
 github_username: metrixorg

@@ -20,7 +20,7 @@ toc: true # table of contents
 اگر از CocoaPods استفاده می‌کنید، می‌توانید خط زیر را به Podfile خود اضافه کنید:
 
 ```ruby
-pod 'MetrixSdk', '1.0.1'
+pod 'MetrixSdk', '1.1.1'
 ```
 
 ---
@@ -96,7 +96,7 @@ MXCustomEvent *event = [MXCustomEvent newEvent:@"mySlug" attributes:myAttributes
 براي يک رويداد سفارشي ميتوانيد به تعداد دلخواه attribute و metric خاص سناريو خود بسازيد، به عنوان مثال فرض کنيد در يک برنامه خريد آنلاين مي‌خواهيد يک رويداد سفارشي بسازيد:
 
 ```objc
-NSMutableDictionary *myAttribures = [[NSMutableDictionary alloc] init];
+NSMutableDictionary *myAttributes = [[NSMutableDictionary alloc] init];
     myAttributes[@"first_name"] = @"Ali";
     myAttributes[@"last_name"] = @"Bagheri";
     myAttributes[@"manufacturer"] = @"Nike";
@@ -104,9 +104,30 @@ NSMutableDictionary *myAttribures = [[NSMutableDictionary alloc] init];
     myAttributes[@"type"] = @"sport";
     myAttributes[@"size"] = @"large";
 NSMutableDictionary *myMetrics = [[NSMutableDictionary alloc] init];
-    myAttributes[@"price"] = @(100000);
-    myAttributes[@"purchase_time"] = current_time;
+    myMetrics[@"price"] = @(100000);
+    myMetrics[@"purchase_time"] = current_time;
 ```
+
+## ساختن رویداد درآمدی
+با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
+
+این تابع را به صورت زیر می‌توانید صدا بزنید:
+
+یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
+
+```objc
+#import <MetrixSdk/MXCurrency.h>
+
+[Metrix trackRevenue:@"mySlug" withValue:@12000 currency:IRR orderId:@"myOrderId"];
+```
+ورودی اول همان نامکی است که از داشبورد دریافت می‌کنید.
+
+دومین وروی تابع یک مقدار است که همان مقدار درآمد است.
+
+سومین ورودی واحد پول این رخداد است.
+
+ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
+
 
 ## ردگيري جريان صفحات
 
