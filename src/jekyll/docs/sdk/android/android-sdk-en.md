@@ -515,37 +515,6 @@ Here is a quick summary of `AttributionModel` properties:
 3. `ATTRIBUTION_NOT_NEEDED`
 4. `UNKNOWN`
 
-<<<<<<< HEAD:src/docs/sdk/android/android-sdk-en.md
-=======
-### Pre-installed trackers
-
-If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in the dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
-
-```java
-Metrix.getInstance().setDefaultTracker(trackerToken);
-```
-
-### Sdk signature
-
-An account manager must activate the Metrix SDK Signature.
-
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by calling setAppSecret on your config instance:
-
-```java
-Metrix.getInstastance().setAppSecret(secretId, info1, info2, info3, info4);
-```
-
-### Separation based on app stores
-
-If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
-
-```java
-Metrix.getInstastance().setStore("store name");
-```
-
->>>>>>> master:src/jekyll/docs/sdk/android/android-sdk-en.md
 ## Deep linking
 
 ### Deep linking Overview

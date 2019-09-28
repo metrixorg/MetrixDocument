@@ -517,32 +517,6 @@ attributionModel.getAttributionStatus() // وضعیت کاربر در کمپین
 3. `ATTRIBUTION_NOT_NEEDED` نیاز به اتربیوت ندارد
 4. `UNKNOWN` حالت ناشناخته
 
-<<<<<<< HEAD:src/docs/sdk/android/android-sdk-fa.md
-=======
-### ۱۹. مشخص کردن Pre-installed Tracker
-
-با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
-
-```java
-Metrix.getInstance().setDefaultTracker(trackerToken);
-```
-
-### ۲۰. امضاء sdk
-
-اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
-
-```java
-Metrix.getInstastance().setAppSecret(secretId, info1, info2, info3, info4);
-```
-
-### ۲۱. تفکیک بر‌اساس استور های اپلیکیشن
-
-اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
-
-```java
-Metrix.getInstastance().setStore("store name");
-```
->>>>>>> master:src/jekyll/docs/sdk/android/android-sdk-fa.md
 
 ## Deep linking
 

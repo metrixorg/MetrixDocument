@@ -116,11 +116,8 @@ NSMutableDictionary *myMetrics = [[NSMutableDictionary alloc] init];
 یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
 
 ```objc
-<<<<<<< HEAD:src/docs/sdk/ios/ios-sdk.md
-=======
 #import <MetrixSdk/MXCurrency.h>
 
->>>>>>> master:src/jekyll/docs/sdk/ios/ios-sdk.md
 [Metrix trackRevenue:@"mySlug" withValue:@12000 currency:IRR orderId:@"myOrderId"];
 ```
 ورودی اول همان نامکی است که از داشبورد دریافت می‌کنید.
