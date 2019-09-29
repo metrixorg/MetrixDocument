@@ -241,3 +241,9 @@ Metrix.setDefaultTracker(trackerToken);
 ```dart
 Metrix.setAppSecret(secretId, info1, info2, info3, info4);
 ```
+### ۶. تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+```dart
+Metrix.setStore("store name");
+```
