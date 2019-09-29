@@ -196,7 +196,7 @@ attributes["product_name"] =  "shirt";
 attributes["type"] =  "sport";
 attributes["size"] =  "large";
 
-Map<String, Object> metrics = new Map();
+Map<String, Double> metrics = new Map();
 metrics["price"] =  100000;
 metrics["purchase_time"] =  current_time;
 

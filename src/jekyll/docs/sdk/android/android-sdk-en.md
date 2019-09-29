@@ -472,7 +472,7 @@ Metrix.getInstance().addUserAttributes(attributes);
 Using this function, you can add arbitrary `Metrics` to all events of the user:
 
 ```java
-Map<String, Object> metrics = new HashMap<>();
+Map<String, Double> metrics = new HashMap<>();
 metrics.put("purchase_time", current_time);
 Metrix.getInstance().addUserMetrics(metrics);
 ```

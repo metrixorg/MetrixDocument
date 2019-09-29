@@ -473,7 +473,7 @@ Metrix.getInstance().addUserAttributes(attributes);
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
 
 ```java
-Map<String, Object> metrics = new HashMap<>();
+Map<String, Double> metrics = new HashMap<>();
 metrics.put("purchase_time", current_time);
 
 Metrix.getInstance().addUserMetrics(metrics);
