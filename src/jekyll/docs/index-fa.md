@@ -59,6 +59,15 @@ permalink: /
       </ul>
     </div>
   </div>
+  <div class="col-12 col-sm-6">
+    <div class="home-card">
+      <h2>S2S Integration</h2>
+      <ul>
+        <li><a href="{{ site.baseurl }}/faq/s2s-integration/">یکپارچه سازی سرور با سرور</a></li>
+      </ul>
+    </div>
+  </div>
+
   <!-- <div class="col-12 col-sm-6">
     <div class="home-card">
       <h2>آنالیتیکس</h2>
