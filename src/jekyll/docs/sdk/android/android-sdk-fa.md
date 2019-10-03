@@ -392,7 +392,43 @@ metrixConfig.setScreenFlowsAutoFill(true);
 Metrix.onCreate(metrixConfig);
 ```
 
-### ۱۵. اطلاع یافتن از شماره نشست جاری
+### ۱۵. شناسه دستگاه‌های متریکس
+
+برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
+            @Override
+            public void onReceiveUserId(String metrixUserId) {
+            sendToyourApi(metrixUserId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+**نکته:** این متد از نسخه ۰.۱۲.۰ به بعد قابل استفاده است.
+
+**نکته:** شناسه متریکس زمانی در اختیار شما قرار می‌گیرید که دستگاه توسط سرویس متریکس شناسایی شده باشد.
+
+### ۱۶. شناسه نشست متریکس
+
+sdk متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
+            @Override
+            public void onReceiveSessionId(String sessionId) {
+            sendToyourApi(sessionId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+**نکته:**این متد از نسخه ۰.۱۲.۰ به بعد قابل استفاده است.
+
+### ۱۷. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -400,7 +436,7 @@ Metrix.onCreate(metrixConfig);
 Metrix.getInstance().getSessionNum();
 ```
 
-### ۱۶. ساختن یک رویداد سفارشی
+### ۱۸. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -437,7 +473,7 @@ Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
 - **ورودی دوم:** یک Map<String, String> که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک Map<String, Double> که شامل ویژگی های قابل اندازه گیری است.
 
-### ۱۷. ساختن رویداد درآمدی
+### ۱۹. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -457,7 +493,7 @@ Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{or
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
-### ۱۸. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+### ۲۰. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -468,7 +504,7 @@ attributes.put("manufacturer", "Nike");
 Metrix.getInstance().addUserAttributes(attributes);
 ```
 
-### ۱۹. مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
+### ۲۱. مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -481,7 +517,7 @@ Metrix.getInstance().addUserMetrics(metrics);
 
 (مقدار پیش‌فرض این تابع در کتابخانه false است.)
 
-### ۲۰. اطلاع یافتن از مقدار screenFlow در کتابخانه
+### ۲۲. اطلاع یافتن از مقدار screenFlow در کتابخانه
 
 با استفاده از این تابع می‌توانید متوجه شوید که مقدار `screenFlow` در کتابخانه متریکس چیست:
 
@@ -489,7 +525,7 @@ Metrix.getInstance().addUserMetrics(metrics);
 Metrix.getInstance().isScreenFlowsAutoFill();
 ```
 
-### ۲۱. دریافت اطلاعات کمپین
+### ۲۳. دریافت اطلاعات کمپین
 
 با مقداردهی این تابعه میتوانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده اید را دریافت کنید.
 
