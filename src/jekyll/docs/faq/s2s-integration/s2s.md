@@ -58,7 +58,7 @@ Request Body:
 
   "deviceIp": {device IP},
   "eventSlug": {The event slug},            // e.g. "taqsq"
-  "eventTime": {Event timestamp in UTC +0}, // e.g "1559047522"
+  "eventTime": {Event timestamp in UTC +0}, // e.g "1570274953412" timestamp in millisecond
 }
 
 ```
