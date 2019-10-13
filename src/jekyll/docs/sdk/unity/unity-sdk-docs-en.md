@@ -217,6 +217,39 @@ metrixConfig.SetStore("store name");
 Metirx.OnCreate(metrixConfig);
 ```
 
+### Metrix device identifier
+For each device with your app installed on it, our backend generates a unique Metrix device identifier (known as an mxuid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```csharp
+void metrixUserId(string metrixUserId) {
+  //do any thing with metrix user id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetUserIdDelegate(metrixUserId);
+Metirx.OnCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+**Note:** Information about the adid is only available after our backend tracks the app instal. It is not possible to access the adid value before the SDK has been initialized and the installation of your app has been successfully tracked.
+
+
+### Metrix session identifier
+For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```csharp
+void metrixSessionId(string metrixSessionId) {
+  //do any thing with metrix session id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionIdDelegate(metrixSessionId);
+Metirx.OnCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
 ### Current session number
 
 By this function, you can find the current session number:

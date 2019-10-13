@@ -401,6 +401,40 @@ metrixConfig.setStore("store name");
 Metrix.onCreate(metrixConfig);
 ```
 
+### Metrix device identifier
+For each device with your app installed on it, our backend generates a unique Metrix device identifier (known as an mxuid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
+            @Override
+            public void onReceiveUserId(String metrixUserId) {
+            sendToyourApi(metrixUserId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+**Note:** Information about the adid is only available after our backend tracks the app instal. It is not possible to access the adid value before the SDK has been initialized and the installation of your app has been successfully tracked.
+
+
+### Metrix session identifier
+For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
+            @Override
+            public void onReceiveSessionId(String sessionId) {
+            sendToyourApi(sessionId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
 ### Current session number
 
 Using this function, you can find the current session number:

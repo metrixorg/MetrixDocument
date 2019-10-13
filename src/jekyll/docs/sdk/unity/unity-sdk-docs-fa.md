@@ -214,7 +214,45 @@ MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetStore("store name");
 Metirx.OnCreate(metrixConfig);
 ```
-### ۱۴. اطلاع یافتن از شماره نشست جاری
+
+### ۱۴. شناسه دستگاه‌های متریکس
+
+برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```csharp
+void metrixUserId(string metrixUserId) {
+  //do any thing with metrix user id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetUserIdDelegate(metrixUserId);
+Metirx.OnCreate(metrixConfig);
+```
+
+**نکته:** این متد از نسخه ۰.۱۳.۰ به بعد قابل استفاده است.
+
+**نکته:** شناسه متریکس زمانی در اختیار شما قرار می‌گیرید که دستگاه توسط سرویس متریکس شناسایی شده باشد.
+
+### ۱۵. شناسه نشست متریکس
+
+sdk متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```csharp
+void metrixSessionId(string metrixSessionId) {
+  //do any thing with metrix session id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionIdDelegate(metrixSessionId);
+Metirx.OnCreate(metrixConfig);
+```
+
+**نکته:**این متد از نسخه ۰.۱۳.۰ به بعد قابل استفاده است.
+
+
+### ۱۶. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -222,7 +260,7 @@ Metirx.OnCreate(metrixConfig);
 Metrix.GetSessionNum();
 ```
 
-### ۱۵. ساختن یک رویداد سفارشی
+### ۱۷. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -236,7 +274,7 @@ Metrix.NewEvent("my_event_slug");
 
 ورودی این تابع از جنس String است
 
-### ۱۶. ساختن رویداد درآمدی
+### ۱۸. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -260,7 +298,7 @@ Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
-### ۱۷. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
+### ۱۹. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
 
 با اضافه کردن تابع زیر صفحات خود میتوانید از حرکت کاربر بین صفحات اطلاع پیدا کنید:
 
@@ -292,6 +330,7 @@ metrixConfig.SetShouldLaunchDeeplink(true);
 metrixConfig.SetDeferredDeeplinkDelegate(deferredDeeplink);
 Metirx.OnCreate(metrixConfig);
 ```
+
 بعد از این که متریکس اطلاعات دیپ‌لینک را از بکند خود دریافت کرد محتوای آن را به کالبک بالا پاس میدهد اگر ورودی متد `SetShouldLaunchDeeplink` مقدار `true` باشد متریکس به صورت اتوماتیک سناریو استاندارد را اجرا میکند ولی اگر مقدار خروجی متد `false` باشد متریکس فقط اطلاعات را در این کالبک قرار میدهد تا شما بر اساس آن اکشن مورد نظر خود را انجام دهید.
 
 ### ری‌اتریبیوت با دیپ‌لینک
