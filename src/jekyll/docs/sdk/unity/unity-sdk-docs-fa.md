@@ -254,22 +254,58 @@ Metirx.OnCreate(metrixConfig);
 
 ### ۱۶. شمارش پاک کردن اپلیکیشن
 
-برای شمارش uninstall ها نیاز است ابتدا شما در فایربیس اپلیکیشن خود را ایجاد کنید سپس در قسمت تنظیمات باید `sender id` و `legacy server key` خود را در پنل متریکس تنظیم کنید.
+متریکس برای شمارش پاک شدن اپلیکشن شما از سایلنت پوش استفاده می‌کند.
+
+برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
+
+**نکته:** شما باید برای استفاده از این ابزار حتما از Firebase Cloud Messaging (FCM) استفاده نمایید.
+
+#### پیدا کردن FCM legacy server key
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب Cloud Messaging را انتخاب کنید
+
+۳. حالا می‌توانید `legacy server key` و `sender id` را بردارید
 
 <img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
 
- سپس `App ID` اپلیکیشن خود را طبق عکس زیر به دست آورید
+#### اضافه کردن FCM legacy server key و sender id به اکانت متریکس
+
+در داشبورد متریکس مراحل زیر را انجام دهید:
+
+۱. به تنظیمات اپلیکیش خود رفته
+
+۲. تب Push Configuration را انتخاب کنید
+
+۳. حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید
+
+۴. دکمه save را بزنید
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### پیدا کردن Firebase APP ID
+
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب General را انتخاب کنید
+
+۳. حالا می‌توانید `App ID` را بردارید
 
 <img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
 
- سپس در تنظیمات متریکس قرار دهید.
+ سپس در تنظیمات sdk متریکس قرار دهید.
+
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetFirebaseAppId("your firebase app id");
 Metirx.OnCreate(metrixConfig);
 ```
-**نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
 
+**نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
 
 ### ۱۷. اطلاع یافتن از شماره نشست جاری
 
