@@ -473,12 +473,20 @@ Metrix.onCreate(metrixConfig);
 
 <img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
 
- سپس در تنظیمات sdk متریکس قرار دهید.
+۴. سپس در تنظیمات sdk متریکس قرار دهید.
+
 ```java
 MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
 metrixConfig.setFirebaseAppId("your firebase app id");
 Metrix.onCreate(metrixConfig);
 ```
+
+۵. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
 **نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
 
 ### ۱۸. اطلاع یافتن از شماره نشست جاری

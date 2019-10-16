@@ -297,12 +297,18 @@ Metirx.OnCreate(metrixConfig);
 
 <img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
 
- سپس در تنظیمات sdk متریکس قرار دهید.
+۴. سپس در تنظیمات sdk متریکس قرار دهید.
 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetFirebaseAppId("your firebase app id");
 Metirx.OnCreate(metrixConfig);
+```
+
+۵. کتاب خانه زیر را در قسمت `dependencies` فایل `mainTemplate.gradle` اپلیکیشن خود اضافه کنید:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
 ```
 
 **نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.

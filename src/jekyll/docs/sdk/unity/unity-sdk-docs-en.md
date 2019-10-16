@@ -292,7 +292,7 @@ In your Firebase console
 
 <img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
 
-Configure the Metrix SDK to receive your app's push notification token
+4\. Configure the Metrix SDK to receive your app's push notification token
 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
@@ -300,8 +300,13 @@ metrixConfig.SetFirebaseAppId("your firebase app id");
 Metirx.OnCreate(metrixConfig);
 ```
 
-**Note:** Integration with Metrix SDK 0.14.0 or above
+5\. Open the `mainTemplate.gradle` file of your app and find the `dependencies` block. Add the following line:
 
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**Note:** Integration with Metrix SDK 0.14.0 or above
 
 ### Current session number
 
