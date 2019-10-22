@@ -51,7 +51,7 @@ Initialize Metrix according to the code below:
 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig("APP_ID");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 Replace `APP_ID` with your application id. You can find that in your Metrix's dashboard.  
@@ -74,7 +74,7 @@ Using the following functions, you can inform Metrix that you wish to send infor
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetLocationListening(locationListening);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### Limitation in number of events to upload
@@ -84,7 +84,7 @@ Using the following function, you can specify that each time the number of your 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadThreshold(50);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 events.)
@@ -96,7 +96,7 @@ Using this function, you can specify the maximum number of out-going events per 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadMaxBatchSize(100);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -108,7 +108,7 @@ Using the following function, you can specify the maximum number of events that 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventMaxCount(1000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -120,7 +120,7 @@ By using this function, you can specify the timeout period of requests for sendi
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadPeriodMillis(30000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 seconds.)
@@ -132,7 +132,7 @@ Using this function, you can specify the limit of session length in your applica
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetSessionTimeoutMillis(1800000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 minutes.)
@@ -144,7 +144,7 @@ Note that you should set this value to `false` before the release of your applic
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.EnableLogging(true);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
@@ -156,7 +156,7 @@ Using this function, you can specify what level of logs to be printed in `logcat
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetLogLevel(3);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is `Log.INFO`.)
@@ -179,7 +179,7 @@ Using this function, you can specify whether when the application is closed, all
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetFlushEventsOnClose(false);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
@@ -191,7 +191,7 @@ If you want to use the Metrix SDK to recognize users whose devices came with you
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetDefaultTracker("trackerToken");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### Sdk signature
@@ -204,7 +204,7 @@ An App Secret is set by calling setAppSecret on your config instance:
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### Separation based on app stores
@@ -214,7 +214,7 @@ If you want to publish your app in different stores such as Cafe Bazaar, Google 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetStore("store name");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### Metrix device identifier
@@ -227,7 +227,7 @@ void metrixUserId(string metrixUserId) {
 
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetUserIdDelegate(metrixUserId);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 **Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
@@ -245,7 +245,7 @@ void metrixSessionId(string metrixSessionId) {
 
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetSessionIdDelegate(metrixSessionId);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 **Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
@@ -325,7 +325,7 @@ void deferredDeeplink(string deeplink) {
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetShouldLaunchDeeplink(true);
 metrixConfig.SetDeferredDeeplinkDelegate(deferredDeeplink);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the delegate and expect the `boolean` set value from you. This value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).

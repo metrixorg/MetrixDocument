@@ -373,7 +373,7 @@ If you want to use the Metrix SDK to recognize users whose devices came with you
 
 ```java
 MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setDefaultTracker(trackerToken);
+metrixConfig.setDefaultTrackerToken(trackerToken);
 Metrix.onCreate(metrixConfig);
 ```
 

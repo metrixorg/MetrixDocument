@@ -360,7 +360,7 @@ Metrix.onCreate(metrixConfig);
 
 ```java
 MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setDefaultTracker(trackerToken);
+metrixConfig.setDefaultTrackerToken(trackerToken);
 Metrix.onCreate(metrixConfig);
 ```
 
