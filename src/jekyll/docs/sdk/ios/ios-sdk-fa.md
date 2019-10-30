@@ -22,8 +22,6 @@ toc: true # table of contents
 pod 'MetrixSdk', '1.1.1'
 ```
 
----
-
 همچنین شما می‌توانید SDK متریکس را به عنوان یک framework به پروژه خود اضافه کنید.
 
 از [اینجا](https://github.com/metrixorg/MetrixSDK-iOS) دانلود نماید.

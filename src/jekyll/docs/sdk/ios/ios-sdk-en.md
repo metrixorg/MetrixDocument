@@ -16,8 +16,6 @@ If you're using [CocoaPods](https://cocoapods.org), you can add the following li
 pod 'MetrixSdk', '1.1.1'
 ```
 
----
-
 You can also choose to integrate the Metrix SDK by adding it to your project as a framework.
 
 Download from [here](https://github.com/metrixorg/MetrixSDK-iOS).
