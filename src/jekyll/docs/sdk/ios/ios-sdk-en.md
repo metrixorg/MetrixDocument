@@ -8,7 +8,7 @@ toc: true # table of contents
 
 ## Basic integration
 
-### add SDK to your project
+### Add SDK to your project
 
 If you're using [CocoaPods](https://cocoapods.org), you can add the following line to your Podfile:
 
@@ -33,7 +33,7 @@ Since the release of iOS 8, Apple has introduced dynamic frameworks (also known 
 
 ### Integrate the SDK into your app
 
-you should use following import statement.
+You should use following import statement.
 
 ```objc
 #import <MetrixSdk/Metrix.h>
@@ -73,7 +73,7 @@ Once you integrate the Metrix SDK into your project, you can take advantage of t
 
 ## Event tracking
 
-you can use Metrix to track events. You should create a new custom event in your dashboard and use its slug as an event name in SDK. First you should create a custom event.
+You can use Metrix to track events. You should create a new custom event in your dashboard and use its slug as an event name in SDK. First you should create a custom event.
 
 ```objc
 MXCustomEvent *event = [MXCustomEvent newEvent:@"mySlug" attributes:myAttributes metrics:myMetrics];
@@ -109,17 +109,17 @@ create a custom event that has just one slug (which you get from Metrix dashboar
 [Metrix trackRevenue:@"mySlug" withValue:@12000 currency:IRR orderId:@"myOrderId"];
 ```
 
-The first entry is the slug that you get from dashboard.
+The first parameter is the slug that you get from dashboard.
 
 The second one is a value, which is the revenue amount.
 
-The third entry is the currency of this revenue.
+The third parameter is the currency of this revenue.
 
-The fourth entry (optional) can be your order number.
+The fourth parameter (optional) can be your order number.
 
 ## Tracking user flow
 
-you can track your user journey with metrix in your app. To do this, you should call the following method upon entering each page (in viewWillAppear or in viewDidApear)
+You can track your user journey with metrix in your app. To do this, you should call the following method upon entering each page (in viewWillAppear or in viewDidApear)
 
 ```objc
 [Metrix trackScreen:@"HomePage"];
@@ -127,7 +127,7 @@ you can track your user journey with metrix in your app. To do this, you should 
 
 ## Device ID
 
-Metrix's SDK provides access to some device IDs.
+The Metrix SDK provides access to some device IDs.
 
 ### Ad ID
 
