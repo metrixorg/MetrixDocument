@@ -39,6 +39,9 @@ fa:
       - name: امضای SDK
         link: /faq/sdk-signature
 
+      - name: یکپارچه‌سازی سرور با سرور
+        link: faq/s2s-integration
+
   - name: مستندات فنی
     icon: m-sdk
     children:
