@@ -1,13 +1,12 @@
 en:
-  - name: FAQ
-    # link: faq
-    icon: m-help
-    # children:
-    #   - name: Introduction
-    #     link: 2.0/
-    #     children:
-    #       - name: CI/CD Overview
-    #         link: 2.0/about-circleci/
+  - name: SDK Documentation
+    icon: m-sdk
+    children:
+      - name: iOS
+        link: /en/sdk/ios
+
+      - name: Android
+        link: /en/sdk/android
 fa:
   - name: سوالات متداول
     icon: m-help

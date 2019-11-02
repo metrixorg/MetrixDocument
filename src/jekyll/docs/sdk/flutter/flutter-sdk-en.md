@@ -196,7 +196,7 @@ attributes["product_name"] =  "shirt";
 attributes["type"] =  "sport";
 attributes["size"] =  "large";
 
-Map<String, Object> metrics = new Map();
+Map<String, Double> metrics = new Map();
 metrics["price"] =  100000;
 metrics["purchase_time"] =  current_time;
 
@@ -250,3 +250,10 @@ An App Secret is set by calling setAppSecret on your config instance:
 Metrix.setAppSecret(secretId, info1, info2, info3, info4);
 ```
 
+### Separation based on app stores
+
+If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
+
+```dart
+Metrix.setStore("store name");
+```
