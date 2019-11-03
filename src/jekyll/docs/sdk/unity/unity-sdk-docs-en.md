@@ -289,14 +289,6 @@ The third parameter is the currency of this event. If you do not set the value, 
 
 The fourth parameter is your order number.
 
-### Enable the process of storing the user flow
-
-Using this function, you can inform the Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
-
-```csharp
-Metrix.ScreenDisplayed("First Screen");
-```
-
 ## Deep linking
 
 ### Deep linking Overview
