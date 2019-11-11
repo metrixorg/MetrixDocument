@@ -30,7 +30,7 @@ allprojects{
 ۲. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.13.0'
+implementation 'ir.metrix:metrix:0.14.0'
 ```
 
 ۳. تنظیمات زیر را به `Proguard` پروژه خود اضافه کنید:
@@ -419,7 +419,68 @@ Metrix.onCreate(metrixConfig);
 ```
 **نکته:**این متد از نسخه ۰.۱۲.۰ به بعد قابل استفاده است.
 
-### ۱۶. اطلاع یافتن از شماره نشست جاری
+### ۱۶. شمارش پاک کردن اپلیکیشن
+
+متریکس برای شمارش پاک شدن اپلیکشن شما از سایلنت پوش استفاده می‌کند.
+
+برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
+
+**نکته:** شما باید برای استفاده از این ابزار حتما از Firebase Cloud Messaging (FCM) استفاده نمایید.
+
+#### پیدا کردن FCM legacy server key
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب Cloud Messaging را انتخاب کنید
+
+۳. حالا می‌توانید `legacy server key` و `sender id` را بردارید
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+#### اضافه کردن FCM legacy server key و sender id به اکانت متریکس
+
+در داشبورد متریکس مراحل زیر را انجام دهید:
+
+۱. به تنظیمات اپلیکیش خود رفته
+
+۲. تب Push Configuration را انتخاب کنید
+
+۳. حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید
+
+۴. دکمه save را بزنید
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### پیدا کردن Firebase APP ID
+
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب General را انتخاب کنید
+
+۳. حالا می‌توانید `App ID` را بردارید
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+۴. سپس در تنظیمات sdk متریکس قرار دهید.
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setFirebaseAppId("your firebase app id");
+Metrix.onCreate(metrixConfig);
+```
+
+۵. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
+
+### ۱۷. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -427,7 +488,7 @@ Metrix.onCreate(metrixConfig);
 Metrix.getInstance().getSessionNum();
 ```
 
-### ۱۷. ساختن یک رویداد سفارشی
+### ۱۸. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -464,7 +525,7 @@ Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
 - **ورودی دوم:** یک Map<String, String> که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک Map<String, Double> که شامل ویژگی های قابل اندازه گیری است.
 
-### ۱۸. ساختن رویداد درآمدی
+### ۱۹. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -484,7 +545,7 @@ Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{or
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
-### ۱۹. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+### ۲۰. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -495,7 +556,7 @@ attributes.put("manufacturer", "Nike");
 Metrix.getInstance().addUserAttributes(attributes);
 ```
 
-### ۲۰. مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
+### ۲۱. مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
 
@@ -508,7 +569,7 @@ Metrix.getInstance().addUserMetrics(metrics);
 
 (مقدار پیش‌فرض این تابع در کتابخانه false است.)
 
-### ۲۱. اطلاع یافتن از مقدار screenFlow در کتابخانه
+### ۲۲. اطلاع یافتن از مقدار screenFlow در کتابخانه
 
 با استفاده از این تابع می‌توانید متوجه شوید که مقدار `screenFlow` در کتابخانه متریکس چیست:
 
@@ -516,7 +577,7 @@ Metrix.getInstance().addUserMetrics(metrics);
 Metrix.getInstance().isScreenFlowsAutoFill();
 ```
 
-### ۲۲. دریافت اطلاعات کمپین
+### ۲۳. دریافت اطلاعات کمپین
 
 با مقداردهی این تابعه میتوانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده اید را دریافت کنید.
 

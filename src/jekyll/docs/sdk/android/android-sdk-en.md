@@ -30,7 +30,7 @@ allprojects{
 2\. Add the following library to the `dependencies` section of your `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.13.0'
+implementation 'ir.metrix:metrix:0.14.0'
 ```
 
 3\. Add the following settings to your project's `Proguard` file:
@@ -434,6 +434,63 @@ metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
 Metrix.onCreate(metrixConfig);
 ```
 **Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+### uninstall tracking
+
+Metrix’s app uninstall tracking relies on silent push notifications to determine if an app is installed on a device. Developer instructions for configuring your app for uninstall tracking can be found below.
+
+**Note:** You must configure your app for push notifications through Firebase Cloud Messaging (FCM). Google Cloud Messaging (GCM) is not supported.
+
+#### Find your FCM legacy server key
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select CLOUD MESSAGING
+
+3\. Locate your `legacy Server key` and `sender id` token
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+#### Add your FCM legacy server key and sender id to your Metrix account
+
+In the Metrix dashboard
+
+1\. Navigate to your app and select your app settings
+
+2\. Select Push configuration
+
+3\. Enter or paste your FCM legacy server key into the Legacy Server Key field and FCM sender id into Sender Id field
+
+4\. Select Save
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### Find your Firebase APP ID
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select General
+
+3\. Locate your `App ID` token
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+4\. Configure the Metrix SDK to receive your app's push notification token
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setFirebaseAppId("your firebase app id");
+Metrix.onCreate(metrixConfig);
+```
+5\. Open the `build.gradle` file of your app and find the `dependencies` block. Add the following line:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**Note:** Integration with Metrix SDK 0.14.0 or above
 
 ### Current session number
 

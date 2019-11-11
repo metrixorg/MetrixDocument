@@ -253,7 +253,68 @@ Metrix.OnCreate(metrixConfig);
 **نکته:**این متد از نسخه ۰.۱۳.۰ به بعد قابل استفاده است.
 
 
-### ۱۶. اطلاع یافتن از شماره نشست جاری
+### ۱۶. شمارش پاک کردن اپلیکیشن
+
+متریکس برای شمارش پاک شدن اپلیکشن شما از سایلنت پوش استفاده می‌کند.
+
+برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
+
+**نکته:** شما باید برای استفاده از این ابزار حتما از Firebase Cloud Messaging (FCM) استفاده نمایید.
+
+#### پیدا کردن FCM legacy server key
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب Cloud Messaging را انتخاب کنید
+
+۳. حالا می‌توانید `legacy server key` و `sender id` را بردارید
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+#### اضافه کردن FCM legacy server key و sender id به اکانت متریکس
+
+در داشبورد متریکس مراحل زیر را انجام دهید:
+
+۱. به تنظیمات اپلیکیش خود رفته
+
+۲. تب Push Configuration را انتخاب کنید
+
+۳. حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید
+
+۴. دکمه save را بزنید
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### پیدا کردن Firebase APP ID
+
+ابتدا به کنسول فایربیس خود رفته.
+
+۱. دکمه settings را زده سپس به Project settings بروید
+
+۲. تب General را انتخاب کنید
+
+۳. حالا می‌توانید `App ID` را بردارید
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+۴. سپس در تنظیمات sdk متریکس قرار دهید.
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetFirebaseAppId("your firebase app id");
+Metirx.OnCreate(metrixConfig);
+```
+
+۵. کتاب خانه زیر را در قسمت `dependencies` فایل `mainTemplate.gradle` اپلیکیشن خود اضافه کنید:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
+
+### ۱۷. اطلاع یافتن از شماره نشست جاری
 
 با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
 
@@ -261,7 +322,7 @@ Metrix.OnCreate(metrixConfig);
 Metrix.GetSessionNum();
 ```
 
-### ۱۷. ساختن یک رویداد سفارشی
+### ۱۸. ساختن یک رویداد سفارشی
 
 با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
@@ -275,7 +336,7 @@ Metrix.NewEvent("my_event_slug");
 
 ورودی این تابع از جنس String است
 
-### ۱۸. ساختن رویداد درآمدی
+### ۱۹. ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
 
