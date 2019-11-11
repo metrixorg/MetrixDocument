@@ -50,7 +50,7 @@ android:exported="true" >
 
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig("APP_ID");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.
@@ -76,7 +76,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetLocationListening(locationListening);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### ۳. تعیین سقف تعداد رویدادها برای ارسال به سمت سرور
@@ -86,7 +86,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadThreshold(50);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ رویداد است.)
@@ -98,7 +98,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadMaxBatchSize(100);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰ رویداد است.)
@@ -110,7 +110,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventMaxCount(1000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰۰ رویداد است.)
@@ -122,7 +122,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetEventUploadPeriodMillis(30000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ ثانیه است.)
@@ -134,7 +134,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetSessionTimeoutMillis(1800000);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه ۳۰ دقیقه است.)
@@ -146,7 +146,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.EnableLogging(true);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
@@ -158,7 +158,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetLogLevel(3);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه `INFO` است.)
@@ -181,7 +181,7 @@ ASSERT = 7;
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetFlushEventsOnClose(false);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (مقدار پیش‌فرض این تابع در کتابخانه true است.)
@@ -193,7 +193,7 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetDefaultTracker("trackerToken");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### ۱۲. امضاء sdk
@@ -203,16 +203,17 @@ Metirx.OnCreate(metrixConfig);
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### ۱۳. تفکیک بر‌اساس استور های اپلیکیشن
 
-اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و ... منتشر کنید، با استفاده از متد زیر می‌توانید نصب های ارگانیک خود را به تفکیک استور های مختلف داشته باشید.
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و … منتشر کنید، با استفاده از متد زیر می‌توانید مشاهده کنید که کاربر از کدام استور ( مثلا کافه بازار، گوگل پلی، مایکت، اول مارکت و وبسایت ... ) اپلیکیشن را نصب کرده اند و منبع نصب های ارگانیک خود را  شناسایی کنید.
+
 ```csharp
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetStore("store name");
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### ۱۴. شناسه دستگاه‌های متریکس
@@ -227,7 +228,7 @@ void metrixUserId(string metrixUserId) {
 
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetUserIdDelegate(metrixUserId);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 **نکته:** این متد از نسخه ۰.۱۳.۰ به بعد قابل استفاده است.
@@ -246,7 +247,7 @@ void metrixSessionId(string metrixSessionId) {
 
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetSessionIdDelegate(metrixSessionId);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 **نکته:**این متد از نسخه ۰.۱۳.۰ به بعد قابل استفاده است.
@@ -359,6 +360,7 @@ Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
 
+<<<<<<< HEAD
 ### ۲۰. نگهداری حرکات کاربر در صفحات مختلف در اپلیکیشن
 
 با اضافه کردن تابع زیر صفحات خود میتوانید از حرکت کاربر بین صفحات اطلاع پیدا کنید:
@@ -366,6 +368,8 @@ Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 ```csharp
 Metrix.ScreenDisplayed("First Screen");
 ```
+=======
+>>>>>>> master
 
 ## Deep linking
 ### توضیحات
@@ -389,7 +393,7 @@ void deferredDeeplink(string deeplink) {
 MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
 metrixConfig.SetShouldLaunchDeeplink(true);
 metrixConfig.SetDeferredDeeplinkDelegate(deferredDeeplink);
-Metirx.OnCreate(metrixConfig);
+Metrix.OnCreate(metrixConfig);
 ```
 
 بعد از این که متریکس اطلاعات دیپ‌لینک را از بکند خود دریافت کرد محتوای آن را به کالبک بالا پاس میدهد اگر ورودی متد `SetShouldLaunchDeeplink` مقدار `true` باشد متریکس به صورت اتوماتیک سناریو استاندارد را اجرا میکند ولی اگر مقدار خروجی متد `false` باشد متریکس فقط اطلاعات را در این کالبک قرار میدهد تا شما بر اساس آن اکشن مورد نظر خود را انجام دهید.
