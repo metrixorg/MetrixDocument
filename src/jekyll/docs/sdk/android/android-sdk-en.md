@@ -30,7 +30,7 @@ allprojects{
 2\. Add the following library to the `dependencies` section of your `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.14.0'
+implementation 'ir.metrix:metrix:0.14.1'
 ```
 
 3\. Add the following settings to your project's `Proguard` file:
