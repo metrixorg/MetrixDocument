@@ -30,7 +30,7 @@ allprojects{
 2\. Add the following library to the `dependencies` section of your `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.11.0'
+implementation 'ir.metrix:metrix:0.13.0'
 ```
 
 3\. Add the following settings to your project's `Proguard` file:
@@ -223,7 +223,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Metrix.initialize(this, "APP_ID");
+
+        MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
+        Metrix.onCreate(metrixConfig);
     }
 }
 ```
@@ -253,9 +255,9 @@ There are three types of events in Metrix:
 Using the following functions, you can inform Metrix that you wish to send information about the location of the user (In order for these methods to work properly, the optional permissions explained earlier must be enabled).
 
 ```java
-Metrix.getInstance().enableLocationListening();
-
-Metrix.getInstance().disableLocationListening();
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setLocationListening(isLocationListeningEnable);
+Metrix.onCreate(metrixConfig);
 ```
 
 ### Limitation in number of events to upload
@@ -263,7 +265,9 @@ Metrix.getInstance().disableLocationListening();
 Using the following function, you can specify that each time the number of your buffered events reaches the threshold, the Metrix SDK should send them to the server:
 
 ```java
-Metrix.getInstance().setEventUploadThreshold(50);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setEventUploadThreshold(50);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is 30 events.)
@@ -273,7 +277,9 @@ Metrix.getInstance().setEventUploadThreshold(50);
 Using this function, you can specify the maximum number of out-going events per request as shown below:
 
 ```java
-Metrix.getInstance().setEventUploadMaxBatchSize(100);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setEventUploadMaxBatchSize(100);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -283,7 +289,9 @@ Metrix.getInstance().setEventUploadMaxBatchSize(100);
 Using the following function, you can specify the maximum number of events that are buffered in the SDK (for example, if the user's device loses internet connection, the events will be buffered in the library until there is a chance to send the events and empty the buffer) and if the number of buffered events in the library passes this amount, old events are destroyed by SDK to make space for new events:
 
 ```java
-Metrix.getInstance().setEventMaxCount(1000);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setEventMaxCount(1000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -293,7 +301,9 @@ Metrix.getInstance().setEventMaxCount(1000);
 By using this function, you can specify the timeout period of requests for sending events:
 
 ```java
-Metrix.getInstance().setEventUploadPeriodMillis(30000);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setEventUploadPeriodMillis(30000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is 30 seconds.)
@@ -303,7 +313,9 @@ Metrix.getInstance().setEventUploadPeriodMillis(30000);
 Using this function, you can specify the limit of session length in your application in unit of miliseconds. For example, if this value is 10,000 and the user interacts with the application for 70 seconds, Metrix calculates this interaction as seven sessions.
 
 ```java
-Metrix.getInstance().setSessionTimeoutMillis(1800000);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setSessionTimeoutMillis(1800000);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is 30 minutes.)
@@ -313,7 +325,9 @@ Metrix.getInstance().setSessionTimeoutMillis(1800000);
 Note that you should set this value to `false` before the release of your application:
 
 ```java
-Metrix.getInstance().enableLogging(true);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.enableLogging(true);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is true.)
@@ -323,7 +337,9 @@ Metrix.getInstance().enableLogging(true);
 Using this function, you can specify what level of logs to be printed in `logcat`, for example, the following command will display all logs except `VERBOSE` in `logcat`:
 
 ```java
-Metrix.getInstance().setLogLevel(Log.DEBUG);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setLogLevel(Log.DEBUG);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is `Log.INFO`.)
@@ -333,10 +349,148 @@ Metrix.getInstance().setLogLevel(Log.DEBUG);
 Using this function, you can specify wether when the application is closed, all events buffered in the device, should be sent or not:
 
 ```java
-Metrix.getInstance().setFlushEventsOnClose(false);
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setFlushEventsOnClose(false);
+Metrix.onCreate(metrixConfig);
 ```
 
 (The default value is true.)
+### Enable the process of storing the user flow
+
+Using this function, you can inform Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setScreenFlowsAutoFill(true);
+Metrix.onCreate(metrixConfig);
+```
+
+(The default value is false.)
+
+### Pre-installed trackers
+
+If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in the dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setDefaultTrackerToken(trackerToken);
+Metrix.onCreate(metrixConfig);
+```
+
+### Sdk signature
+
+An account manager must activate the Metrix SDK Signature.
+
+If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
+
+An App Secret is set by calling setAppSecret on your config instance:
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setAppSecret(secretId, info1, info2, info3, info4);
+Metrix.onCreate(metrixConfig);
+```
+
+
+### Separation based on app stores
+
+If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setStore("store name");
+Metrix.onCreate(metrixConfig);
+```
+
+### Metrix device identifier
+For each device with your app installed on it, our backend generates a unique Metrix device identifier (known as an mxuid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
+            @Override
+            public void onReceiveUserId(String metrixUserId) {
+            sendToyourApi(metrixUserId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+**Note:** Information about the adid is only available after our backend tracks the app instal. It is not possible to access the adid value before the SDK has been initialized and the installation of your app has been successfully tracked.
+
+
+### Metrix session identifier
+For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
+            @Override
+            public void onReceiveSessionId(String sessionId) {
+            sendToyourApi(sessionId);    
+            }
+        });
+Metrix.onCreate(metrixConfig);
+```
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+### uninstall tracking
+
+Metrix’s app uninstall tracking relies on silent push notifications to determine if an app is installed on a device. Developer instructions for configuring your app for uninstall tracking can be found below.
+
+**Note:** You must configure your app for push notifications through Firebase Cloud Messaging (FCM). Google Cloud Messaging (GCM) is not supported.
+
+#### Find your FCM legacy server key
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select CLOUD MESSAGING
+
+3\. Locate your `legacy Server key` and `sender id` token
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+#### Add your FCM legacy server key and sender id to your Metrix account
+
+In the Metrix dashboard
+
+1\. Navigate to your app and select your app settings
+
+2\. Select Push configuration
+
+3\. Enter or paste your FCM legacy server key into the Legacy Server Key field and FCM sender id into Sender Id field
+
+4\. Select Save
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### Find your Firebase APP ID
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select General
+
+3\. Locate your `App ID` token
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+4\. Configure the Metrix SDK to receive your app's push notification token
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setFirebaseAppId("your firebase app id");
+Metrix.onCreate(metrixConfig);
+```
+5\. Open the `build.gradle` file of your app and find the `dependencies` block. Add the following line:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**Note:** Integration with Metrix SDK 0.14.0 or above
 
 ### Current session number
 
@@ -371,7 +525,7 @@ attributes.put("product_name", "shirt");
 attributes.put("type", "sport");
 attributes.put("size", "large");
 
-Map<String, Object> metrics = new HashMap<>();
+Map<String, Double> metrics = new HashMap<>();
 metrics.put("price", 100000);
 metrics.put("purchase_time", current_time);
 
@@ -409,20 +563,10 @@ Metrix.getInstance().addUserAttributes(attributes);
 Using this function, you can add arbitrary `Metrics` to all events of the user:
 
 ```java
-Map<String, Object> metrics = new HashMap<>();
+Map<String, Double> metrics = new HashMap<>();
 metrics.put("purchase_time", current_time);
-Metrix.getInstance().setUserMetrics(metrics);
+Metrix.getInstance().addUserMetrics(metrics);
 ```
-
-### Enable the process of storing the user flow
-
-Using this function, you can inform Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
-
-```java
-Metrix.getInstance().setScreenFlowsAutoFill(true);
-```
-
-(The default value is false.)
 
 ### Find out the value of screenFlow
 
@@ -461,34 +605,6 @@ Here is a quick summary of `AttributionModel` properties:
 2. `NOT_ATTRIBUTED_YET`
 3. `ATTRIBUTION_NOT_NEEDED`
 4. `UNKNOWN`
-
-### Pre-installed trackers
-
-If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in the dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
-
-```java
-Metrix.getInstance().setDefaultTracker(trackerToken);
-```
-
-### Sdk signature
-
-An account manager must activate the Metrix SDK Signature.
-
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by calling setAppSecret on your config instance:
-
-```java
-Metrix.getInstastance().setAppSecret(secretId, info1, info2, info3, info4);
-```
-
-### Separation based on app stores
-
-If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
-
-```java
-Metrix.getInstastance().setStore("store name");
-```
 
 ## Deep linking
 

@@ -8,7 +8,7 @@ toc: true # table of contents
 
 ## Basic integration
 
-1\. Download the latest version from [our releases page](https://storage.backtory.com/metricx/sdk-unity/MetrixSDK-v0.11.0.unitypackage).
+1\. Download the latest version from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/blob/master/MetrixSDK-v0.13.0.unitypackage).
 Open your project in the Unity Editor and navigate to Assets → Import Package → Custom Package and select the downloaded Unity package file.
 
 2\. Please add the following permissions, which the Metrix SDK needs, if they are not already present in your `AndroidManifest.xml` file in `Plugins/Android` folder:
@@ -50,7 +50,8 @@ The Google Play Store `INSTALL_REFERRER` intent should be captured with a broadc
 Initialize Metrix according to the code below:
 
 ```csharp
-Metrix.Initialize("APP_ID");
+MetrixConfig metrixConfig = new MetrixConfig("APP_ID");
+Metrix.OnCreate(metrixConfig);
 ```
 
 Replace `APP_ID` with your application id. You can find that in your Metrix's dashboard.  
@@ -71,8 +72,9 @@ There are three types of events in Metrix:
 Using the following functions, you can inform Metrix that you wish to send information about the location of the user (In order for these methods to work properly, the optional permissions explained earlier must be enabled).
 
 ```csharp
-Metrix.EnableLocationListening();
-Metrix.DisableLocationListening();
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLocationListening(locationListening);
+Metrix.OnCreate(metrixConfig);
 ```
 
 ### Limitation in number of events to upload
@@ -80,7 +82,9 @@ Metrix.DisableLocationListening();
 Using the following function, you can specify that each time the number of your buffered events reaches the threshold, the Metrix SDK should send them to the server:
 
 ```csharp
-Metrix.SetEventUploadThreshold(50);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadThreshold(50);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 events.)
@@ -90,7 +94,9 @@ Metrix.SetEventUploadThreshold(50);
 Using this function, you can specify the maximum number of out-going events per request as shown below:
 
 ```csharp
-Metrix.SetEventUploadMaxBatchSize(100);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadMaxBatchSize(100);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -100,7 +106,9 @@ Metrix.SetEventUploadMaxBatchSize(100);
 Using the following function, you can specify the maximum number of events that are buffered in the SDK (for example, if the user's device loses internet connection, the events will be buffered in the library until there is a chance to send the events and empty the buffer) and if the number of buffered events in the library passes this amount, old events are destroyed by SDK to make space for new events:
 
 ```csharp
-Metrix.SetEventMaxCount(1000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventMaxCount(1000);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 100 events.)
@@ -110,7 +118,9 @@ Metrix.SetEventMaxCount(1000);
 By using this function, you can specify the timeout period of requests for sending events:
 
 ```csharp
-Metrix.SetEventUploadPeriodMillis(30000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetEventUploadPeriodMillis(30000);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 seconds.)
@@ -120,7 +130,9 @@ Metrix.SetEventUploadPeriodMillis(30000);
 Using this function, you can specify the limit of session length in your application in unit of miliseconds. For example, if this value is 10,000 and the user interacts with the application for 70 seconds, Metrix calculates this interaction as seven sessions.
 
 ```csharp
-Metrix.SetSessionTimeoutMillis(1800000);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionTimeoutMillis(1800000);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is 30 minutes.)
@@ -130,7 +142,9 @@ Metrix.SetSessionTimeoutMillis(1800000);
 Note that you should set this value to `false` before the release of your application:
 
 ```csharp
-Metrix.EnableLogging(true);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.EnableLogging(true);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
@@ -140,7 +154,9 @@ Metrix.EnableLogging(true);
 Using this function, you can specify what level of logs to be printed in `logcat`, for example, the following command will display all logs except `VERBOSE` in `logcat`:
 
 ```csharp
-Metrix.SetLogLevel(3);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetLogLevel(3);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is `Log.INFO`.)
@@ -161,10 +177,136 @@ ASSERT = 7;
 Using this function, you can specify whether when the application is closed, all events buffered in the device, should be sent or not:
 
 ```csharp
-Metrix.SetFlushEventsOnClose(false);
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetFlushEventsOnClose(false);
+Metrix.OnCreate(metrixConfig);
 ```
 
 (The default value is true.)
+
+### Pre-installed trackers
+
+If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetDefaultTracker("trackerToken");
+Metrix.OnCreate(metrixConfig);
+```
+
+### Sdk signature
+
+An account manager must activate the Metrix SDK Signature.
+
+If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
+
+An App Secret is set by calling setAppSecret on your config instance:
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetAppSecret(secretId, info1, info2, info3, info4);
+Metrix.OnCreate(metrixConfig);
+```
+
+### Separation based on app stores
+
+If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetStore("store name");
+Metrix.OnCreate(metrixConfig);
+```
+
+### Metrix device identifier
+For each device with your app installed on it, our backend generates a unique Metrix device identifier (known as an mxuid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```csharp
+void metrixUserId(string metrixUserId) {
+  //do any thing with metrix user id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetUserIdDelegate(metrixUserId);
+Metrix.OnCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+**Note:** Information about the adid is only available after our backend tracks the app instal. It is not possible to access the adid value before the SDK has been initialized and the installation of your app has been successfully tracked.
+
+
+### Metrix session identifier
+For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
+
+```csharp
+void metrixSessionId(string metrixSessionId) {
+  //do any thing with metrix session id
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetSessionIdDelegate(metrixSessionId);
+Metrix.OnCreate(metrixConfig);
+```
+
+**Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
+
+### uninstall tracking
+
+Metrix’s app uninstall tracking relies on silent push notifications to determine if an app is installed on a device. Developer instructions for configuring your app for uninstall tracking can be found below.
+
+**Note:** You must configure your app for push notifications through Firebase Cloud Messaging (FCM). Google Cloud Messaging (GCM) is not supported.
+
+#### Find your FCM legacy server key
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select CLOUD MESSAGING
+
+3\. Locate your `legacy Server key` and `sender id` token
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+#### Add your FCM legacy server key and sender id to your Metrix account
+
+In the Metrix dashboard
+
+1\. Navigate to your app and select your app settings
+
+2\. Select Push configuration
+
+3\. Enter or paste your FCM legacy server key into the Legacy Server Key field and FCM sender id into Sender Id field
+
+4\. Select Save
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+#### Find your Firebase APP ID
+In your Firebase console
+
+1\. Select the settings (gear) icon > Project settings
+
+2\. Select General
+
+3\. Locate your `App ID` token
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+4\. Configure the Metrix SDK to receive your app's push notification token
+
+```csharp
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetFirebaseAppId("your firebase app id");
+Metirx.OnCreate(metrixConfig);
+```
+
+5\. Open the `mainTemplate.gradle` file of your app and find the `dependencies` block. Add the following line:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:17.6.0'
+```
+
+**Note:** Integration with Metrix SDK 0.14.0 or above
 
 ### Current session number
 
@@ -192,7 +334,7 @@ The input of this function is String.
 If your users can generate revenue by tapping on advertisements or making in-app purchases, you can track those revenues too with events. You can also add an optional order ID to avoid tracking duplicate revenues. By doing so, the last ten order IDs will be remembered and revenue events with duplicate order IDs are skipped. This is especially useful for tracking in-app purchases. You can see an example below where a tap is worth 12,000 IRR:
 
 ```csharp
-Metrix.NewRevenue("my_event_slug", 12000, 0, "2");
+Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 ```
 
 The first parameter is the slug you get from the dashboard.
@@ -205,30 +347,53 @@ The third parameter is the currency of this event. If you do not set the value, 
 
 The fourth parameter is your order number.
 
-### Enable the process of storing the user flow
+## Deep linking
 
-Using this function, you can inform the Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
+### Deep linking Overview
+
+If you are using Metrix tracker URLs with deeplinking enabled, it is possible to receive information about the deeplink URL and its content. Users may interact with the URL regardless of whether they have your app installed on their device (standard deep linking scenario) or not (deferred deep linking scenario). In the standard deep linking scenario, the Android platform natively offers the possibility for you to receive deep link content information. The Android platform does not automatically support deferred deep linking scenario; in this case, the Metrix SDK offers the mechanism you need to get the information about the deep link content.
+
+### Standard deep linking scenario
+
+برای پیاده سازی سناریو استاندارد می‌توانید از  [این](https://github.com/metrixorg/UnityDeeplinks) کتابخانه استفاده کنید، همچنین یک برنچ نمونه برای پیاده سازی سناریو استاندارد دیپ‌لینک در [اینجا](https://github.com/metrixorg/MetrixSDK-UnitySample/tree/deeplink) وجود دارد.
+
+### Deferred deep linking scenario
+
+Deferred deeplinking scenario occurs when a user clicks on an Metrix tracker URL with a `deep_link` parameter contained in it, but does not have the app installed on the device at click time. When the user clicks the URL, they will be redirected to the Play Store to download and install your app. After opening it for the first time, `deep_link` parameter content will be delivered to your app.
+
+The Metrix SDK opens the deferred deep link by default. There is no extra configuration needed.
+
+#### Deferred deep linking callback
+
+If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
 
 ```csharp
-Metrix.ScreenDisplayed("First Screen");
+void deferredDeeplink(string deeplink) {
+  //do any thing with deferred deeplink
+}
+
+MetrixConfig metrixConfig = new MetrixConfig(yourAppId);
+metrixConfig.SetShouldLaunchDeeplink(true);
+metrixConfig.SetDeferredDeeplinkDelegate(deferredDeeplink);
+Metrix.OnCreate(metrixConfig);
 ```
 
-### Pre-installed trackers
+After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the delegate and expect the `boolean` set value from you. This value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).
 
-If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
+If you set `true`, we will launch it, triggering the scenario described in the Standard deep linking scenario chapter. If you do not want the SDK to launch the activity, set `false` from the `SetShouldLaunchDeeplink` method, and (based on the deep link content) decide on your own what to do next in your app.
+
+### Reattribution via deeplinks
+
+Metrix enables you to run re-engagement campaigns with deeplinks. For more information.
+
+If you are using this feature, you need to make one additional call to the Metrix SDK in your app for us to properly reattribute your users.
+
+Once you have received the deeplink content in your app, add a call to the `Metrix.AppWillOpenUrl(Uri)` method. By making this call, the Metrix SDK will send information to the Metrix backend to check if there is any new attribution information inside of the deeplink. If your user is reattributed due to a click on the Metrix tracker URL with deeplink content.
+
+Here's how the call to `Metrix.AppWillOpenUrl(Uri)` should look:
 
 ```csharp
-Metrix.SetDefaultTracker("trackerToken");
+void onDeeplink(string deeplink) {
+  Metrix.AppWillOpenUrl(deeplink);
+}
 ```
-
-### Sdk signature
-
-An account manager must activate the Metrix SDK Signature.
-
-If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
-
-An App Secret is set by calling setAppSecret on your config instance:
-```csharp
-Metrix.SetAppSecret(secretId, info1, info2, info3, info4);
-```
-
