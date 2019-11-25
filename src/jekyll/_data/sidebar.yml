@@ -58,3 +58,6 @@ fa:
 
       - name: Flutter
         link: /sdk/flutter
+
+      - name: PWA
+        link: /sdk/pwa
