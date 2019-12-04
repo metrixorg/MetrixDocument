@@ -30,7 +30,7 @@ allprojects{
 2\. Add the following library to the `dependencies` section of your `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.13.0'
+implementation 'ir.metrix:metrix:0.14.1'
 ```
 
 3\. Add the following settings to your project's `Proguard` file:
@@ -435,6 +435,38 @@ Metrix.onCreate(metrixConfig);
 ```
 **Note:** You can only make this call in the Metrix SDK in v0.12.0 and above.
 
+### Get User attribution
+
+In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:
+
+```java
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConifg.setOnAttributionChangedListener(new OnAttributionChangedListener() {
+    @Override
+      public void onAttributionChanged(AttributionModel attributionModel) {
+          //TODO
+       }
+    });
+Metrix.onCreate(metrixConfig);
+```
+
+Here is a quick summary of `AttributionModel` properties:
+
+`attributionModel.getAcquisitionAd()` : The creative/ad grouping level of the current attribution.
+
+`attributionModel.getAcquisitionAdSet()`: The adGroup/adSet grouping level of the current attribution.
+
+`attributionModel.getAcquisitionCampaign()`: The campaign grouping level of the current attribution.
+
+`attributionModel.getAcquisitionSource()`: The network/source grouping level of the current attribution.
+
+`attributionModel.getAttributionStatus()`: Specifies the status of the user in the campaign and returns only the four values below:
+
+1. `ATTRIBUTED`
+2. `NOT_ATTRIBUTED_YET`
+3. `ATTRIBUTION_NOT_NEEDED`
+4. `UNKNOWN`
+
 ### uninstall tracking
 
 Metrix’s app uninstall tracking relies on silent push notifications to determine if an app is installed on a device. Developer instructions for configuring your app for uninstall tracking can be found below.
@@ -575,36 +607,6 @@ Using this function, you can read the `screenFlow` value in Metrix:
 ```java
 Metrix.getInstance().isScreenFlowsAutoFill();
 ```
-
-### Get User attribution
-
-In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:
-
-```java
-Metrix.getInstance().setOnAttributionChangedListener(new OnAttributionChangedListener() {
-    @Override
-      public void onAttributionChanged(AttributionModel attributionModel) {
-          //TODO
-       }
-    });
-```
-
-Here is a quick summary of `AttributionModel` properties:
-
-`attributionModel.getAcquisitionAd()` : The creative/ad grouping level of the current attribution.
-
-`attributionModel.getAcquisitionAdSet()`: The adGroup/adSet grouping level of the current attribution.
-
-`attributionModel.getAcquisitionCampaign()`: The campaign grouping level of the current attribution.
-
-`attributionModel.getAcquisitionSource()`: The network/source grouping level of the current attribution.
-
-`attributionModel.getAttributionStatus()`: Specifies the status of the user in the campaign and returns only the four values below:
-
-1. `ATTRIBUTED`
-2. `NOT_ATTRIBUTED_YET`
-3. `ATTRIBUTION_NOT_NEEDED`
-4. `UNKNOWN`
 
 ## Deep linking
 
