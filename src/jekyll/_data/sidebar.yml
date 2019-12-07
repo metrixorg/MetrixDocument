@@ -1,6 +1,6 @@
 en:
   - name: SDK Documentation
-    icon: m-sdk
+    icon: picon-sdk
     children:
       - name: iOS
         link: /en/sdk/ios
@@ -9,7 +9,7 @@ en:
         link: /en/sdk/android
 fa:
   - name: سوالات متداول
-    icon: m-help
+    icon: picon-help
     children:
       - name: سوالات عمومی
         link: /faq/general-questions
@@ -42,7 +42,7 @@ fa:
         link: /faq/s2s-integration
 
   - name: مستندات فنی
-    icon: m-sdk
+    icon: picon-sdk
     children:
       - name: iOS
         link: /sdk/ios
