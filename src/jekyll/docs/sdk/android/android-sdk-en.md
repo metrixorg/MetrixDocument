@@ -674,7 +674,8 @@ The Metrix SDK opens the deferred deep link by default. There is no extra config
 If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
 
 ```java
-Metrix.getInstance().setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
     @Override
     public boolean launchReceivedDeeplink(Uri deeplink) {
         // ...
@@ -685,6 +686,7 @@ Metrix.getInstance().setOnDeeplinkResponseListener(new OnDeeplinkResponseListene
         }
     }
 });
+Metrix.onCreate(metrixConfig);
 ```
 
 After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the listener and expect the `boolean` return value from you. This return value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).

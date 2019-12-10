@@ -664,7 +664,8 @@ protected void onNewIntent(Intent intent) {
 اگر شما قصد دارید که سناریو deferred را کنترل کنیداز طریق کالبک زیر می‌توانید.
 
 ```java
-Metrix.getInstance().setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
+MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
+metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
     @Override
     public boolean launchReceivedDeeplink(Uri deeplink) {
         // ...
@@ -675,6 +676,7 @@ Metrix.getInstance().setOnDeeplinkResponseListener(new OnDeeplinkResponseListene
         }
     }
 });
+Metrix.onCreate(metrixConfig);
 ```
 
 بعد از این که متریکس اطلاعات دیپ‌لینک را از بکند خود دریافت کرد محتوای آن را به کالبک بالا پاس میدهد اگر خروجی متد `lunchReceivedDeeplink` مقدار `true` باشد متریکس به صورت اتوماتیک سناریو استاندارد را اجرا میکند ولی اگر مقدار خروجی متد `false` باشد متریکس فقط اطلاعات را در این کالبک قرار میدهد تا شما بر اساس آن اکشن مورد نظر خود را انجام دهید.
