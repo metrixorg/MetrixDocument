@@ -1,34 +1,33 @@
 {
-  "name": "frasco",
-  "version": "0.9.2",
-  "description": "Jekyll starter project including full setup for gulp, Sass, Autoprefixer, PostCSS, webpack, imagemin, Browsersync etc.",
+  "name": "metrix-document",
+  "version": "1.0.0",
+  "description": "Metrix Documents",
   "main": "gulpfile.js",
   "scripts": {
-    "preinstall": "bundle install --path vendor/bundle",
     "start": "gulp",
-    "build": "gulp build --jekyllEnv=production --mode=production",
+    "build": "gulp build --mode=production",
     "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ixkaito/frasco.git"
+    "url": "https://github.com/metrixorg/MetrixDocument"
   },
   "keywords": [
-    "Autoprefixer",
-    "Browsersync",
-    "gulp",
-    "imagemin",
-    "Jekyll",
-    "PostCSS",
-    "Sass",
-    "Webpack"
+    "Metrix",
+    "C#",
+    "Java",
+    "Javascript",
+    "Dart",
+    "Flutter",
+    "Kotlin",
+    "Objective-C",
+    "Swift"
   ],
-  "author": "Kite",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ixkaito/frasco/issues"
+    "url": "https://github.com/metrixorg/MetrixDocument/issues"
   },
-  "homepage": "https://ixkaito.github.io/frasco",
+  "homepage": "https://docs.metrix.ir/",
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
