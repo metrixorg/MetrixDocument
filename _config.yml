@@ -5,7 +5,7 @@ title: 'Frasco: Jekyll Starter Project'
 email: info@metrix.ir
 description: >-
   Metrix is a mobile marketing measurement platform that unifies mobile attribution and analytics into one powerful platform.
-baseurl: '/docs' # the subpath of your site, e.g. /docs
+baseurl: '' # the subpath of your site, e.g. /docs
 url: 'https://metrix.ir'
 twitter_username: Metrix_ir
 github_username: metrixorg
