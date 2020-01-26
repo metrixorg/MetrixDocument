@@ -20,17 +20,17 @@ toc: true # table of contents
 
 این پارامترها در فهرست زیر قابل مشاهده هستند.هر کدام از این پارامترها را به دلخواه خودتان می‌توانید انتخاب کنید و آنها را به صورت ماکرو تو urlاتون اضافه کنید تا متریکس بتواند برای شما تو کال‌بک به سرور شما ارسال کند :
 
-* android_id شناسه دستگاه اندروید
-* gps_adid شناسه تبلیغاتی گوگل پلی سرویس
-* device_name مدل دستگاه
-* device_manufacturer برند دستگاه
-* installed_at زمان نصب
-* ip_address آی‌پی کاربر
-* tracker_code شناسه ترکر
-* network_name نام شبکه تبلیغاتی
-* campaign_name نام کمپین
-* adgroup_name نام گروه تبلیغاتی
-* creative_name نام خلاقه
+* `android_id` : شناسه دستگاه اندروید
+* `gps_adid` : شناسه تبلیغاتی گوگل پلی سرویس
+* `device_name` : مدل دستگاه
+* `device_manufacturer` : برند دستگاه
+* `installed_at` : زمان نصب
+* `ip_address` : آی‌پی کاربر
+* `tracker_code` : شناسه ترکر
+* `network_name` : نام شبکه تبلیغاتی
+* `campaign_name` : نام کمپین
+* `adgroup_name` : نام گروه تبلیغاتی
+* `creative_name` : نام خلاقه
 
  
 
