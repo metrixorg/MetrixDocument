@@ -25,7 +25,7 @@ toc: true # table of contents
 
 [مستندات]({{ '/sdk' | relative_url }})
 
-<img src= "{{ '/image/sdk-signature-dashboard.jpg' | relative_url }}" alt= "sdk signature" />
+<img src= "{{ '/images/sdk-signature-dashboard.jpg' | relative_url }}" alt= "sdk signature" />
 
 ## داده‌های مربوط به امضای SDK چطور در داشبورد من ظاهر می شوند؟
 
