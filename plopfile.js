@@ -1,9 +1,17 @@
 const packageJson = require('./package.json');
 
 module.exports = function(plop) {
-  plop.setHelper('path-remove-last-slash', function(text) {
-    if (text.endsWith('/')) return text.substring(0, text.length - 1);
-    return text;
+  plop.setHelper('kebabWithSlash', text => {
+    const result = (text.endsWith('/') ? text.substring(0, text.length - 1) : text)
+      .split('/')
+      .map(str => {
+        return str
+          .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+          .map(x => x.toLowerCase())
+          .join('-');
+      })
+      .join('/');
+    return result;
   });
 
   plop.setGenerator('markdown-page', {
@@ -18,7 +26,7 @@ module.exports = function(plop) {
       {
         name: 'faTitle',
         type: 'input',
-        message: 'Title of the article in persian:',
+        message: 'Title of the article in Persian:',
       },
       {
         name: 'hasEnglish',
@@ -29,14 +37,14 @@ module.exports = function(plop) {
       {
         name: 'enTitle',
         type: 'input',
-        message: 'Title of the article in persian:',
+        message: 'Title of the article in English:',
         when: data => data.hasEnglish,
       },
     ],
     actions: data => {
       const actionMarkdownFile = lang => ({
         type: 'add',
-        path: `src/jekyll/docs/{{kebabCase path}}/index-${lang}.md`,
+        path: `src/jekyll/docs/{{kebabWithSlash path}}/index-${lang}.md`,
         templateFile: 'plop-templates/markdown-page.hbs',
         data: { lang, title: lang === 'fa' ? data.faTitle : data.enTitle },
       });
