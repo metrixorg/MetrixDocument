@@ -2,6 +2,7 @@ backend:
   name: github
   repo: metrixorg/MetrixDocument
 media_folder: 'src/jekyll/images'
+public_folder: '/images'
 collections:
   - name: 'data'
     label: 'Data'
@@ -67,3 +68,47 @@ collections:
                       - label: Name
                         name: name
                         widget: string
+  - name: faq
+    label: FAQ
+    delete: true
+    create: true
+    folder: src/jekyll/docs/faq
+    identifier_field: permalink
+    summary: '{{fields.title}} {{fields.permalink}}'
+    slug: '{{fields.permalink}}-{{fields.lang}}'
+    path: '{{fields.permalink}}'
+    preview_path: '/faq/{{fields.permalink}}'
+    editor:
+      preview: false
+    fields:
+      - name: layout
+        label: Layout
+        widget: select
+        options: ['classic-docs', 'platform-details']
+        requied: true
+        default: classic-docs
+      - name: title
+        label: Title
+        widget: string
+        requied: true
+      - name: toc
+        label: Table of Contents
+        widget: boolean
+        default: true
+        requied: true
+      - name: permalink
+        label: Permalink
+        widget: string
+        requied: true
+        hint: 'Url of the page. Ex. /sdk/android/'
+        pattern: ['^\/([a-z0-9\-]*[a-z0-9]+\/)*([a-z0-9\-]*[a-z0-9]+)\/$', 'Must start and end with "/". Ex. /sdk/android/']
+      - name: lang
+        label: Language
+        widget: select
+        options: ['fa', 'en']
+        requied: true
+        default: fa
+      - name: body
+        label: Body
+        widget: markdown
+        requied: true
