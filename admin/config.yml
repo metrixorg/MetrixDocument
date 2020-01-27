@@ -76,7 +76,6 @@ collections:
     identifier_field: permalink
     summary: '{{fields.title}} {{fields.permalink}}'
     slug: '{{fields.permalink}}-{{fields.lang}}'
-    path: '{{fields.permalink}}'
     preview_path: '/faq/{{fields.permalink}}'
     editor:
       preview: false
