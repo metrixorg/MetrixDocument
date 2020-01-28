@@ -74,7 +74,7 @@ collections:
     create: true
     folder: src/jekyll/docs/faq
     identifier_field: permalink
-    summary: '{{fields.title}} {{fields.permalink}}'
+    summary: '{{fields.title}} •• {{fields.lang}} •• {{fields.permalink}}'
     slug: '{{fields.permalink}}-{{fields.lang}}'
     preview_path: '/faq/{{fields.permalink}}'
     editor:
@@ -116,10 +116,9 @@ collections:
     create: true
     folder: src/jekyll/docs/sdk
     identifier_field: permalink
-    summary: |-
-      {{fields.title}}
-      {{fields.permalink}}
-    slug: '{{fields.permalink}}-{{fields.lang}}'
+    summary: '{{fields.title}} •• {{fields.lang}} •• {{fields.permalink}}'
+    # slug: '{{fields.permalink}}-{{fields.lang}}'
+    path: '{{fields.platform}}/{{fields.permalink}}-{{fields.lang}}'
     preview_path: '/sdk/{{fields.permalink}}'
     editor:
       preview: false
@@ -128,6 +127,12 @@ collections:
         label: Layout
         widget: hidden
         requied: true
+        default: classic-docs
+      - name: platform
+        label: Platform
+        widget: select
+        requied: true
+        options: ['android', 'flutter', 'ios', 'pwa', 'react-native', 'unity']
         default: classic-docs
       - name: title
         label: Title
