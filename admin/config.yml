@@ -82,8 +82,51 @@ collections:
     fields:
       - name: layout
         label: Layout
+        widget: hidden
+        requied: true
+        default: classic-docs
+      - name: title
+        label: Title
+        widget: string
+        requied: true
+      - name: toc
+        label: Table of Contents
+        widget: boolean
+        default: true
+        requied: true
+      - name: permalink
+        label: Permalink
+        widget: string
+        requied: true
+        hint: 'Url of the page. Ex. /sdk/android/'
+        pattern: ['^\/([a-z0-9\-]*[a-z0-9]+\/)*([a-z0-9\-]*[a-z0-9]+)\/$', 'Must start and end with "/". Ex. /sdk/android/']
+      - name: lang
+        label: Language
         widget: select
-        options: ['classic-docs', 'platform-details']
+        options: ['fa', 'en']
+        requied: true
+        default: fa
+      - name: body
+        label: Body
+        widget: markdown
+        requied: true
+  - name: sdk
+    label: SDK Docs
+    delete: true
+    create: true
+    folder: src/jekyll/docs/sdk
+    identifier_field: permalink
+    summary: |-
+      {{fields.title}}
+      {{fields.permalink}}
+    slug: '{{fields.permalink}}-{{fields.lang}}'
+    preview_path: '/sdk/{{fields.permalink}}'
+    editor:
+      preview: false
+    fields:
+      - name: layout
+        label: Layout
+        widget: hidden
         requied: true
         default: classic-docs
       - name: title
