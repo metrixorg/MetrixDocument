@@ -91,7 +91,7 @@ collections:
         requied: true
       - name: toc
         label: Table of Contents
-        widget: boolean
+        widget: hidden
         default: true
         requied: true
       - name: permalink
