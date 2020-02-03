@@ -3,6 +3,7 @@ backend:
   repo: metrixorg/MetrixDocument
 media_folder: 'src/jekyll/images'
 public_folder: '/images'
+publish_mode: editorial_workflow
 collections:
   - name: 'data'
     label: 'Data'
@@ -76,7 +77,7 @@ collections:
     identifier_field: permalink
     summary: '{{fields.title}} •• {{fields.lang}} •• {{fields.permalink}}'
     slug: '{{fields.permalink}}-{{fields.lang}}'
-    preview_path: '/faq/{{fields.permalink}}'
+    preview_path: '/{{fields.permalink}}'
     editor:
       preview: false
     fields:
@@ -119,7 +120,7 @@ collections:
     summary: '{{fields.title}} •• {{fields.lang}} •• {{fields.permalink}}'
     # slug: '{{fields.permalink}}-{{fields.lang}}'
     path: '{{fields.platform}}/{{fields.permalink}}-{{fields.lang}}'
-    preview_path: '/sdk/{{fields.permalink}}'
+    preview_path: '/{{fields.permalink}}'
     editor:
       preview: false
     fields:
