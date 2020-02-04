@@ -2,7 +2,7 @@
 layout: classic-docs
 title: مدیریت ترکرها
 toc: true
-permalink: /faq/attribution/index/
+permalink: /faq/attribution/
 lang: fa
 ---
 # راهنمای گام به گام ساخت ترکر در داشبورد متریکس
