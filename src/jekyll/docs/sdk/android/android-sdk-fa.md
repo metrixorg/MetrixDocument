@@ -30,7 +30,7 @@ allprojects{
 ۲. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.14.4'
+implementation 'ir.metrix:metrix:0.14.6'
 ```
 
 ۳. تنظیمات زیر را به `Proguard` پروژه خود اضافه کنید:
@@ -219,7 +219,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+
         MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
 
         Metrix.onCreate(metrixConfig);

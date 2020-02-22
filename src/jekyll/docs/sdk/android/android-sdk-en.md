@@ -30,7 +30,7 @@ allprojects{
 2\. Add the following library to the `dependencies` section of your `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.14.4'
+implementation 'ir.metrix:metrix:0.14.6'
 ```
 
 3\. Add the following settings to your project's `Proguard` file:
@@ -199,7 +199,7 @@ You need to initialize the Metrix SDK in `onCreate` method of your `Application`
 1\. Create a class that inherits from the `Application` class:
 
 <img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Class.png"/>  
-  
+
 2\. Open the `AndriodManifest.xml` file and go to`<application>` tag.
 3\. Using `Attribute` subclass, add `Application` to `AndroidManifest.xml` file:
 
@@ -212,7 +212,7 @@ You need to initialize the Metrix SDK in `onCreate` method of your `Application`
 ```
 
 <img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Manifest.png">  
-  
+
 4\. In `onCreate` method of your `Application` class, initialize Metrix according to the codes below:
 
 ```java
