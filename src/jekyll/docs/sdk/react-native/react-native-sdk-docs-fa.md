@@ -40,56 +40,6 @@ react-native link @metrixorg/react-native-metrix
 
 (دو permission دوم اختیاری است)
 
-## دریافت اطلاعات Install Referrer
-
-برای افزایش دقت تشخیص اتریبیوشن نصب‌های اپلیکیشن شما، متریکس نیازمند اطلاعاتی درباره `referrer` نصب اپلیکیشن است. این اطلاعات می‌تواند از طریق سرویس ارائه شده توسط کتابخانه **Google Play Referrer API** و یا دریافت **Google Play Store intent** با استفاده از یک **broadcast receiver** به دست آید.
-
-**نکته مهم:** سرویس **Google Play Referrer API** به تازگی توسط گوگل و با هدف فراهم کردن دقیق یک راه امن و مطمئن برای دریافت اطلاعات `referrer` نصب ارائه شده و این قابلیت را به سرویس‌دهندگان پلتفرم‌های اتریبیوشن می‌دهد تا با تقلب click injection مبازه کنند. به همین دلیل متریکس نیز به همه توسعه‌دهندگان استفاده از این سرویس را توصیه می‌کند. در مقابل، روش **Google Play Store intent** یک مسیر با ضریب امنیت کمتر برای به‌دست آوردن اطلاعات `referrer`نصب ارائه می‌دهد که البته به صورت موازی با **Google Play Referrer API** به طور موقت پشتیبانی می‌شود،اما در آینده‌ای نزدیک منسوخ خواهد شد.
-
-### تنظیمات Google Play Store intent
-
-برای دریافت intent `INSTALL_REFERRER` از Google Play باید یک `broadcast receiver` آن را دریافت کند، اگر از `broadcast receiver` سفارشی خود استفاده نمی‌کنید میتوانید با قرار دادن `receiver` زیر در تگ `application` فایل `AndroidManifest.xml` آن را دریافت کنید.
-
-```xml
-<receiver
-android:name="ir.metrix.sdk.MetrixReferrerReceiver"
-android:permission="android.permission.INSTALL_PACKAGES"
-android:exported="true" >
-  <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-  </intent-filter>
-</receiver>
-
-```
-
-چنان چه چندین کتابخانه برای دریافت intent `INSTALL_REFERRER` دارید، می‌توانید با قرار دادن کلاس سفارشی خود در `receiver` مانند زیر عمل کنید:
-
-```xml
-<receiver
-android:name="com.your.app.InstallReceiver"
-android:permission="android.permission.INSTALL_PACKAGES"
-android:exported="true" >
-  <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-  </intent-filter>
-</receiver>
-```
-
-و کد کلاس `InstallReceiver` به صورت زیر می‌شود:
-
-```java
-public class InstallReceiver extends BroadcastReceiver {
-@Override
-public void onReceive(Context context, Intent intent) {
-  // Metrix
-  new MetrixReferrerReceiver().onReceive(context, intent);
-
-  // Google Analytics
-  new CampaignTrackingReceiver().onReceive(context, intent);
- }
-}
-```
-
 ## راه‌اندازی و پیاده‌سازی sdk در اپلیکیشن اندروید:
 
 ### تنظیمات اولیه در اپلیکیشن:
@@ -496,11 +446,11 @@ Metrix.onCreate(metrixConfig);
 پلتفرم اندروید به صورت اتماتیک سناریو deferred را پشتیبانی نمیکند در این صورت متریکس سناریو مخصوص به خود را دارد تا بتواند اطلاعات دیپ‌لینک را به اپلیکیشن ارسال کند.
 ### سناریو استاندارد
 
-برای پیاده سازی سناریو استاندارد می‌توانید از  [این](https://reactnavigation.org/docs/en/deep-linking.html) کتابخانه استفاده کنید، 
+برای پیاده سازی سناریو استاندارد می‌توانید از  [این](https://reactnavigation.org/docs/en/deep-linking.html) کتابخانه استفاده کنید،
 
 ### سناریو deferred
 
-این سناریو زمانی رخ می‌هد که کاربر روی دیپ‌لینک کلیک می‌کند ولی اپلیکیشن شما را در زمانی که کلیک کرده روی دستگاه خود نصب نکرده است. وقتی کاربر کلیک کرد به گوگل پلی استور هدایت می‌شود تا اپلیکیشن شما را نصب کند وقتی اپلیکیشن شما را نصب کرد و برای اولین بار آن را باز کرد اطلاعات دیپ‌لینک به اپلیکیشن داده می‌شود. 
+این سناریو زمانی رخ می‌هد که کاربر روی دیپ‌لینک کلیک می‌کند ولی اپلیکیشن شما را در زمانی که کلیک کرده روی دستگاه خود نصب نکرده است. وقتی کاربر کلیک کرد به گوگل پلی استور هدایت می‌شود تا اپلیکیشن شما را نصب کند وقتی اپلیکیشن شما را نصب کرد و برای اولین بار آن را باز کرد اطلاعات دیپ‌لینک به اپلیکیشن داده می‌شود.
 متریکس به صورت پیش‌فرض سناریو deferred را پشتیبانی نمی‌کند و نیاز به تنظیم دارد.
 اگر شما قصد دارید که سناریو deferred را کنترل کنیداز طریق کالبک زیر می‌توانید.
 ```javascript
