@@ -16,10 +16,14 @@ toc: true # table of contents
 npm install @metrixorg/react-native-metrix --save
 react-native link @metrixorg/react-native-metrix
 ```
-
 ## نصب به صورت دستی
 
 #### iOS
+در صورتی که از CocoaPods استفاده می‌کنید و `react-native link` به درستی کار نکرد، خط زیر را به `Podfile` خود اضافه کرده و دستور `pod install` را اجرا کنید:
+```
+pod 'react-native-metrix', :path => '../node_modules/@metrixorg/react-native-metrix'
+```
+در صورتی که از CocoaPods استفاده نمی‌کنید:
 
 1. در XCode در قسمت `project navigator` روی `Libraries` راست کلید نمایید سپس `Add files to [your project's name]` را کلیک کنید.
 2. به `node_modules` رفته و فایل `@metrixorg/react-native-metrix/ios/RCTMetrixReactNative.xcodeproj` را اضافه کنید.
