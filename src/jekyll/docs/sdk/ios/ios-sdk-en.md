@@ -13,7 +13,7 @@ toc: true # table of contents
 If you're using [CocoaPods](https://cocoapods.org), you can add the following line to your Podfile:
 
 ```ruby
-pod 'MetrixSdk', '1.1.1'
+pod 'MetrixSdk', '1.2.0'
 ```
 
 You can also choose to integrate the Metrix SDK by adding it to your project as a framework.

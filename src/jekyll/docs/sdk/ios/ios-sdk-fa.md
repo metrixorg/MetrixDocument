@@ -19,7 +19,7 @@ toc: true # table of contents
 اگر از CocoaPods استفاده می‌کنید، می‌توانید خط زیر را به Podfile خود اضافه کنید:
 
 ```ruby
-pod 'MetrixSdk', '1.1.1'
+pod 'MetrixSdk', '1.2.0'
 ```
 
 همچنین شما می‌توانید SDK متریکس را به عنوان یک framework به پروژه خود اضافه کنید.
