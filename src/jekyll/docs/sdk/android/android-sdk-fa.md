@@ -5,504 +5,73 @@ lang: fa
 permalink: /sdk/android/index.html
 toc: true # table of contents
 ---
-
-## ویدیوی آموزش پیاده‌سازی SDK
-
-<div id="4620389899"><script type="text/JavaScript" src="https://www.aparat.com/embed/DLr4Q?data[rnddiv]=4620389899&data[responsive]=yes"></script></div>
-
-## تنظیمات اولیه در پروژه
-
-۱. ابتدا تنظیمات زیر را در قسمت `repositories` فایل `gradle` کل پروژه اضافه کنید:
-
+<hr/>
+<br/>
+# راه‌اندازی کتابخانه در اپلیکیشن اندروید
+<br/>
+۱. کتابخانه را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
 ```groovy
-allprojects{
-    repositories {
-
-    ...
-
-        maven {
-            url 'https://dl.bintray.com/metrixorg/maven'
-        }
-    }
-}
+implementation 'ir.metrix:metrix:0.14.7'
 ```
 
-۲. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
-
-```groovy
-implementation 'ir.metrix:metrix:0.14.6'
-```
-
-۳. تنظیمات زیر را به `Proguard` پروژه خود اضافه کنید:
-
-```
--keepattributes Signature
--keepattributes *Annotation*
--keepattributes EnclosingMethod
--keepattributes InnerClasses
-
--keepclassmembers enum * { *; }
--keep class **.R$* { *; }
-
-#Metrix
--keep class ir.metrix.sdk.** { *; }
-
-
-# retrofit
-# Retain service method parameters when optimizing.
--keepclassmembers,allowshrinking,allowobfuscation interface * {
-    @retrofit2.http.* <methods>;
-}
-
-# Ignore JSR 305 annotations for embedding nullability information.
--dontwarn javax.annotation.**
-
-# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
--dontwarn kotlin.Unit
-
-# Top-level functions that can only be used by Kotlin.
--dontwarn retrofit2.-KotlinExtensions
-
-# With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
-# and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
--if interface * { @retrofit2.http.* <methods>; }
--keep,allowobfuscation interface <1>
-
-#OkHttp
-# A resource is loaded with a relative path so the package of this class must be preserved.
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
--dontwarn org.codehaus.mojo.animal_sniffer.*
-
-# OkHttp platform used only on JVM and when Conscrypt dependency is available.
--dontwarn okhttp3.internal.platform.ConscryptPlatform
-
-
-
-#Gson
-# Gson specific classes
--dontwarn sun.misc.**
-#-keep class com.google.gson.stream.** { *; }
-
-# Prevent proguard from stripping interface information from TypeAdapterFactory,
-# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
--keep class * implements com.google.gson.TypeAdapterFactory
--keep class * implements com.google.gson.JsonSerializer
--keep class * implements com.google.gson.JsonDeserializer
-#gms
--keep class com.google.android.gms.** { *; }
-
--dontwarn android.content.pm.PackageInfo
-```
-
-۴. متریکس برای تشخیص دستگاه های یکتا از **google advertising id** استفاده می‌کند، برای اینکه متریکس بتواند از این ویژگی استفاده کند باید طبق زیر کتابخانه آن را به قسمت `dependencies` فایل `build.gradle` اضافه کنید:
-
-```groovy
-implementation 'com.google.android.gms:play-services-analytics:16.0.7'
-```
-
-اگر پروژه شما از ورژن قبل‌تر از ورژن ۷ کتابخانه‌ی `play-servicses-analytics` استفاده می‌کند، باید بخش زیر را به تگ `application` فایل `AndroidManifest.xml` خود اضافه کنید
+۲. در فایل `AndroidManifest.xml` اپلیکیشن خود، داخل تگ `application` دستور زیر شامل `AppID` اپلیکیشن خود را قرار دهید:
 
 ```xml
-<meta-data android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
-```
+<application>
+...
+...
 
-۵. برای کتابخانه `Metrix` لازم است تا دسترسی‌های زیر را به فایل `AndroidManifest.xml` اضافه کنید:
-
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!--optional-->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!--optional-->
-```
-
-(دو permission دوم اختیاری است)
-
-## دریافت اطلاعات Install Referrer
-
-برای افزایش دقت تشخیص اتریبیوشن نصب‌های اپلیکیشن شما، متریکس نیازمند اطلاعاتی درباره `referrer` نصب اپلیکیشن است. این اطلاعات می‌تواند از طریق سرویس ارائه شده توسط کتابخانه **Google Play Referrer API** و یا دریافت **Google Play Store intent** با استفاده از یک **broadcast receiver** به دست آید.
-
-**نکته مهم:** سرویس **Google Play Referrer API** به تازگی توسط گوگل و با هدف فراهم کردن دقیق یک راه امن و مطمئن برای دریافت اطلاعات `referrer` نصب ارائه شده و این قابلیت را به سرویس‌دهندگان پلتفرم‌های اتریبیوشن می‌دهد تا با تقلب click injection مبازه کنند. به همین دلیل متریکس نیز به همه توسعه‌دهندگان استفاده از این سرویس را توصیه می‌کند. در مقابل، روش **Google Play Store intent** یک مسیر با ضریب امنیت کمتر برای به‌دست آوردن اطلاعات `referrer`نصب ارائه می‌دهد که البته به صورت موازی با **Google Play Referrer API** به طور موقت پشتیبانی می‌شود،اما در آینده‌ای نزدیک منسوخ خواهد شد.
-
-### تنظیمات Google Play Referrer API
-
-برای استفاده ازین ویژگی Google Play باید کتابخانه زیر را اضافه کنید:
-
-```groovy
-implementation 'com.android.installreferrer:installreferrer:1.0'
-```
-
-همچنین قانون زیر را باید به فایل `Proguard` خود اضافه کنید:
-
-```
--keep public class com.android.installreferrer.** { *; }
-```
-
-### تنظیمات Google Play Store intent
-
-برای دریافت intent `INSTALL_REFERRER` از Google Play باید یک `broadcast receiver` آن را دریافت کند، اگر از `broadcast receiver` سفارشی خود استفاده نمی‌کنید میتوانید با قرار دادن `receiver` زیر در تگ `application` فایل `AndroidManifest.xml` آن را دریافت کنید.
-
-```xml
-<receiver
-android:name="ir.metrix.sdk.MetrixReferrerReceiver"
-android:permission="android.permission.INSTALL_PACKAGES"
-android:exported="true" >
-    <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
-</receiver>
-```
-
-چنان چه چندین کتابخانه برای دریافت intent `INSTALL_REFERRER` دارید، می‌توانید با قرار دادن کلاس سفارشی خود در `receiver` مانند زیر عمل کنید:
-
-```xml
-<receiver
-android:name="com.your.app.InstallReceiver"
-android:permission="android.permission.INSTALL_PACKAGES"
-android:exported="true" >
-    <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
-</receiver>
-```
-
-و کد کلاس `InstallReceiver` به صورت زیر می‌شود:
-
-```java
-public class InstallReceiver extends BroadcastReceiver {
-@Override
-public void onReceive(Context context, Intent intent) {
-    // Metrix
-    new MetrixReferrerReceiver().onReceive(context, intent);
-
-    // Google Analytics
-    new CampaignTrackingReceiver().onReceive(context, intent);
-    }
-}
-```
-
-## راه‌اندازی و پیاده‌سازی sdk در اپلیکیشن اندروید:
-
-### تنظیمات اولیه در اپلیکیشن:
-
-باید کتابخانه متریکس را در کلاس `Application` اندروید `initialize` کنید. اگر از قبل در پروژه خود کلاس `Application` ندارید به شکل زیر این کلاس را ایجاد کنید:
-
-۱. یک کلاس ایجاد کنید که از کلاس `Application` را ارث بری کند:
-
-<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Class.png"/>
-
-۲. فایل `AndriodManifest.xml` اپلیکیشن خود را باز کنید و به تگ `<application>` بروید.
-
-۳. با استفاده از `Attribute` زیر کلاس `Application` خود را در `AndroidManifest.xml` اضافه کنید:
-
-```xml
-<application
-    android:name=“.MyApplication”
-    ... >
+    <meta-data android:name="metrix_application_id" android:value="YOUR-APP_ID"/>
 
 </application>
 ```
-
-۴. در متد `onCreate` کلاس `Application` خود، مطابق قطعه کد زیر sdk متریکس را `initialize` کنید:
-
-```java
-import android.app.Application;
-
-import ir.metrix.sdk.Metrix;
-import ir.metrix.sdk.MetrixConfig;
-
-
-public class MyApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
-
-        Metrix.onCreate(metrixConfig);
-    }
-}
-```
-
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.
 
-### در مورد کلاس اپلیکیشن و initialize کردن در این کلاس
-
-اندروید در کلاس اپلیکیشن به توسعه دهنده این اختیار را می‌دهد که قبل از ساخته شدن هر `Activity` در اپلیکیشن دستوراتی را وارد کند. این موضوع برای کتابخانه متریکس نیز ضروری است، به این دلیل که شمردن `session`ها و همچنین جریان بین `Activity`ها و دیگر امکانات کارایی لازم را داشته باشند و به درستی عمل کنند.
-
-## امکانات کتابخانه متریکس
-
-### ۱. توضیح مفاهیم رویداد (event) و نشست (session)
-
-در هر تعاملی که کاربر با اپلیکیشن دارد، کتابخانه متریکس این تعامل را در قالب یک **رویداد** برای سرور ارسال می‌کند. تعریف کتابخانه متریکس از یک **نشست**، بازه زمانی مشخصی است که کاربر با اپلیکیشن در تعامل است.
-
-در کتابخانه متریکس سه نوع رویداد داریم:
-
-1. **شروع نشست (session_start):** زمان شروع یک نشست.
-2. **پایان نشست (session_stop):‌** زمان پایان یک نشست.
-3. **سفارشی (custom):** وابسته به منطق اپلیکیشن شما و تعاملی که کاربر با اپلیکیشن شما دارد می‌توانید رویدادهای سفارشی خود را در قالبی که در ادامه شرح داده خواهد شد بسازید و ارسال کنید.
-
-**نکته:** برای استفاده از امکانات کتابخانه و صدا زدن متدهایی که کتابخانه در اختیار شما می‌گذارد باید `MetrixClient` را با استفاده از متد `getInstance` دریافت کنید و در ادامه متد مدنظر خود را صدا بزنید.
-
-### ۲. فعال یا غیرفعال کردن ثبت اطلاعات مکان کاربر در رویدادها
-
-می‌توانید با استفاده از دو تابع زیر به کتابخانه متریکس اعلام کنید که در رویدادها اطلاعات مربوط به مکان کاربر را به همراه دیگر اطلاعات ارسال کند یا نکند. (برای اینکه این متد به درستی عمل کند دسترسی‌های اختیاری که بالاتر ذکر شد باید فعال باشند)
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setLocationListening(isLocationListeningEnable);
-Metrix.onCreate(metrixConfig);
-```
-
-### ۳. تعیین سقف تعداد رویدادها برای ارسال به سمت سرور
-
-با استفاده از تابع زیر می‌توانید مشخص کنید که هر موقع تعداد رویدادهای ذخیره شده شما به تعداد مورد نظر شما رسید کتابخانه رویدادها را برای سرور ارسال کند:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setEventUploadThreshold(50);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه ۳۰ رویداد است.)
-
-### ۴. تعیین حداکثر تعداد رویداد ارسالی در هر درخواست
-
-با استفاده از این تابع می‌توانید حداکثر تعداد رویداد ارسالی در هر درخواست را به شکل زیر مشخص کنید:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setEventUploadMaxBatchSize(100);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰ رویداد است.)
-
-### ۵. تعیین تعداد حداکثر ذخیره رویداد در مخزن کتابخانه
-
-با استفاده از تابع زیر می‌توانید مشخص کنید که حداکثر تعداد رویدادهای ذخیر شده در کتابخانه متریکس چقدر باشد (به عنوان مثال اگر دستگاه کاربر اتصال خود به اینترنت را از دست داد رویدادها تا مقداری که شما مشخص می‌کنید در کتابخانه ذخیره خواهند شد) و اگر تعداد رویدادهای ذخیره شده در کتابخانه از این مقدار بگذرد رویدادهای قدیمی توسط sdk نگهداری نشده و از بین می‌روند:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setEventMaxCount(1000);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰۰ رویداد است.)
-
-### ۶. تعیین بازه زمانی ارسال رویدادها به سمت سرور
-
-با استفاده از این تابع می‌توانید مشخص کنید که درخواست آپلود رویدادها بعد از گذشت چند میلی‌ثانیه فرستاده شود:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setEventUploadPeriodMillis(30000);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه ۳۰ ثانیه است.)
-
-### ۷. تعیین بازه زمانی دلخواه برای نشست‌ها
-
-با استفاده از این تابع می‌توانید حد نشست‌ها را در اپلیکیشن خود مشخص کنید که هر نشست حداکثر چند ثانیه محاسبه شود. به عنوان مثال اگر مقدار این تابع را ۱۰۰۰۰ وارد کنید اگر کاربر در اپلیکیشن ۷۰ ثانیه تعامل داشته باشد، کتابخانه متریکس این تعامل را ۷ نشست محاسبه می‌کند.
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setSessionTimeoutMillis(1800000);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه ۳۰ دقیقه است.)
-
-### ۸. فعال کردن مدیریت لاگ‌ها کتابخانه متریکس
-
-توجه داشته باشید که موقع release اپلیکیشن خود مقدار این تابع را false قرار دهید:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.enableLogging(true);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه true است.)
-
-### ۹. تعیین LogLevel
-
-با استفاده از این تابع می‌توانید مشخص کنید که چه سطحی از لاگ‌ها در `logcat` چاپ شود، به عنوان مثال دستور زیر همه‌ی سطوح لاگ‌ها به جز `VERBOSE` در `logcat` نمایش داده شود:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setLogLevel(Log.DEBUG);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه `Log.INFO` است.)
-
-### ۱۰. فعال یا غیرفعال کردن ارسال همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید مشخص کنید که زمانی که اپلیکیشن بسته می‌شود همه رویدادهای ذخیره شده در کتابخانه ارسال شود یا نشود:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setFlushEventsOnClose(false);
-Metrix.onCreate(metrixConfig);
-```
-
-(مقدار پیش‌فرض این تابع در کتابخانه true است.)
-
-
-### ۱۱. مشخص کردن Pre-installed Tracker
-
-با استفاده از این تابع می‌توانید با استفاده از یک `trackerToken` که از پنل آن را دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض را قرار دهید:
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setDefaultTrackerToken(trackerToken);
-Metrix.onCreate(metrixConfig);
-```
-
-### ۱۲. امضاء sdk
-
-اگر شما قابلیت sdk signature در دشبورد خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setAppSecret(secretId, info1, info2, info3, info4);
-Metrix.onCreate(metrixConfig);
-```
-
-### ۱۳. تفکیک بر‌اساس استور های اپلیکیشن
-
-اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و … منتشر کنید، با استفاده از متد زیر می‌توانید مشاهده کنید که کاربر از کدام استور ( مثلا کافه بازار، گوگل پلی، مایکت، اول مارکت و وبسایت ... ) اپلیکیشن را نصب کرده اند و منبع نصب های ارگانیک خود را  شناسایی کنید.
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setStore("store name");
-Metrix.onCreate(metrixConfig);
-```
-
-### ۱۴. شناسه دستگاه‌های متریکس
-
-برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند.
-برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
-            @Override
-            public void onReceiveUserId(String metrixUserId) {
-            sendToyourApi(metrixUserId);    
-            }
-        });
-Metrix.onCreate(metrixConfig);
-```
-**نکته:** این متد از نسخه ۰.۱۲.۰ به بعد قابل استفاده است.
-
-**نکته:** شناسه متریکس زمانی در اختیار شما قرار می‌گیرید که دستگاه توسط سرویس متریکس شناسایی شده باشد.
-
-### ۱۵. شناسه نشست متریکس
-
-sdk متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
-برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
-            @Override
-            public void onReceiveSessionId(String sessionId) {
-            sendToyourApi(sessionId);    
-            }
-        });
-Metrix.onCreate(metrixConfig);
-```
-**نکته:**این متد از نسخه ۰.۱۲.۰ به بعد قابل استفاده است.
-
-### ۱۶. شمارش پاک کردن اپلیکیشن
-
-متریکس برای شمارش پاک شدن اپلیکشن شما از سایلنت پوش استفاده می‌کند.
-
-برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
-
-**نکته:** شما باید برای استفاده از این ابزار حتما از Firebase Cloud Messaging (FCM) استفاده نمایید.
-
-#### پیدا کردن FCM legacy server key
-ابتدا به کنسول فایربیس خود رفته.
-
-۱. دکمه settings را زده سپس به Project settings بروید
-
-۲. تب Cloud Messaging را انتخاب کنید
-
-۳. حالا می‌توانید `legacy server key` و `sender id` را بردارید
-
-<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
-
-#### اضافه کردن FCM legacy server key و sender id به اکانت متریکس
-
-در داشبورد متریکس مراحل زیر را انجام دهید:
-
-۱. به تنظیمات اپلیکیش خود رفته
-
-۲. تب Push Configuration را انتخاب کنید
-
-۳. حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید
-
-۴. دکمه save را بزنید
-
-<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
-
-#### پیدا کردن Firebase APP ID
-
-ابتدا به کنسول فایربیس خود رفته.
-
-۱. دکمه settings را زده سپس به Project settings بروید
-
-۲. تب General را انتخاب کنید
-
-۳. حالا می‌توانید `App ID` را بردارید
-
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
-
-۴. سپس در تنظیمات sdk متریکس قرار دهید.
-
-```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
-metrixConfig.setFirebaseAppId("your firebase app id");
-Metrix.onCreate(metrixConfig);
-```
-
-۵. کتاب خانه زیر را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
-
-```groovy
-implementation 'com.google.firebase:firebase-messaging:17.6.0'
-```
-
-**نکته:**این متد از نسخه ۰.۱۴.۰ به بعد قابل استفاده است.
-
-### ۱۷. اطلاع یافتن از شماره نشست جاری
-
-با استفاده از این تابع می‌توانید از شماره نشست (session) جاری اطلاع پیدا کنید:
+<hr/>
+<br/>
+# امکانات و قابلیت‌ها
+<br/>
+
+## نشست (session)
+هر تعاملی که کاربر با یک اپلیکیشن دارد، در قالب یک **نشست** صورت می‌گیرد. کتابخانه متریکس اطلاعات مربوط به نشست‌های مختلف کاربر در اپلیکیشن شما و بازه زمانی آنها را جمع‌آوری می‌کند و در قالب **رویداد** در اختیار شما می‌گذارد.
+
+### شناسه نشست
+کتابخانه متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند که می‌توانید این شناسه را دریافت نمایید.
+برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
+[تغییر پیکربندی کتابخانه](#شناسه-نشست-متریکس)
+ مراجعه کنید.
+
+### شماره نشست جاری
+
+با استفاده از این تابع می‌توانید از شماره نشست جاری کاربر در تمام مدت استفاده خود از اپلیکیشن شما اطلاع پیدا کنید:
 
 ```java
 Metrix.getInstance().getSessionNum();
 ```
+<br/>
+## رویداد (event)
+هرگونه تعاملی که کاربر با اپلیکیشن شما دارد می‌تواند به عنوان یک **رویداد** در پنل و اپلیکیشن شما تعریف شود تا کتابخانه متریکس اطلاعات آماری مربوط به آن را در اختیار شما قرار دهد.
 
-### ۱۸. ساختن یک رویداد سفارشی
+در کتابخانه متریکس چهار نوع رویداد داریم:
 
-با استفاده از این تابع می‌توانید یک رویداد سفارشی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
+- **شروع نشست (session_start):** زمان شروع یک نشست.
+- **پایان نشست (session_stop):‌** زمان پایان یک نشست.
+- **سفارشی (custom):** وابسته به منطق اپلیکیشن شما و تعاملی که کاربر با اپلیکیشن شما دارد می‌توانید رویدادهای سفارشی خود را در قالبی که در ادامه شرح داده خواهد شد بسازید و ارسال کنید.
+- **درآمدی (revenue):** نوع خاصی از رویدادهای سفارشی قابل تعریف است که مربوط به میزان درآمد کسب شده در اپلیکیشن شما می‌باشد و دارای یک مقدار قابل اندازه‌گیری از جنس درآمد مالی است.
 
-این تابع را به دو صورت می‌توانید صدا بزنید:
+### ساختن یک رویداد سفارشی
 
-۱. یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
+برای ساخت یک رویداد سفارشی در ابتدا در پنل خود از قسمت مدیریت رویدادها، رویداد موردنظر خود را ثبت کنید و نامک (slug) آن را به عنوان نام رویداد در اپلیکیشن استفاده کنید.
+
+وقوع رویداد به دو صورت می‌تواند ثبت شود:
+
+۱. ثبت رویداد تنها با استفاده از نامک آن که در پنل معرفی شده است:
 
 ```java
 Metrix.getInstance().newEvent("my_event_slug");
 ```
 
-ورودی این تابع از جنس String است و همان نامکی است که داشبورد دریافت می‌کنید.
-
-۲. یک رویداد سفارشی با تعداد دلخواه attribute و metric خاص سناریو خود بسازید، به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
+۲. ثبت رویداد به همراه تعداد دلخواه attribute و metric مربوط به آن. به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
 
 ```java
 Map<String, String> attributes = new HashMap<>();
@@ -515,71 +84,115 @@ attributes.put("size", "large");
 
 Map<String, Double> metrics = new HashMap<>();
 metrics.put("price", 100000.0);
+metrics.put("purchase_time", current_time);
 
 Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
 ```
 
-ورودی‌های متد newEvent بدین شرح هستند:
+ورودی‌های متد **newEvent** در این حالت، بدین شرح هستند:
 
-- **ورودی اول:** نامک رویداد مورد نظر شما که از جنس String است و آن را از داشبورد متریکس دریافت می‌کنید.
+- **ورودی اول:** نامک رویداد مورد نظر شما که در پنل متریکس معرفی شده است.
 - **ورودی دوم:** یک Map<String, String> که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک Map<String, Double> که شامل ویژگی های قابل اندازه گیری است.
 
-### ۱۹. ساختن رویداد درآمدی
+### ساختن رویداد درآمدی
 
-با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار شما در ابتدا باید در داشبورد متریکس از قسمت مدیریت رخدادها، رخداد موردنظر خود را ثبت کنید و نامک (slug) آن را بعنوان نام رخداد در sdk استفاده کنید.
-
-این تابع را به صورت زیر می‌توانید صدا بزنید:
-
-یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
+با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار در ابتدا در پنل خود از قسمت مدیریت رویدادها، رویداد موردنظر خود را ثبت کنید و نامک (slug) آن را به عنوان نام رویداد در اپلیکیشن استفاده کنید.
 
 ```java
 Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{orderId}");
 ```
+ورودی‌های متد **newRevenue** بدین شرح هستند:
 
-ورودی اول همان نامکی است که از داشبورد دریافت می‌کنید.
+- **ورودی اول:** نامک رویداد مورد نظر شما که در پنل متریکس معرفی شده است.
+- **ورودی دوم:** یک مقدار عددی است که همان میزان درآمد است.
+- **ورودی سوم:** واحد پول مورد استفاده است و می‌تواند سه مقدار **MetrixCurrency.IRR**  (پیش‌فرض) یا **MetrixCurrency.USD** و یا **MetrixCurrency.EUR** را داشته باشد.
+- **ورودی چهارم:** این ورودی دلخواه است و شماره سفارش را تعیین می‌کند.
 
-دومین وروی تابع یک مقدار است که همان مقدار درآمد است.
-
-سومین ورودی واحد پول این رخداد است که در صورت قرار ندادن مقدار آن واحد پیشفرض ریال است.
-
-ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
-
-### ۲۰. مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
 
 ```java
 Map<String, String> attributes = new HashMap<>();
 attributes.put("manufacturer", "Nike");
-
 Metrix.getInstance().addUserAttributes(attributes);
 ```
 
-### ۲۱. مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
+### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
 
 ```java
 Map<String, Double> metrics = new HashMap<>();
 metrics.put("purchase_time", current_time);
-
 Metrix.getInstance().addUserMetrics(metrics);
 ```
+<br/>
+## دریافت شناسه دستگاه‌های متریکس
 
-(مقدار پیش‌فرض این تابع در کتابخانه false است.)
+برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند که شما می‌توانید این شناسه را به محض شناسایی دریافت نمایید.
+برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
+[تغییر پیکربندی کتابخانه](#شناسه-دستگاه‌های-متریکس)
+ مراجعه کنید.
 
-### ۲۲. اطلاع یافتن از مقدار screenFlow در کتابخانه
+<br/>
+## امضاء
 
-با استفاده از این تابع می‌توانید متوجه شوید که مقدار `screenFlow` در کتابخانه متریکس چیست:
+شما می‌توانید با فعال‌سازی قابلیت sdk signature در پنل خود و تعیین app secret های موجود، امنیت ارتباط و انتقال اطلاعات را افزایش داده و از سلامت آمار اپلیکیشن خود اطمینان بیشتری حاصل کنید. برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
+[تغییر پیکربندی کتابخانه](#امضاء-sdk)
+ مراجعه کنید.
+
+<br/>
+## شمارش پاک کردن اپلیکیشن
+
+متریکس برای شمارش پاک شدن اپلیکشن شما از سایلنت پوش استفاده می‌کند.
+
+**نکته:** شما باید برای استفاده از این ابزار حتما از Firebase Cloud Messaging (FCM) استفاده نمایید.
+
+برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
+
+- پیدا کردن FCM legacy server key
+
+ابتدا به کنسول فایربیس خود رفته.
+دکمه settings را زده سپس به Project settings بروید
+تب Cloud Messaging را انتخاب کنید.
+حالا می‌توانید `legacy server key` و `sender id` را بردارید
+
+<img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
+
+- اضافه کردن FCM legacy server key و sender id به اکانت متریکس
+
+در داشبورد متریکس به تنظیمات اپلیکیش خود رفته
+تب Push Configuration را انتخاب کنید
+حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید و دکمه save را بزنید
+
+<img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
+
+- پیدا کردن Firebase APP ID
+
+ابتدا به کنسول فایربیس خود رفته.
+دکمه settings را زده سپس به Project settings بروید
+تب General را انتخاب کنید
+حالا می‌توانید `App ID` را بردارید
+
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+
+- تغییر پیکربندی کتابخانه متریکس
+
+با استفاده از دستور زیر در هنگام تعیین پیکربندی کتابخانه، آیدی فایربیس را به کتابخانه متریکس بدهید.
 
 ```java
-Metrix.getInstance().isScreenFlowsAutoFill();
+metrixConfig.setFirebaseAppId("your firebase app id");
 ```
+**تذکر:** در این باره توضیحات مربوط به بخش
+[تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
+را مطالعه نمایید.
 
-### ۲۳. دریافت اطلاعات کمپین
+<br/>
+## دریافت اطلاعات کمپین
 
-با مقداردهی این تابعه میتوانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده اید را دریافت کنید.
+با استفاده از متد زیر می‌توانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده‌اید را دریافت کنید.
 
 ```java
 Metrix.getInstance().setOnAttributionChangedListener(new OnAttributionChangedListener() {
@@ -590,34 +203,36 @@ Metrix.getInstance().setOnAttributionChangedListener(new OnAttributionChangedLis
 });
 ```
 
-مدل `AttributionModel` اطلاعات زیر را در اختیار شما قرار میدهد.
+مدل `AttributionModel` اطلاعات زیر را در اختیار شما قرار می‌دهد.
 
 ```java
 attributionModel.getAcquisitionAd() // نام تبلیغ
 attributionModel.getAcquisitionAdSet() // گروه تبلیغاتی
 attributionModel.getAcquisitionCampaign() // کمپین تبلیغاتی
 attributionModel.getAcquisitionSource() // شبکه تبلیغاتی
-attributionModel.getAttributionStatus() // وضعیت کاربر در کمپین را مشخص میکند و فقط چهار مقدار زیر را برمیگرداند
+attributionModel.getAttributionStatus() // وضعیت کاربر در کمپین را مشخص می‌کند
 ```
 
-1. `ATTRIBUTED` اتربیوت شده
-2. `NOT_ATTRIBUTED_YET` هنوز اتربیوت نشده
-3. `ATTRIBUTION_NOT_NEEDED` نیاز به اتربیوت ندارد
-4. `UNKNOWN` حالت ناشناخته
+مقدار `AttributionStatus` شامل یکی از موارد زیر است:
 
+- `ATTRIBUTED` اتربیوت شده
+- `NOT_ATTRIBUTED_YET` هنوز اتربیوت نشده
+- `ATTRIBUTION_NOT_NEEDED` نیاز به اتربیوت ندارد
+- `UNKNOWN` حالت ناشناخته
 
-## Deep linking
+<br/>
+## Deep Linking
 
-### توضیحات
-
-اگر شما از ترکر های که دیپ‌لینک در آنها فعال است استفاده کنید، می‌توانیداطلاعات url دیپ‌لینک و محتوای آن را دریافت کنید. دستگاه بر اساس نصب بودن اپلیکیشن (سناریو استاندارد) یا نصب نبودن اپلیکیشن (سناریو deferred) واکنش نشان میدهد.
+اگر شما از ترکر هایی که دیپ‌لینک در آنها فعال است استفاده کنید، می‌توانید اطلاعات url دیپ‌لینک و محتوای آن را دریافت کنید. دستگاه بر اساس نصب بودن اپلیکیشن (سناریو استاندارد) یا نصب نبودن اپلیکیشن (سناریو deferred) واکنش نشان می‌دهد.
 در صورت نصب بودن اپلیکیشن شما اطلاعات دیپ‌لینک به اپلیکیشن شما ارسال می‌شود.
-پلتفرم اندروید به صورت اتماتیک سناریو deferred را پشتیبانی نمیکند در این صورت متریکس سناریو مخصوص به خود را دارد تا بتواند اطلاعات دیپ‌لینک را به اپلیکیشن ارسال کند.
+
+پلتفرم اندروید به صورت اتوماتیک سناریو deferred را پشتیبانی نمی‌کند. در این صورت متریکس سناریو مخصوص به خود را دارد تا بتواند اطلاعات دیپ‌لینک را به اپلیکیشن ارسال کند.
 
 ### سناریو استاندارد
 
 اگر کاربران شما اپلیکیشن شما را نصب داشته باشند و شما بخواهید بعد از کلیک بر روی لینک دیپ‌لینک صفحه خاصی از اپلیکیشن شما باز شود ابتدا باید یک scheme name یکتا انتخاب کنید.
-سپس آن را باید به اکتیویتی که قصد دارید در صورت کلیک بر روی دیپ‌لینک کلیک شد اجرا شود نسبت دهید برای این منظور به فایل `AndroinManifest.xml` رفته و بخش `intent-filter` را به اکتیویتی مورد نظر اضافه کنید همچنین scheme name مورد نظر خود را نیز قرار دهید مانند زیر:
+سپس آن را باید به اکتیویتی که قصد دارید در صورت کلیک بر روی دیپ‌لینک اجرا شود نسبت دهید. برای این منظور به فایل `AndroinManifest.xml` رفته و بخش `intent-filter` را به اکتیویتی مورد نظر اضافه کنید همچنین scheme name مورد نظر خود را نیز قرار دهید.
+مانند زیر:
 
 ```xml
 <activity
@@ -659,12 +274,12 @@ protected void onNewIntent(Intent intent) {
 
 ### سناریو deferred
 
-این سناریو زمانی رخ می‌هد که کاربر روی دیپ‌لینک کلیک می‌کند ولی اپلیکیشن شما را در زمانی که کلیک کرده روی دستگاه خود نصب نکرده است. وقتی کاربر کلیک کرد به گوگل پلی استور هدایت می‌شود تا اپلیکیشن شما را نصب کند وقتی اپلیکیشن شما را نصب کرد و برای اولین بار آن را باز کرد اطلاعات دیپ‌لینک به اپلیکیشن داده می‌شود.
+این سناریو زمانی رخ می‌هد که کاربر روی دیپ‌لینک کلیک می‌کند ولی اپلیکیشن شما را در زمانی که کلیک کرده روی دستگاه خود نصب نکرده است. وقتی کاربر کلیک کرد به گوگل پلی استور هدایت می‌شود تا اپلیکیشن شما را نصب کند. وقتی اپلیکیشن شما را نصب کرد و برای اولین بار آن را باز کرد اطلاعات دیپ‌لینک به اپلیکیشن داده می‌شود.
+
 متریکس به صورت پیش‌فرض سناریو deferred را پشتیبانی نمی‌کند و نیاز به تنظیم دارد.
-اگر شما قصد دارید که سناریو deferred را کنترل کنیداز طریق کالبک زیر می‌توانید.
+اگر شما قصد دارید که سناریو deferred را کنترل کنید می‌توانید از کالبک زیر در هنگام تعیین پیکربندی کتابخانه استفاده نمایید:
 
 ```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
 metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
     @Override
     public boolean launchReceivedDeeplink(Uri deeplink) {
@@ -676,15 +291,18 @@ metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
         }
     }
 });
-Metrix.onCreate(metrixConfig);
 ```
 
-بعد از این که متریکس اطلاعات دیپ‌لینک را از بکند خود دریافت کرد محتوای آن را به کالبک بالا پاس میدهد اگر خروجی متد `lunchReceivedDeeplink` مقدار `true` باشد متریکس به صورت اتوماتیک سناریو استاندارد را اجرا میکند ولی اگر مقدار خروجی متد `false` باشد متریکس فقط اطلاعات را در این کالبک قرار میدهد تا شما بر اساس آن اکشن مورد نظر خود را انجام دهید.
+بعد از این که متریکس اطلاعات دیپ‌لینک را از سرور خود دریافت کرد محتوای آن را به کالبک بالا پاس می‌دهد. اگر خروجی متد `lunchReceivedDeeplink` مقدار `true` باشد متریکس به صورت اتوماتیک سناریو استاندارد را اجرا می‌کند ولی اگر مقدار خروجی متد `false` باشد متریکس فقط اطلاعات را در این کالبک قرار می‌دهد تا شما بر اساس آن اکشن مورد نظر خود را انجام دهید.
+
+**تذکر:** در این باره توضیحات مربوط به بخش
+[تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
+را مطالعه نمایید.
 
 ### ری‌اتریبیوت با دیپ‌لینک
 
-متریکس ابزار ری‌اتریبیوت با دیپ‌لینک دارد اگر میخواهید از این ابزار استفاده کنید نیاز است یکی از متد های متریکس را بعد از دریافت دیپ‌لینک صدا بزنید.
-اگر شما اطلاعات دیپ‌لینک را در اپلیکیشن دریافت کردید با صدا زدن `Metrix.getInstance().appWillOpenUrl(Uri)` می‌توانید اطلاعات دیپ‌لینک را به بکند متریکس ارسال کنید تا کاربر دوباره ری‌اتریبیوت شود.
+متریکس ابزار ری‌اتریبیوت با دیپ‌لینک دارد. اگر می‌خواهید از این ابزار استفاده کنید نیاز است یکی از متد های متریکس را بعد از دریافت دیپ‌لینک صدا بزنید.
+اگر شما اطلاعات دیپ‌لینک را در اپلیکیشن دریافت کردید با صدا زدن `Metrix.getInstance().appWillOpenUrl(Uri)` می‌توانید اطلاعات دیپ‌لینک را به متریکس ارسال کنید تا کاربر دوباره ری‌اتریبیوت شود.
 
 ```java
 @Override
@@ -706,4 +324,140 @@ protected void onNewIntent(Intent intent) {
     Uri data = intent.getData();
     Metrix.getInstance().appWillOpenUrl(data);
 }
+```
+
+<hr/>
+<br/>
+# تغییر پیکربندی کتابخانه
+شما می‌توانید به مانند قطعه کد زیر با ایجاد یک نمونه از کلاس `MetrixConfig` تغییرات مورد نظر خود را در رابطه با پیکربندی کتابخانه متریکس ایجاد و در انتها  این کتابخانه را با صدا زدن متد `onCreate` مجددا و با پیکربندی جدید راه‌اندازی نمایید.
+
+```java
+MetrixConfig metrixConfig = new MetrixConfig(context, "APP_ID");
+
+// اعمال تغییرات مورد نظر 
+
+Metrix.onCreate(metrixConfig); // راه‌اندازی مجدد
+```
+
+در ادامه به معرفی تغییراتی که می‌توانید اعمال کنید، می‌پردازیم.
+
+### ثبت اطلاعات مکان کاربر در رویدادها
+
+می‌توانید با استفاده دستور زیر به کتابخانه متریکس اعلام کنید که در رویدادها اطلاعات مربوط به مکان کاربر را به همراه دیگر اطلاعات ارسال کند.
+
+```java
+metrixConfig.setLocationListening(isLocationListeningEnable);
+```
+**تذکر مهم:** برای استفاده از امکانات مبتنی بر مکان کاربر نیاز است که اپلیکیشن شما دسترسی موقعیت مکانی را داشته باشد. به این منظور یکی از دسترسی‌های زیر را به فایل `AndroidManifest.xml` برنامه خود اضافه نمایید.
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+البته توجه داشته باشید که در اندرویدهای ۶ به بالا برای گرفتن این دسترسی ها علاوه بر اضافه کردن آنها به منیفست باید دسترسی در زمان اجرا هم از کاربر گرفته شود.
+
+### سقف تعداد رویدادها برای ارسال به سمت سرور
+
+با استفاده از دستور زیر می‌توانید مشخص کنید که هر موقع تعداد رویدادهای ذخیره شده شما به تعداد مورد نظر شما رسید کتابخانه رویدادها را برای سرور ارسال کند:
+
+```java
+metrixConfig.setEventUploadThreshold(50);
+```
+مقدار پیش‌فرض این تابع در کتابخانه ۳۰ رویداد است.
+
+### حداکثر تعداد رویداد ارسالی در هر درخواست
+
+با استفاده از دستور زیر می‌توانید حداکثر تعداد رویداد ارسالی در هر درخواست را مشخص کنید:
+
+```java
+metrixConfig.setEventUploadMaxBatchSize(100);
+```
+مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰ رویداد است.
+
+### تعداد حداکثر ذخیره رویداد در مخزن کتابخانه
+
+با استفاده از دستور زیر می‌توانید مشخص کنید که حداکثر تعداد رویدادهای ذخیره شده در کتابخانه متریکس چقدر باشد (به عنوان مثال اگر دستگاه کاربر اتصال خود به اینترنت را از دست داد رویدادها تا مقداری که شما مشخص می‌کنید در کتابخانه ذخیره خواهند شد) و اگر تعداد رویدادهای ذخیره شده در کتابخانه از این مقدار بگذرد رویدادهای قدیمی توسط کتابخانه نگهداری نشده و از بین می‌روند:
+
+```java
+metrixConfig.setEventMaxCount(1000);
+```
+مقدار پیش‌فرض این تابع در کتابخانه ۱۰۰۰ رویداد است.
+
+### بازه زمانی ارسال رویدادها به سمت سرور
+
+با استفاده از دستور زیر می‌توانید مشخص کنید که درخواست آپلود رویدادها بعد از گذشت چند میلی‌ثانیه فرستاده شود:
+
+```java
+metrixConfig.setEventUploadPeriodMillis(30000);
+```
+مقدار پیش‌فرض این تابع در کتابخانه ۳۰ ثانیه است.
+
+### بازه زمانی دلخواه برای نشست‌ها
+
+با استفاده از این تابع می‌توانید حد نشست‌ها را در اپلیکیشن خود مشخص کنید که هر نشست حداکثر چند ثانیه محاسبه شود. به عنوان مثال اگر مقدار این تابع را ۱۰۰۰۰ وارد کنید اگر کاربر در اپلیکیشن ۷۰ ثانیه تعامل داشته باشد، کتابخانه متریکس این تعامل را ۷ نشست محاسبه می‌کند.
+
+```java
+metrixConfig.setSessionTimeoutMillis(1800000);
+```
+مقدار پیش‌فرض این متد در کتابخانه ۳۰ دقیقه است.
+
+### جمع‌آوری flow کاربر در اپلیکیشن
+
+با استفاده از این متد، می‌توانید جمع‌آوری خودکار اطلاعات مربوط به جریان کاربر در هر `Activity`/`Fragment` توسط متریکس را فعال یا غیر فعال نمایید.
+
+```java
+metrixConfig.setScreenFlowsAutoFill(true);
+```
+
+به طور پیش‌فرض این عملکرد غیرفعال است.
+
+### مشخص کردن Pre-installed Tracker
+
+اگر بخواهید کاربرانی را که از قبل اپلیکیشن شما را نصب داشته‌اند شناسایی نمایید، با استفاده از این تابع می‌توانید با یک `trackerToken` که از پنل دریافت می‌کنید، برای همه‌ی رویدادها یک `tracker` پیش‌فرض قرار دهید:
+
+```java
+metrixConfig.setDefaultTrackerToken(trackerToken);
+```
+
+### امضاء SDK
+
+اگر شما قابلیت sdk signature را در پنل خود فعال کنید و به app secret ها دسترسی دارید برای استفاده از آن از متد زیر استفاده کنید:
+```java
+metrixConfig.setAppSecret(secretId, info1, info2, info3, info4);
+```
+
+### تفکیک بر‌اساس استور های اپلیکیشن
+
+اگر شما می‌خواهید اپلیکیشن خود را در استور های مختلف مانند کافه بازار، گوگل پلی و … منتشر کنید، با استفاده از متد زیر می‌توانید مشاهده کنید که کاربر از کدام استور ( مثلا کافه بازار، گوگل پلی، مایکت، اول مارکت و وبسایت ... ) اپلیکیشن را نصب کرده و منبع نصب های ارگانیک خود را شناسایی کنید.
+```java
+metrixConfig.setStore("store name");
+```
+
+### شناسه دستگاه‌های متریکس
+
+برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```java
+metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
+            @Override
+            public void onReceiveUserId(String metrixUserId) {
+            sendToyourApi(metrixUserId);    
+            }
+        });
+```
+**نکته:** شناسه متریکس زمانی در اختیار شما قرار می‌گیرید که دستگاه توسط سرویس متریکس شناسایی شده باشد.
+
+### شناسه نشست متریکس
+
+کتابخانه متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر شنونده را تعریف نمایید:
+
+```java
+metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
+            @Override
+            public void onReceiveSessionId(String sessionId) {
+            sendToyourApi(sessionId);    
+            }
+        });
 ```
