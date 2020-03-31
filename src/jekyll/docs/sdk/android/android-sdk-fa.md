@@ -10,22 +10,68 @@ toc: true # table of contents
 # راه‌اندازی کتابخانه در اپلیکیشن اندروید
 <br/>
 ۱. کتابخانه را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
+
 ```groovy
 implementation 'ir.metrix:metrix:0.14.7'
 ```
 
-۲. در فایل `AndroidManifest.xml` اپلیکیشن خود، داخل تگ `application` دستور زیر شامل `AppID` اپلیکیشن خود را قرار دهید:
+۲. کتابخانه متریکس را در متد `onCreate` کلاس `Application` اندروید `initialize` کنید. 
+اگر از قبل در پروژه خود کلاس `Application` ندارید به شکل زیر این کلاس را ایجاد کنید:
+
+- یک کلاس ایجاد کنید که از کلاس `Application` ارث بری کند:
+
+<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Class.png"/>
+
+- فایل `AndriodManifest.xml` اپلیکیشن خود را باز کنید و به تگ `<application>` بروید.
+
+- با استفاده از `Attribute` زیر، کلاس `Application` خود را در `AndroidManifest.xml` اضافه کنید:
 
 ```xml
-<application>
-...
-...
-
-    <meta-data android:name="metrix_application_id" android:value="YOUR-APP_ID"/>
+<application
+    android:name=“.MyApplication”
+    ... >
 
 </application>
 ```
+
+در کلاس `Application` خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، sdk متریکس را `initialize` کنید:
+
+**توجه:** شما می‌توانید پیش از فراخوانی متد `onCreate`، با استفاده از نمونه `MetrixConfig` خود، پیکربندی دلخواه خود را برای کتابخانه تنظیم کنید.
+برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
+[تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
+ مراجعه کنید.
+
+```java
+import android.app.Application;
+
+import ir.metrix.sdk.Metrix;
+import ir.metrix.sdk.MetrixConfig;
+
+
+public class MyApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID"); // ساخت نمونه‌ای از کلاس `MetrixConfig`
+        // تغییر پیکربندی (دلخواه)
+        Metrix.onCreate(metrixConfig); // راه‌اندازی کردن کتابخانه
+    }
+}
+```
+
+
+
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.
+
+
+
+### در مورد کلاس اپلیکیشن و initialize کردن در این کلاس
+
+اندروید در کلاس اپلیکیشن به توسعه دهنده این اختیار را می‌دهد که قبل از ساخته شدن هر `Activity` در اپلیکیشن دستوراتی را وارد کند. این موضوع برای کتابخانه متریکس نیز ضروری است، به این دلیل که شمردن `session`ها و همچنین جریان بین `Activity`ها و دیگر امکانات کارایی لازم را داشته باشند و به درستی عمل کنند.
+
+
 
 <hr/>
 <br/>
@@ -33,9 +79,11 @@ implementation 'ir.metrix:metrix:0.14.7'
 <br/>
 
 ## نشست (session)
+
 هر تعاملی که کاربر با یک اپلیکیشن دارد، در قالب یک **نشست** صورت می‌گیرد. کتابخانه متریکس اطلاعات مربوط به نشست‌های مختلف کاربر در اپلیکیشن شما و بازه زمانی آنها را جمع‌آوری می‌کند و در قالب **رویداد** در اختیار شما می‌گذارد.
 
 ### شناسه نشست
+
 کتابخانه متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند که می‌توانید این شناسه را دریافت نمایید.
 برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
 [تغییر پیکربندی کتابخانه](#شناسه-نشست-متریکس)
@@ -329,14 +377,14 @@ protected void onNewIntent(Intent intent) {
 <hr/>
 <br/>
 # تغییر پیکربندی کتابخانه
-شما می‌توانید به مانند قطعه کد زیر با ایجاد یک نمونه از کلاس `MetrixConfig` تغییرات مورد نظر خود را در رابطه با پیکربندی کتابخانه متریکس ایجاد و در انتها  این کتابخانه را با صدا زدن متد `onCreate` مجددا و با پیکربندی جدید راه‌اندازی نمایید.
+شما می‌توانید به مانند قطعه کد زیر در کلاس `Application` خود، پیش از فراخوانی متد `onCreate` به منظور `initialize` کردن کتابخانه، با استفاده از نمونه کلاس `MetrixConfig` خود، تغییرات مورد نظر خود را در رابطه با پیکربندی کتابخانه متریکس ایجاد کنید:
 
 ```java
 MetrixConfig metrixConfig = new MetrixConfig(context, "APP_ID");
 
 // اعمال تغییرات مورد نظر 
 
-Metrix.onCreate(metrixConfig); // راه‌اندازی مجدد
+Metrix.onCreate(metrixConfig); // راه‌اندازی کردن کتابخانه
 ```
 
 در ادامه به معرفی تغییراتی که می‌توانید اعمال کنید، می‌پردازیم.

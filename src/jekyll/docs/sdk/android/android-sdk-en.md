@@ -16,18 +16,52 @@ toc: true # table of contents
 implementation 'ir.metrix:metrix:0.14.7'
 ```
 
-2\. Open the `AndriodManifest.xml` file and add the `meta-data` below inside the `<application>` tag.
+2\. You need to initialize the Metrix SDK in `onCreate` method of your `Application`. 
+If you do not already have a class `Application` in your project, create this class as below:
+
+- Create a class that inherits from the `Application` class:
+
+<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Class.png"/>  
+
+- Open the `AndriodManifest.xml` file and go to`<application>` tag.
+- Using `Attribute` subclass, add `Application` to `AndroidManifest.xml` file:
 
 ```xml
-    <application>
-        ...
-        
-        <meta-data android:name="metrix_application_id" android:value="APP_ID"/>
+    <application
+        android:name=“.MyApplication”
+        ... >
 
     </application>
 ```
 
-Replace `APP_ID` with your application id. You can find it in your Metrix dashboard.
+<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Manifest.png">  
+
+In `onCreate` method of your `Application` class, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
+
+**Note:** Before calling the `onCreate` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
+Check out the [SDK Configuration](#SDK-Configuration) section for more info.
+
+```java
+import ir.metrix.sdk.Metrix;
+
+public class MyApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
+        // set your configuration
+        Metrix.onCreate(metrixConfig); // initialize the SDK
+    }
+}
+```
+
+Replace `APP_ID` with your application id. You can find that in your Metrix dashboard.
+
+### About the application class and initialization in this class
+
+Android gives developers the ability to run methods before the creation of any `activity` in the application class. Because counting the `session`, gathering `screen-flows` between `activities` and many other features of the SDK required them to work properly.
 
 <hr/>
 <br/>
@@ -319,14 +353,14 @@ protected void onNewIntent(Intent intent) {
 <hr/>
 <br/>
 # SDK Configuration
-You can configure Metrix SDK by instantiating the `MetrixConfig` class, introducing different configurations to the instance by calling available methods in the class and finally reinitializing the SDK by calling `onCreate` method passing the new configuration. See the sample below:
+In your `Application` class, before calling `onCreate` method to initialize Metrix, you can configure Metrix SDK by introducing different configurations to your `MetrixConfig` instance, calling available methods in the class. See the sample below:
 
 ```java
 MetrixConfig metrixConfig = new MetrixConfig(context, "APP_ID");
 
 // Setting your configuration 
 
-Metrix.onCreate(metrixConfig); // Reinitializing the SDK
+Metrix.onCreate(metrixConfig); // initializing the SDK
 ```
 
 Available configurations can be found below:
