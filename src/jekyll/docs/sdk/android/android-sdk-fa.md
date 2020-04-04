@@ -200,20 +200,20 @@ Metrix.getInstance().addUserMetrics(metrics);
 
 برای پیاده سازی این ابزار مراحل زیر را دنبال کنید.
 
-- پیدا کردن FCM legacy server key
+- پیدا کردن FCM server key
 
 ابتدا به کنسول فایربیس خود رفته.
 دکمه settings را زده سپس به Project settings بروید
 تب Cloud Messaging را انتخاب کنید.
-حالا می‌توانید `legacy server key` و `sender id` را بردارید
+حالا می‌توانید `server key` و `sender id` را بردارید
 
 <img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
 
-- اضافه کردن FCM legacy server key و sender id به اکانت متریکس
+- اضافه کردن FCM server key و sender id به اکانت متریکس
 
 در داشبورد متریکس به تنظیمات اپلیکیش خود رفته
 تب Push Configuration را انتخاب کنید
-حالا می‌توانید FCM legacy server key و sender id را در فیلد های مناسب قرار دهید و دکمه save را بزنید
+حالا می‌توانید FCM server key و sender id را در فیلد های مناسب قرار دهید و دکمه save را بزنید
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 

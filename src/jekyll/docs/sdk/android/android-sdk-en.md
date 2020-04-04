@@ -17,7 +17,7 @@ implementation 'ir.metrix:metrix:0.14.7'
 ```
 
 2\. You need to initialize the Metrix SDK in `onCreate` method of your `Application`. 
-If you do not already have a class `Application` in your project, create this class as below:
+If you do not already have a `Application` class in your project, create this class as below:
 
 - Create a class that inherits from the `Application` class:
 
@@ -180,15 +180,15 @@ Metrix’s app uninstall tracking relies on silent push notifications to determi
 
 Developer instructions for configuring your app for uninstall tracking can be found below.
 
-- Find your FCM legacy server key
+- Find your FCM server key
 
-In your Firebase console, select the settings (gear) icon > Project settings. Select CLOUD MESSAGING and locate your `legacy Server key` and `sender id` token.
+In your Firebase console, select the settings (gear) icon > Project settings. Select CLOUD MESSAGING and locate your `Server key` and `sender id` token.
 
 <img src="{{ '/images/firebase-cloud-messaging.png' | relative_url }}" alt="firebase cloud messageing"/>
 
-- Add your FCM legacy server key and sender id to your Metrix account
+- Add your FCM server key and sender id to your Metrix account
 
-In the Metrix dashboard, navigate to your app and select your app settings. Select Push configurationand enter or paste your FCM legacy server key into the Legacy Server Key field and FCM sender id into Sender Id field. Select Save.
+In the Metrix dashboard, navigate to your app and select your app settings. Select Push configuration and enter or paste your FCM server key into the Server Key field and FCM sender id into Sender Id field. Select Save.
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
@@ -207,7 +207,7 @@ metrixConfig.setFirebaseAppId("your firebase app id");
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
 
 
-### Get User Attribution
+## Get User Attribution
 
 In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:
 
@@ -437,9 +437,7 @@ The default value is 30 minutes.
 Using this method, you can inform Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
 
 ```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
 metrixConfig.setScreenFlowsAutoFill(true);
-Metrix.onCreate(metrixConfig);
 ```
 
 The default value is false.
@@ -484,7 +482,7 @@ metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
 **Note:** Information about the adId is only available after our backend tracks the app installation. It is not possible to access the adId value before the SDK has been initialized and the installation of your app has been successfully tracked.
 
 
-### Metrix Session Identifier
+## Metrix Session Identifier
 For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
 
 ```java
