@@ -212,7 +212,7 @@ metrixConfig.setFirebaseAppId("your firebase app id");
 In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:
 
 ```java
-metrixConifg.setOnAttributionChangedListener(new OnAttributionChangedListener() {
+metrixConfig.setOnAttributionChangedListener(new OnAttributionChangedListener() {
     @Override
       public void onAttributionChanged(AttributionModel attributionModel) {
           //TODO
@@ -233,6 +233,8 @@ Here is a quick summary of `AttributionModel` properties:
 - `NOT_ATTRIBUTED_YET`
 - `ATTRIBUTION_NOT_NEEDED`
 - `UNKNOWN`
+
+**Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
 
 <br/>
 ## Deep Linking

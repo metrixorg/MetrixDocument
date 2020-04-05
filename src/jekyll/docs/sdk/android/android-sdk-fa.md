@@ -240,10 +240,10 @@ metrixConfig.setFirebaseAppId("your firebase app id");
 <br/>
 ## دریافت اطلاعات کمپین
 
-با استفاده از متد زیر می‌توانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده‌اید را دریافت کنید.
+با استفاده از متد زیر، در هنگام تعیین پیکربندی کتابخانه، می‌توانید اطلاعات کمپین تبلیغاتی که در ترکر خود در پنل قرار داده‌اید را دریافت کنید.
 
 ```java
-Metrix.getInstance().setOnAttributionChangedListener(new OnAttributionChangedListener() {
+metrixConfig.setOnAttributionChangedListener(new OnAttributionChangedListener() {
 @Override
     public void onAttributionChanged(AttributionModel attributionModel) {
         //TODO
@@ -267,6 +267,10 @@ attributionModel.getAttributionStatus() // وضعیت کاربر در کمپین
 - `NOT_ATTRIBUTED_YET` هنوز اتربیوت نشده
 - `ATTRIBUTION_NOT_NEEDED` نیاز به اتربیوت ندارد
 - `UNKNOWN` حالت ناشناخته
+
+**تذکر:** در این باره توضیحات مربوط به بخش
+[تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
+را مطالعه نمایید.
 
 <br/>
 ## Deep Linking
