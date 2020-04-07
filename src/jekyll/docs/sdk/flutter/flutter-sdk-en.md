@@ -93,11 +93,11 @@ metrics["price"] =  100000.0;
 
 Metrix.newEvent("purchase_event_slug", attributes, metrics);
 ```
-The variables for the `newEvent` method are as follows:
+The parameters for the `newEvent` method are as follows:
 
 - **First variable:** The event slug which is a String you receive from the Metrix dashboard.
-- **Second variable:** A Map `<String, String>` that specifies the attributes of an event.
-- **Third variable:** A Map `<String, Double>` that contains measurable metrics.
+- **Second variable:** A `Map<String, String>` that specifies the attributes of an event.
+- **Third variable:** A `Map<String, Double>` that contains measurable metrics.
 
 #### Specify the default attributes for user
 
