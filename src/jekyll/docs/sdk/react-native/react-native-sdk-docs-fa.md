@@ -24,11 +24,11 @@ pod 'react-native-metrix', :path => '../node_modules/@metrixorg/react-native-met
 ```
 در صورتی که از CocoaPods استفاده نمی‌کنید:
 
-1. در XCode در قسمت `project navigator` روی `Libraries` راست کلید نمایید سپس `Add files to [your project's name]` را کلیک کنید.
-2. به `node_modules` رفته و فایل `@metrixorg/react-native-metrix/ios/RCTMetrixReactNative.xcodeproj` را اضافه کنید.
-3. فایل `node_modules/@metrixorg/react-native-metrix/ios/MetrixSdk.framework` را در `[your projct's path]/ios` کپی کنید.
-4. در قسمت `project navigatior` پروژه خود را انتخاب کنید در تب `Build Phases` بخش `Link Binary with Libraries` باید `libRCTMetrixReactNative.a` و `add other ➜ [your projct's path]/MetrixSdk.framewrok` اضافه نمایید.
-5. در تب `General` ← `Embeded Binaries` ← `+` باید فایل `MetrixSdk.framework` را اضافه نماید.
+۱. در XCode در قسمت `project navigator` روی `Libraries` راست کلید نمایید سپس `Add files to [your project's name]` را کلیک کنید.
+۲. به `node_modules` رفته و فایل `@metrixorg/react-native-metrix/ios/RCTMetrixReactNative.xcodeproj` را اضافه کنید.
+۳. فایل `node_modules/@metrixorg/react-native-metrix/ios/MetrixSdk.framework` را در `[your projct's path]/ios` کپی کنید.
+۴. در قسمت `project navigatior` پروژه خود را انتخاب کنید در تب `Build Phases` بخش `Link Binary with Libraries` باید `libRCTMetrixReactNative.a` و `add other ➜ [your projct's path]/MetrixSdk.framewrok` اضافه نمایید.
+۵. در تب `General` ← `Embeded Binaries` ← `+` باید فایل `MetrixSdk.framework` را اضافه نماید.
 
 ## اندروید
 
@@ -127,6 +127,28 @@ Metrix.newEvent('purchase_event_slug', attributes, metrics);
 - **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
 
+#### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+
+با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
+
+```javascript
+var attributes = {};
+attributes['manufacturer'] = 'Nike';
+
+Metrix.addUserAttributes(attributes);
+```
+
+#### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
+
+با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
+
+```javascript
+var metrics = {};
+metrics['perchase_time'] = current_time;
+
+Metrix.addUserMetrics(metrics);
+```
+
 ### ساختن رویداد درآمدی
 
 با استفاده از این تابع می‌توانید یک رویداد درآمدی بسازید. برای این کار در ابتدا در پنل خود از قسمت مدیریت رویدادها، رویداد موردنظر خود را ثبت کنید و نامک (slug) آن را به عنوان نام رویداد در اپلیکیشن استفاده کنید.
@@ -140,28 +162,6 @@ Metrix.newRevenue('my_event_slug', 12000, 0, '2');
 - **ورودی دوم:** یک مقدار عددی است که همان میزان درآمد است.
 - **ورودی سوم:** واحد پول مورد استفاده را تعیین می‌کند و می‌تواند سه مقدار **0 (ریال)**  (پیش‌فرض) یا **1 (دلار)** و یا **3 (یورو)** را داشته باشد.
 - **ورودی چهارم:** این ورودی دلخواه است و شماره سفارش را تعیین می‌کند.
-
-### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
-
-```javascript
-var attributes = {};
-attributes['manufacturer'] = 'Nike';
-
-Metrix.addUserAttributes(attributes);
-```
-
-### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
-
-```javascript
-var metrics = {};
-metrics['perchase_time'] = current_time;
-
-Metrix.addUserMetrics(metrics);
-```
 
 <br/>
 ## دریافت شناسه دستگاه‌های متریکس
@@ -303,8 +303,10 @@ onDeeplink(deeplink) {
 شما می‌توانید به مانند قطعه کد زیر در `constructor` کلاس کامپوننت اصلی پروژه خود، پیش از فراخوانی متد `onCreate` به منظور `initialize` کردن کتابخانه، با استفاده از نمونه کلاس `MetrixConfig` خود، تغییرات مورد نظر خود را در رابطه با پیکربندی کتابخانه متریکس ایجاد کنید:
 
 ```javascript
-let metrixConfig = new MetrixConfig('APP_ID'); // ساخت نمونه‌ای از کلاس `MetrixConfig`
-// تغییر پیکربندی (دلخواه)
+let metrixConfig = new MetrixConfig('APP_ID');
+
+// اعمال تغییرات مورد نظر
+
 Metrix.onCreate(metrixConfig); // راه‌اندازی کردن کتابخانه
 ```
 
@@ -375,16 +377,6 @@ metrixConfig.setSessionTimeoutMillis(1800000);
 ```
 
 مقدار پیش‌فرض این متد در کتابخانه ۳۰ دقیقه است.
-
-### جمع‌آوری flow کاربر در اپلیکیشن
-
-با استفاده از این متد، می‌توانید جمع‌آوری خودکار اطلاعات مربوط به جریان کاربر در هر `Activity`/`Fragment` توسط متریکس را فعال یا غیر فعال نمایید.
-
-```javascript
-metrixConfig.setScreenFlowsAutoFill(true);
-```
-
-به طور پیش‌فرض این عملکرد غیرفعال است.
 
 ### مشخص کردن Pre-installed Tracker
 

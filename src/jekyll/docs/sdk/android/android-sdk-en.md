@@ -51,7 +51,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
-        // set your configuration
+        // set your configuration (optional)
         Metrix.onCreate(metrixConfig); // initialize the SDK
     }
 }
@@ -126,11 +126,11 @@ metrics.put("purchase_time", current_time);
 Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
 ```
 
-The variables for the `newEvent` method are as follows:
+The parameters for the `newEvent` method are as follows:
 
 - **First variable:** The event slug which is a String you receive from the Metrix dashboard.
-- **Second variable:** A Map `<String, String>` that specifies the attributes of an event.
-- **Third variable:** A Map `<String, Double>` that contains measurable metrics.
+- **Second variable:** A `Map<String, String>` that specifies the attributes of an event.
+- **Third variable:** A `Map<String, Double>` that contains measurable metrics.
 
 #### Specify the default attributes for user
 
@@ -305,7 +305,6 @@ Deferred deeplinking scenario occurs when a user clicks on a Metrix tracker URL 
 If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
 
 ```java
-MetrixConfig metrixConfig = new  MetrixConfig(this, yourAppId);
 metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
     @Override
     public boolean launchReceivedDeeplink(Uri deeplink) {
@@ -317,7 +316,6 @@ metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
         }
     }
 });
-Metrix.onCreate(metrixConfig);
 ```
 
 After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the listener and expect the `boolean` return value from you. This return value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).
