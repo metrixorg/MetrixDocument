@@ -1,67 +1,58 @@
 ---
 layout: classic-docs
-title: SDK Android
+title: SDK React Native
 lang: en
-permalink: /sdk/android/index.html
+permalink: /sdk/react-native/index.html
 toc: true # table of contents
 ---
+
+[![npm version](https://badge.fury.io/js/%40metrixorg%2Freact-native-metrix.svg)](https://badge.fury.io/js/%40metrixorg%2Freact-native-metrix)
 
 <hr/>
 <br/>
 # Initial Implementation of the SDK in Your Project
 <br/>
-1\. Add the following library to the `dependencies` section of your application `gradle` file:
+1\. Execute the following commands in your react-native project directory to add the metrix library:
 
-```groovy
-implementation 'ir.metrix:metrix:0.14.7'
+```bash
+npm install @metrixorg/react-native-metrix --save
+react-native link @metrixorg/react-native-metrix
+```
+## iOS
+In case of using CocoaPods, if the command `react-native link` is not working, add the following line to your `Podfile` execute the command `pod install`:
+
+```
+pod 'react-native-metrix', :path => '../node_modules/@metrixorg/react-native-metrix'
+```
+If you are not using CocoaPods, follow the steps below:
+1. Right-click on `Libraries` in `project navigator` in the XCode section and choose `Add files to [your project's name]`.
+2. Go to `node_modules` and add the `@metrixorg/react-native-metrix/ios/RCTMetrixReactNative.xcodeproj` file.
+3. Copy the `node_modules/@metrixorg/react-native-metrix/ios/MetrixSdk.framework` file to `[your projct's path]/ios`.
+4. Choose your project in `project navigatior` section. In `Build Phases` tab, `Link Binary with Libraries` section, add `libRCTMetrixReactNative.a` and `add other ➜ [your projct's path]/MetrixSdk.framewrok`.
+5. Add `MetrixSdk.framework` in `General` tab -> `Embeded Binaries` -> `+`.
+
+## Android
+
+Initialize Metrix library in your main `React.Component` class.
+
+- Import Metrix module in your code:
+
+```javascript
+import {Metrix, MetrixConfig} from '@metrixorg/react-native-metrix';
 ```
 
-2\. You need to initialize the Metrix SDK in `onCreate` method of your `Application`. 
-If you do not already have a `Application` class in your project, create this class as below:
-
-- Create a class that inherits from the `Application` class:
-
-<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Class.png"/>  
-
-- Open the `AndriodManifest.xml` file and go to`<application>` tag.
-- Using `Attribute` subclass, add `Application` to `AndroidManifest.xml` file:
-
-```xml
-    <application
-        android:name=“.MyApplication”
-        ... >
-
-    </application>
-```
-
-<img src="https://storage.backtory.com/tapsell-server/metrix/doc/screenshots/Metrix-Application-Manifest.png">  
-
-In `onCreate` method of your `Application` class, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
+- In `constructor` of your main `React.Component` class, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
 
 **Note:** Before calling the `onCreate` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
 Check out the [SDK Configuration](#SDK-Configuration) section for more info.
 
-```java
-import ir.metrix.sdk.Metrix;
-
-public class MyApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        MetrixConfig metrixConfig = new  MetrixConfig(this, "APP_ID");
-        // set your configuration (optional)
-        Metrix.onCreate(metrixConfig); // initialize the SDK
-    }
-}
+```javascript
+let metrixConfig = new MetrixConfig('APP_ID');
+// set your configuration (optional)
+Metrix.onCreate(metrixConfig); // initialize the SDK
 ```
 
 Replace `APP_ID` with your application id. You can find that in your Metrix dashboard.
-
-### About the application class and initialization in this class
-
-Android gives developers the ability to run methods before the creation of any `activity` in the application class. Because counting the `session`, gathering `screen-flows` between `activities` and many other features of the SDK required them to work properly.
 
 <hr/>
 <br/>
@@ -80,10 +71,11 @@ Check out the [SDK Configuration](#Metrix-Session-Identifier) section for more i
 
 Using this function, you can find the current session number:
 
-```java
-Metrix.getInstance().getSessionNum();
+```javascript
+Metrix.getSessionNum(function(sessionNum) {
+  //TODO
+});
 ```
-
 <br/>
 ## Event
 
@@ -104,26 +96,26 @@ You can call this function in two ways:
 
 1\. Make a custom event that has only one specified name:
 
-```java
-Metrix.getInstance().newEvent("abc123");
+```javascript
+Metrix.newEvent('my_event_slug');
 ```
 
 2\. Create a custom event with a specific number of attributes and metrics, for example, suppose you want to create a custom event in an online purchase program:
 
-```java
-Map<String, String> attributes = new HashMap<>();
-attributes.put("first_name", "Ali");
-attributes.put("last_name", "Bagheri");
-attributes.put("manufacturer", "Nike");
-attributes.put("product_name", "shirt");
-attributes.put("type", "sport");
-attributes.put("size", "large");
+```javascript
+var attributes = {};
+attributes['first_name'] = 'Ali';
+attributes['last_name'] = 'Bagheri';
+attributes['manufacturer'] = 'Nike';
+attributes['product_name'] = 'shirt';
+attributes['type'] = 'sport';
+attributes['size'] = 'large';
 
-Map<String, Double> metrics = new HashMap<>();
-metrics.put("price", 100000);
-metrics.put("purchase_time", current_time);
+var metrics = {};
+metrics['price'] = 100000;
+metrics['perchase_time'] = current_time;
 
-Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
+Metrix.newEvent('purchase_event_slug', attributes, metrics);
 ```
 
 The parameters for the `newEvent` method are as follows:
@@ -136,32 +128,33 @@ The parameters for the `newEvent` method are as follows:
 
 Using this function, you can add arbitrary `Attributes` to all events of the user:
 
-```java
-Map<String, String> attributes = new HashMap<>();
-attributes.put("manufacturer", "Nike");
-Metrix.getInstance().addUserAttributes(attributes);
+```javascript
+var attributes = {};
+attributes['manufacturer'] = 'Nike';
+
+Metrix.addUserAttributes(attributes);
 ```
 
 #### Specify the default metrics for user
 Using this function, you can add arbitrary `Metrics` to all events of the user:
 
-```java
-Map<String, Double> metrics = new HashMap<>();
-metrics.put("purchase_time", current_time);
-Metrix.getInstance().addUserMetrics(metrics);
+```javascript
+var metrics = {};
+metrics['perchase_time'] = current_time;
+
+Metrix.addUserMetrics(metrics);
 ```
 
 ### Track Revenue
 
 If your users can generate revenue by tapping on advertisements or making in-app purchases, you can track those revenues too with events. You can also add an optional order ID to avoid tracking duplicate revenues. By doing so, the last ten order IDs will be remembered and revenue events with duplicate order IDs are skipped. This is especially useful for tracking in-app purchases. You can see an example below where a tap is worth 12,000 IRR:
 
-```java
-Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{orderId}");
+```javascript
+Metrix.newRevenue('my_event_slug', 12000, 0, '2');
 ```
-
 - The first parameter is the slug you get from the dashboard.
 - The second parameter is the amount of revenue.
-- The third parameter is the currency of this event which can be `MetrixCurrency.IRR` (Default), `MetrixCurrency.USD`, or `MetrixCurrency.EUR`. 
+- The third parameter is the currency of this event which can be `0` (Rial), `1` (Dollar), or `2` (Euro). Rial is considered as the default value. 
 - The fourth parameter is your order number (optional).
 
 <br/>
@@ -206,10 +199,9 @@ In your Firebase console, select the settings (gear) icon > Project settings. Se
 
 - Configure the Metrix SDK to receive your app's push notification token
 
-```java
+```javascript
 metrixConfig.setFirebaseAppId("your firebase app id");
 ```
-
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
 
 
@@ -217,13 +209,10 @@ metrixConfig.setFirebaseAppId("your firebase app id");
 
 In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:
 
-```java
-metrixConfig.setOnAttributionChangedListener(new OnAttributionChangedListener() {
-    @Override
-      public void onAttributionChanged(AttributionModel attributionModel) {
-          //TODO
-       }
-    });
+```javascript
+metrixConfig.setOnAttributionChangedListener(attributionModel => {
+  //TODO
+});
 ```
 
 Here is a quick summary of `AttributionModel` properties:
@@ -249,52 +238,7 @@ If you are using Metrix tracker URLs with deeplinking enabled, it is possible to
 
 ### Standard deep linking scenario
 
-If a user has your app installed and you want it to launch after they engage with an Metrix tracker URL with the `deep_link` parameter in it, enable deeplinking in your app. This is done by choosing a desired **unique scheme name**. You'll assign it to the activity you want to launch once your app opens following a user selecting the tracker URL in the`AndroidManifest.xml` file. Add the `intent-filter` section to your desired activity definition in the manifest file and assign an `android:scheme` property value with the desired scheme name:
-
-```xml
-<activity
-    android:name=".MainActivity"
-    android:configChanges="orientation|keyboardHidden"
-    android:label="@string/app_name"
-    android:screenOrientation="portrait">
-
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-
-    <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="metrixExample" />
-    </intent-filter>
-</activity>
-```
-
-Deeplink content information within your desired activity is delivered via the `Intent` object, via either the activity's `onCreate` or `onNewIntent` methods. Once you've launched your app and have triggered one of these methods, you will be able to receive the actual deeplink passed in the `deep_link` parameter in the click URL. You can then use this information to conduct some additional logic in your app.
-
-You can extract deeplink content from either two methods like so:
-
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    Intent intent = getIntent();
-    Uri data = intent.getData();
-}
-```
-
-```java
-@Override
-protected void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
-
-    Uri data = intent.getData();
-}
-```
+You can use [this](https://reactnavigation.org/docs/en/deep-linking.html) library to implement the standard deep linking scenario.
 
 ### Deferred deep linking scenario
 
@@ -304,20 +248,12 @@ Deferred deeplinking scenario occurs when a user clicks on a Metrix tracker URL 
 
 If you wish to control if the Metrix SDK will open the deferred deep link, you can do it with a callback method in the config object.
 
-```java
-metrixConfig.setOnDeeplinkResponseListener(new OnDeeplinkResponseListener() {
-    @Override
-    public boolean launchReceivedDeeplink(Uri deeplink) {
-        // ...
-        if (shouldMetrixSdkLaunchTheDeeplink(deeplink)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+```javascript
+metrixConfig.setShouldLaunchDeeplink(true);
+metrixConfig.setOnDeeplinkResponseListener(deeplink => {
+  //TODO
 });
 ```
-
 After the Metrix SDK receives the deep link information from our backend, the SDK will deliver you its content via the listener and expect the `boolean` return value from you. This return value represents your decision on whether or not the Metrix SDK should launch the activity to which you have assigned the scheme name from the deeplink (like in the standard deeplinking scenario).
 
 If you return `true`, we will launch it, triggering the scenario described in the Standard deep linking scenario chapter. If you do not want the SDK to launch the activity, return `false` from the listener, and (based on the deep link content) decide on your own what to do next in your app.
@@ -330,52 +266,36 @@ Metrix enables you to run re-engagement campaigns with deeplinks.
 
 If you are using this feature, you need to make one additional call to the Metrix SDK in your app for us to properly reattribute your users.
 
-Once you have received the deeplink content in your app, add a call to the `Metrix.getInstance().appWillOpenUrl(Uri)` method. By making this call, the Metrix SDK will send information to the Metrix backend to check if there is any new attribution information inside of the deeplink. If your user is reattributed due to a click on the Metrix tracker URL with deeplink content.
+Once you have received the deeplink content in your app, add a call to the `Metrix.appWillOpenUrl(deeplink)` method. By making this call, the Metrix SDK will send information to the Metrix backend to check if there is any new attribution information inside of the deeplink. If your user is reattributed due to a click on the Metrix tracker URL with deeplink content.
 
-Here's how the call to `Metrix.getInstance().appWillOpenUrl(Uri)` should look:
+Here's how the call to `Metrix.appWillOpenUrl(deeplink)` should look:
 
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    Intent intent = getIntent();
-    Uri data = intent.getData();
-    Metrix.getInstance().appWillOpenUrl(data);
-}
-```
-
-```java
-@Override
-protected void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
-
-    Uri data = intent.getData();
-    Metrix.getInstance().appWillOpenUrl(data);
+```javascript
+onDeeplink(deeplink) {
+  Metrix.appWillOpenUrl(deeplink);
 }
 ```
 
 <hr/>
 <br/>
 # SDK Configuration
-In your `Application` class, before calling `onCreate` method to initialize Metrix, you can configure Metrix SDK by introducing different configurations to your `MetrixConfig` instance, calling available methods in the class. See the sample below:
 
-```java
-MetrixConfig metrixConfig = new MetrixConfig(context, "APP_ID");
+In your main `React.Component` class, before calling `onCreate` method to initialize Metrix, you can configure Metrix SDK by introducing different configurations to your `MetrixConfig` instance, calling available methods in the class. See the sample below:
 
-// Setting your configuration 
+```javascript
+let metrixConfig = new MetrixConfig('APP_ID');
+
+// Setting your configuration
 
 Metrix.onCreate(metrixConfig); // initializing the SDK
 ```
-
 Available configurations can be found below:
 
 ### Enable location listening
 
 Using the following method, you can inform Metrix that you wish to send information about the location of the user.
 
-```java
+```javascript
 metrixConfig.setLocationListening(isLocationListeningEnable);
 ```
 
@@ -392,7 +312,7 @@ You should be informed that as of Android 6.0 (API level 23), permissions should
 
 Using the following method, you can specify that each time the number of your buffered events reaches the threshold, the Metrix SDK should send them to the server:
 
-```java
+```javascript
 metrixConfig.setEventUploadThreshold(50);
 ```
 
@@ -402,7 +322,7 @@ The default value is 30 events.
 
 Using this method, you can specify the maximum number of out-going events per request:
 
-```java
+```javascript
 metrixConfig.setEventUploadMaxBatchSize(100);
 ```
 
@@ -412,7 +332,7 @@ The default value is 100 events.
 
 Using the following method, you can specify the maximum number of events that are buffered in the SDK (for example, if the user's device loses internet connection, the events will be buffered in the library until there is a chance to send the events and empty the buffer) and if the number of buffered events in the library passes this amount, old events are destroyed by SDK to make space for new events:
 
-```java
+```javascript
 metrixConfig.setEventMaxCount(1000);
 ```
 
@@ -422,8 +342,8 @@ The default value is 1000 events.
 
 By using this method, you can specify the timeout period of requests for sending events:
 
-```java
-Metrix.onCreate(metrixConfig);
+```javascript
+metrixConfig.setEventUploadPeriodMillis(30000);
 ```
 
 The default value is 30 seconds.
@@ -432,28 +352,18 @@ The default value is 30 seconds.
 
 Using this function, you can specify the limit of session length in your application in unit of milliseconds. For example, if this value is 10,000 and the user interacts with the application for 70 seconds, Metrix calculates this interaction as seven sessions.
 
-```java
+```javascript
 metrixConfig.setSessionTimeoutMillis(1800000);
 ```
 
 The default value is 30 minutes.
 
-### Enable the process of storing the user flow
-
-Using this method, you can inform Metrix to gather information about user's flow in each `Activity`/`Fragment` and these details should be stored automatically:
-
-```java
-metrixConfig.setScreenFlowsAutoFill(true);
-```
-
-The default value is false.
-
 ### Pre-installed trackers
 
 If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in the dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
 
-```java
-metrixConfig.setDefaultTrackerToken(trackerToken);
+```javascript
+metrixConfig.setDefaultTracker(trackerToken);
 ```
 
 ### SDK Signature
@@ -461,7 +371,8 @@ metrixConfig.setDefaultTrackerToken(trackerToken);
 If the SDK signature has already been enabled on your account and you have access to App Secrets in your Metrix Dashboard, please use the method below to integrate the SDK signature into your app.
 
 An App Secret is set by calling setAppSecret on your config instance:
-```java
+
+```javascript
 metrixConfig.setAppSecret(secretId, info1, info2, info3, info4);
 ```
 
@@ -469,20 +380,17 @@ metrixConfig.setAppSecret(secretId, info1, info2, info3, info4);
 
 If you want to publish your app in different stores such as Cafe Bazaar, Google Play, etc, and split the organic users by their store's source, you can use the following method:
 
-```java
+```javascript
 metrixConfig.setStore("store name");
 ```
 
 ### Metrix device identifier
 For each device with your app installed on, our backend generates a unique Metrix device identifier (known as an mxuid). You can obtain this identifier using the following method.
 
-```java
-metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
-            @Override
-            public void onReceiveUserId(String metrixUserId) {
-            sendToyourApi(metrixUserId);    
-            }
-        });
+```javascript
+metrixConfig.setOnReceiveUserIdListener(metrixUserId => {
+  //TODO
+});
 ```
 
 **Note:** Information about the adId is only available after our backend tracks the app installation. It is not possible to access the adId value before the SDK has been initialized and the installation of your app has been successfully tracked.
@@ -491,11 +399,8 @@ metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
 ### Metrix Session Identifier
 For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
 
-```java
-metrixConfig.setOnSessionIdListener(new OnSessionIdListener() {
-            @Override
-            public void onReceiveSessionId(String sessionId) {
-            sendToyourApi(sessionId);    
-            }
-        });
+```javascript
+metrixConfig.setOnSessionIdListener(metrixSessionId => {
+  //TODO
+});
 ```
