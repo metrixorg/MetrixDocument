@@ -132,15 +132,7 @@ The variables for the `newEvent` method are as follows:
 - **Second variable:** A Map `<String, String>` that specifies the attributes of an event.
 - **Third variable:** A Map `<String, Double>` that contains measurable metrics.
 
-### Track Revenue
-
-If your users can generate revenue by tapping on advertisements or making in-app purchases, you can track those revenues too with events. You can also add an optional order ID to avoid tracking duplicate revenues. By doing so, the last ten order IDs will be remembered and revenue events with duplicate order IDs are skipped. This is especially useful for tracking in-app purchases. You can see an example below where a tap is worth 12,000 IRR:
-
-```java
-Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{orderId}");
-```
-
-### Specify the default attributes for user
+#### Specify the default attributes for user
 
 Using this function, you can add arbitrary `Attributes` to all events of the user:
 
@@ -150,7 +142,7 @@ attributes.put("manufacturer", "Nike");
 Metrix.getInstance().addUserAttributes(attributes);
 ```
 
-### Specify the default metrics for user
+#### Specify the default metrics for user
 Using this function, you can add arbitrary `Metrics` to all events of the user:
 
 ```java
@@ -158,6 +150,20 @@ Map<String, Double> metrics = new HashMap<>();
 metrics.put("purchase_time", current_time);
 Metrix.getInstance().addUserMetrics(metrics);
 ```
+
+### Track Revenue
+
+If your users can generate revenue by tapping on advertisements or making in-app purchases, you can track those revenues too with events. You can also add an optional order ID to avoid tracking duplicate revenues. By doing so, the last ten order IDs will be remembered and revenue events with duplicate order IDs are skipped. This is especially useful for tracking in-app purchases. You can see an example below where a tap is worth 12,000 IRR:
+
+```java
+Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{orderId}");
+```
+
+- The first parameter is the slug you get from the dashboard.
+- The second parameter is the amount of revenue.
+- The third parameter is the currency of this event which can be `MetrixCurrency.IRR` (Default), `MetrixCurrency.USD`, or `MetrixCurrency.EUR`. 
+- The fourth parameter is your order number (optional).
+
 <br/>
 ## Device Identifier
 For each device with your app installed on, our backend generates a unique Metrix device identifier (known as an mxuid). You can obtain this identifier by introducing a listener in your configuration. 
@@ -469,7 +475,7 @@ If you want to publish your app in different stores such as Cafe Bazaar, Google 
 metrixConfig.setStore("store name");
 ```
 
-## Metrix device identifier
+### Metrix device identifier
 For each device with your app installed on, our backend generates a unique Metrix device identifier (known as an mxuid). You can obtain this identifier using the following method.
 
 ```java
@@ -484,7 +490,7 @@ metrixConfig.setOnReceiveUserIdListener(new OnReceiveUserIdListener() {
 **Note:** Information about the adId is only available after our backend tracks the app installation. It is not possible to access the adId value before the SDK has been initialized and the installation of your app has been successfully tracked.
 
 
-## Metrix Session Identifier
+### Metrix Session Identifier
 For each session, our sdk generates a unique Metrix session identifier (knowns as an mxsid). In order to obtain this identifier, call the following method on the `MetrixConfig` instance:
 
 ```java

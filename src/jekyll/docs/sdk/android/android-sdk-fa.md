@@ -140,8 +140,28 @@ Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
 ورودی‌های متد **newEvent** در این حالت، بدین شرح هستند:
 
 - **ورودی اول:** نامک رویداد مورد نظر شما که در پنل متریکس معرفی شده است.
-- **ورودی دوم:** یک Map<String, String> که ویژگی‌های یک رویداد را مشخص می‌کند.
-- **ورودی سوم:** یک Map<String, Double> که شامل ویژگی های قابل اندازه گیری است.
+- **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
+- **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
+
+#### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+
+با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
+
+```java
+Map<String, String> attributes = new HashMap<>();
+attributes.put("manufacturer", "Nike");
+Metrix.getInstance().addUserAttributes(attributes);
+```
+
+#### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
+
+با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
+
+```java
+Map<String, Double> metrics = new HashMap<>();
+metrics.put("purchase_time", current_time);
+Metrix.getInstance().addUserMetrics(metrics);
+```
 
 ### ساختن رویداد درآمدی
 
@@ -157,25 +177,6 @@ Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{or
 - **ورودی سوم:** واحد پول مورد استفاده است و می‌تواند سه مقدار **MetrixCurrency.IRR**  (پیش‌فرض) یا **MetrixCurrency.USD** و یا **MetrixCurrency.EUR** را داشته باشد.
 - **ورودی چهارم:** این ورودی دلخواه است و شماره سفارش را تعیین می‌کند.
 
-### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
-
-```java
-Map<String, String> attributes = new HashMap<>();
-attributes.put("manufacturer", "Nike");
-Metrix.getInstance().addUserAttributes(attributes);
-```
-
-### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
-
-```java
-Map<String, Double> metrics = new HashMap<>();
-metrics.put("purchase_time", current_time);
-Metrix.getInstance().addUserMetrics(metrics);
-```
 <br/>
 ## دریافت شناسه دستگاه‌های متریکس
 
