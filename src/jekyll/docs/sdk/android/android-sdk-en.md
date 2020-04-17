@@ -13,7 +13,7 @@ toc: true # table of contents
 1\. Add the following library to the `dependencies` section of your application `gradle` file:
 
 ```groovy
-implementation 'ir.metrix:metrix:0.14.8'
+                 implementation 'ir.metrix:metrix:0.14.8'
 ```
 
 2\. You need to initialize the Metrix SDK in `onCreate` method of your `Application`. 
