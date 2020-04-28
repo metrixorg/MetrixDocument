@@ -9,7 +9,7 @@ lang: fa
 
 برای تغییر تنظیمات اتریبیوشن، در صفحه *سازمان‌ها* روی علامت سه نقطه کلیک کرده و **setting** یا **تنظیمات** را انتخاب کنید و سپس وارد بخش **اتریبیوشن** شوید. در اینجا می‌توانید نسبت به تغییر تنظیمات اتریبیوشن اقدام کنید.
 
-<img src="{{ '/images/attribution-window.png' | relative_url }}" alt="attribution setting"/>
+<img src="{{ '/images/attribution-window.jpg' | relative_url }}" alt="attribution setting"/>
 
 ## در پنجره اتریبیوشن، چه روش‌هایی برای تغییر در تنظیمات فرایند اتریبیوشن وجود دارد؟
 
