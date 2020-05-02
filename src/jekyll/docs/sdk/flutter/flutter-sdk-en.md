@@ -186,6 +186,12 @@ metrixConfig.firebaseAppId = "yourfirebase app id";
 
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
 
+- Add this dependency to your `app/build.gradle` file:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:18.0.0'
+```
+
 ## Get User Attribution
 
 In case you want to access info about your user's current attribution when ever you need it, you can make a call to the following method of the Metrix instance:

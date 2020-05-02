@@ -131,6 +131,11 @@ metrixConfig.SetFirebaseAppId("your firebase app id");
 
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
 
+- Add this dependency to your `app/build.gradle` file:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:18.0.0'
+```
 
 <br/>
 ## Deep Linking

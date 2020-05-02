@@ -149,6 +149,12 @@ metrixConfig.SetFirebaseAppId("your firebase app id");
 [تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
 را مطالعه نمایید.
 
+- کتاب‌خانه زیر را در قسمت `dependencies` فایل `app/build.gradle` اپلیکیشن خود اضافه کنید:
+
+```groovy
+implementation 'com.google.firebase:firebase-messaging:18.0.0'
+```
+
 <br/>
 ## Deep Linking
 
