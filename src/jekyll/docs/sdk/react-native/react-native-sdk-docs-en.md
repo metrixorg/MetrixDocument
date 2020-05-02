@@ -365,7 +365,7 @@ The default value is 30 minutes.
 
 ### Pre-installed trackers
 
-If you want to use the Metrix SDK to recognize users whose devices came with your app pre-installed, open your app delegate and set the default tracker of your config. Replace `trackerToken` with the tracker token you created in the dashboard. Please note that the Dashboard displays a tracker URL (including http://tracker.metrix.ir/). In your source code, you should specify only the six-character token and not the entire URL.
+If you want to use the Metrix SDK to recognize users whose installation has not been triggered by an ad click, set the default tracker in your config using the method below. Replace `trackerToken` with the tracker token you created in the dashboard.
 
 ```javascript
 metrixConfig.setDefaultTracker(trackerToken);
