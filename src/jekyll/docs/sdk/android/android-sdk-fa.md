@@ -12,7 +12,7 @@ toc: true # table of contents
 ۱. کتابخانه را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
 
 ```groovy
- implementation 'ir.metrix:metrix:0.14.9'
+    implementation 'ir.metrix:metrix:0.14.9'
 ```
 
 ۲. کتابخانه متریکس را در متد `onCreate` کلاس `Application` اندروید `initialize` کنید. 
