@@ -38,6 +38,7 @@ permalink: /
     <li><a href="{{ site.baseurl }}/sdk/unity/">Unity</a></li>
     <li><a href="{{ site.baseurl }}/sdk/flutter/">Flutter</a></li>
     <li><a href="{{ site.baseurl }}/sdk/pwa/">PWA</a></li>
+    <li><a href="{{ site.baseurl }}/sdk/cordova/">Cordova</a></li>
   </ul>
 </div>
   </div>
