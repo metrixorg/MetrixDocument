@@ -12,3 +12,4 @@ toc: false # table of contents
 - [Unity]({{ site.baseurl }}/sdk/unity/)
 - [Flutter]({{ site.baseurl }}/sdk/flutter/)
 - [PWA]({{ site.baseurl }}/sdk/pwa/)
+- [Cordova]({{ site.baseurl }}/sdk/cordova/)

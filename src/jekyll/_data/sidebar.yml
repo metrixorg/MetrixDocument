@@ -61,3 +61,6 @@ fa:
 
       - name: PWA
         link: /sdk/pwa
+
+      - name: Cordova
+        link: /sdk/cordova
