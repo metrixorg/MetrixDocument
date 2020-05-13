@@ -16,6 +16,13 @@ toc: true # table of contents
 cordova plugin add @metrixorg/cordova-metrix
 ```
 
+در صورتی که از `ionic-native` در پروژه خود استفاده می‌کنید، پلاگین متریکس را با اجرای دستورات زیر به برنامه خود اضافه کنید:
+
+```bash
+npm install @ionic-native/metrix --save
+ionic cordova plugin add @metrixorg/cordova-metrix
+```
+
 ۲. در فایل `index.js` خود، بعد از اینکه event `deviceready` را دریافت کردید، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
 
 **توجه:** شما می‌توانید پیش از فراخوانی متد `onCreate`، با استفاده از نمونه `MetrixConfig` خود، پیکربندی دلخواه خود را برای کتابخانه تنظیم کنید.
@@ -199,6 +206,13 @@ metrixConfig.setFirebaseAppId("your firebase app id");
 **تذکر:** در این باره توضیحات مربوط به بخش
 [تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)
 را مطالعه نمایید.
+
+- کتاب‌خانه زیر را به اپلیکیشن خود اضافه کنید:
+
+```groovy
+<framework src="com.google.firebase:firebase-messaging:18.0.0" />
+```
+
 
 <br/>
 ## دریافت اطلاعات کمپین

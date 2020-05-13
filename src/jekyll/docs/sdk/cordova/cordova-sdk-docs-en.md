@@ -17,6 +17,14 @@ toc: true # table of contents
 ```bash
 cordova plugin add @metrixorg/cordova-metrix
 ```
+
+In case you are using Ionic Native, you can add our SDK from `ionic-native` repo:
+
+```bash
+npm install @ionic-native/metrix --save
+ionic cordova plugin add @metrixorg/cordova-metrix
+```
+
 2\. In your `index.js` file after you have received the deviceready event, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
 
 **Note:** Before calling the `onCreate` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
@@ -179,6 +187,12 @@ In your Firebase console, select the settings (gear) icon > Project settings. Se
 metrixConfig.setFirebaseAppId("your firebase app id");
 ```
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
+
+- Add this dependency to your project:
+
+```groovy
+<framework src="com.google.firebase:firebase-messaging:18.0.0" />
+```
 
 ## Get User Attribution
 
