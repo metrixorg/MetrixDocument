@@ -124,6 +124,8 @@ The parameters for the `newEvent` method are as follows:
 - **Second variable:** A `Map<String, String>` that specifies the attributes of an event.
 - **Third variable:** A `Map<String, Double>` that contains measurable metrics.
 
+**Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
+
 #### Specify the default attributes for user
 
 Using this function, you can add arbitrary `Attributes` to all events of the user:
@@ -134,6 +136,8 @@ attributes['manufacturer'] = 'Nike';
 
 Metrix.addUserAttributes(attributes);
 ```
+
+**Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
 
 #### Specify the default metrics for user
 Using this function, you can add arbitrary `Metrics` to all events of the user:
@@ -223,9 +227,13 @@ metrixConfig.setOnAttributionChangedListener(attributionModel => {
 Here is a quick summary of `AttributionModel` properties:
 
 `attributionModel.getAcquisitionAd()`: The creative/ad grouping level of the current attribution.
+
 `attributionModel.getAcquisitionAdSet()`: The adGroup/adSet grouping level of the current attribution.
+
 `attributionModel.getAcquisitionCampaign()`: The campaign grouping level of the current attribution.
+
 `attributionModel.getAcquisitionSource()`: The network/source grouping level of the current attribution.
+
 `attributionModel.getAttributionStatus()`: Specifies the status of the user in the campaign.
 
 `AttributionStatus` has one of the values below:

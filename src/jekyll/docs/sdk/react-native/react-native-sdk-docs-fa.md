@@ -127,6 +127,9 @@ Metrix.newEvent('purchase_event_slug', attributes, metrics);
 - **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
 - **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
 
+**توجه:** هر رویداد می‌تواند حداکثر ۵۰ attribute داشته باشد که طول key و value آن حداکثر ۵۱۲ بایت می‌باشد.
+
+
 #### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
 
 با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
@@ -137,6 +140,9 @@ attributes['manufacturer'] = 'Nike';
 
 Metrix.addUserAttributes(attributes);
 ```
+
+**توجه:** هر رویداد می‌تواند حداکثر ۵۰ attribute داشته باشد که طول key و value آن حداکثر ۵۱۲ بایت می‌باشد.
+
 
 #### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
 
@@ -242,10 +248,15 @@ metrixConfig.setOnAttributionChangedListener(attributionModel => {
 ```
 
 مدل `attributionModel` اطلاعات زیر را در اختیار شما قرار می دهد.
+
 `attributionModel.acquisitionAd` : نام تبلیغ
+
 `attributionModel.acquisitionAdSet`: گروه تبلیغاتی
+
 `attributionModel.acquisitionCampaign`: کمپین تبلیغاتی
+
 `attributionModel.acquisitionSource`: شبکه تبلیغاتی
+
 `attributionModel.attributionStatus`: وضعیت کاربر در کمپین را  
 مشخص می کند
 
