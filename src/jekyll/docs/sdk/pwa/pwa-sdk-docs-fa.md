@@ -7,8 +7,8 @@ toc: true # table of contents
 ---
 
 
-### پروژه نمونه
-در [اینجا](https://github.com/metrixorg/MetrixSDK-Web/blob/master/index.js) یک نمونه از استفاده از sdk قرار دارد.
+### دریافت کتابخانه
+فایل کتابخانه متریکس را می‌توانید از [اینجا](https://github.com/metrixorg/MetrixSDK-Web/raw/master/dist/metrix.js) دریافت و به پروژه خود اضافه نمایید.
 
 ### تنظیمات اولیه
 

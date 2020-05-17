@@ -77,7 +77,7 @@ You can call this function in two ways:
 ```dart
 Metrix.newEvent('my_event_slug',null,null);
 ```
-2\. Create a custom event with a specific number of attributes and metrics, for example, suppose you want to create a custom event in an online purchase program:
+2\. Create a custom event with a specific number of attributes, for example, suppose you want to create a custom event in an online purchase program:
 
 ```dart
 Map<String, String> attributes = new Map();
@@ -88,16 +88,12 @@ attributes["product_name"] =  "shirt";
 attributes["type"] =  "sport";
 attributes["size"] =  "large";
 
-Map<String, Double> metrics = new Map();
-metrics["price"] =  100000.0;
-
-Metrix.newEvent("purchase_event_slug", attributes, metrics);
+Metrix.newEvent("purchase_event_slug", attributes);
 ```
 The parameters for the `newEvent` method are as follows:
 
 - **First variable:** The event slug which is a String you receive from the Metrix dashboard.
 - **Second variable:** A `Map<String, String>` that specifies the attributes of an event.
-- **Third variable:** A `Map<String, Double>` that contains measurable metrics.
 
 **Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
 
@@ -119,15 +115,6 @@ Metrix.addUserAttributes(attributes);
 
 **Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
 
-#### Specify the default metrics for user
-Using this function, you can add arbitrary `Metrics` to all events of the user:
-
-```dart
-Map<String, Double> metrics = new Map();
-metrics["price"] =  100000.0;
-
-Metrix.addUserMetrics(metrics);
-```
 
 ### Track Revenue
 

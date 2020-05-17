@@ -108,7 +108,7 @@ You can call this function in two ways:
 Metrix.getInstance().newEvent("abc123");
 ```
 
-2\. Create a custom event with a specific number of attributes and metrics, for example, suppose you want to create a custom event in an online purchase program:
+2\. Create a custom event with a specific number of attributes, for example, suppose you want to create a custom event in an online purchase program:
 
 ```java
 Map<String, String> attributes = new HashMap<>();
@@ -119,18 +119,13 @@ attributes.put("product_name", "shirt");
 attributes.put("type", "sport");
 attributes.put("size", "large");
 
-Map<String, Double> metrics = new HashMap<>();
-metrics.put("price", 100000);
-metrics.put("purchase_time", current_time);
-
-Metrix.getInstance().newEvent("purchase_event_slug", attributes, metrics);
+Metrix.getInstance().newEvent("purchase_event_slug", attributes);
 ```
 
 The parameters for the `newEvent` method are as follows:
 
 - **First variable:** The event slug which is a String you receive from the Metrix dashboard.
 - **Second variable:** A `Map<String, String>` that specifies the attributes of an event.
-- **Third variable:** A `Map<String, Double>` that contains measurable metrics.
 
 **Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
 
@@ -146,14 +141,6 @@ Metrix.getInstance().addUserAttributes(attributes);
 
 **Note:** Every event can have up to 50 attributes unique to that event with each attribute having a limit of 512 bytes in key and 512 bytes in value.
 
-#### Specify the default metrics for user
-Using this function, you can add arbitrary `Metrics` to all events of the user:
-
-```java
-Map<String, Double> metrics = new HashMap<>();
-metrics.put("purchase_time", current_time);
-Metrix.getInstance().addUserMetrics(metrics);
-```
 
 ### Track Revenue
 

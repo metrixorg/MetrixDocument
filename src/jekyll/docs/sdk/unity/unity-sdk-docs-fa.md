@@ -10,7 +10,7 @@ toc: true # table of contents
 <br/>
 # راه‌اندازی کتابخانه در اپلیکیشن اندروید
 <br/>
-۱. ابتدا کتابخانه‌ متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/MetrixSDK-v0.15.2.unitypackage) دانلود کنید و در پروژه خود import کنید.
+۱. ابتدا کتابخانه‌ متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.2.unitypackage) دانلود کنید و در پروژه خود import کنید.
 
 ۲. در ابتدای برنامه‌ی خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
 

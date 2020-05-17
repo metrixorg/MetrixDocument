@@ -103,7 +103,7 @@ Metrix.getSessionNum(function(sessionNum) {
 Metrix.newEvent('my_event_slug');
 ```
 
-۲. ثبت رویداد به همراه تعداد دلخواه attribute و metric مربوط به آن. به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
+۲. ثبت رویداد به همراه تعداد دلخواه attribute مربوط به آن. به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
 
 ```javascript
 var attributes = {};
@@ -114,18 +114,13 @@ attributes['product_name'] = 'shirt';
 attributes['type'] = 'sport';
 attributes['size'] = 'large';
 
-var metrics = {};
-metrics['price'] = 100000;
-metrics['perchase_time'] = current_time;
-
-Metrix.newEvent('purchase_event_slug', attributes, metrics);
+Metrix.newEvent('purchase_event_slug', attributes);
 ```
 
 ورودی‌های متد **newEvent** در این حالت، بدین شرح هستند:
 
 - **ورودی اول:** نامک رویداد مورد نظر شما که در پنل متریکس معرفی شده است.
 - **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
-- **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
 
 **توجه:** هر رویداد می‌تواند حداکثر ۵۰ attribute داشته باشد که طول key و value آن حداکثر ۵۱۲ بایت می‌باشد.
 
@@ -143,17 +138,6 @@ Metrix.addUserAttributes(attributes);
 
 **توجه:** هر رویداد می‌تواند حداکثر ۵۰ attribute داشته باشد که طول key و value آن حداکثر ۵۱۲ بایت می‌باشد.
 
-
-#### مشخص کردن Metricsهای پیش‌فرض همه‌ی رویدادها
-
-با استفاده از این تابع می‌توانید به تعداد دلخواه `Metric` به همه‌ی رویدادهای خود اضافه کنید:
-
-```javascript
-var metrics = {};
-metrics['perchase_time'] = current_time;
-
-Metrix.addUserMetrics(metrics);
-```
 
 ### ساختن رویداد درآمدی
 
