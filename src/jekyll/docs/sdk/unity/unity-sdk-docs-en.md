@@ -11,7 +11,7 @@ toc: true # table of contents
 # Initial Implementation of the SDK in Your Project
 <br/>
 
-1\. Download the latest version from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/MetrixSDK-v0.15.0.unitypackage).
+1\. Download the latest version from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/MetrixSDK-v0.15.2.unitypackage).
 Open your project in the Unity Editor and navigate to Assets → Import Package → Custom Package and select the downloaded Unity package file.
 
 2\. In the start of your application, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
