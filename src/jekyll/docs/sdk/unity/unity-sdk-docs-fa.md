@@ -10,9 +10,26 @@ toc: true # table of contents
 <br/>
 # راه‌اندازی کتابخانه در اپلیکیشن اندروید
 <br/>
-۱. ابتدا کتابخانه‌ متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.2.unitypackage) دانلود کنید و در پروژه خود import کنید.
+۱. ابتدا پلاگین متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.3.unitypackage) دانلود کنید و در پروژه خود import کنید.
 
-۲. در ابتدای برنامه‌ی خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
+۲. وابستگی مربوط به کتابخانه متریکس را به dependencies در فایل `mainTemplate.gradle` پروژه خود اضافه کنید:
+
+```groovy
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // ...
+
+    // Adding Metrix
+    implementation 'ir.metrix:unity:0.15.2'
+**DEPS**}
+```
+
+**توجه:** در صورتی که در پروژه خود فایل `mainTemplate.gradle` ندارید، برای اضافه کردن این فایل 
+[این مطلب](https://docs.unity3d.com/Manual/android-gradle-overview.html)
+را مطالعه کنید.
+
+۳. در ابتدای برنامه‌ی خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
 
 **توجه:** شما می‌توانید پیش از فراخوانی متد `onCreate`، با استفاده از نمونه `MetrixConfig` خود، پیکربندی دلخواه خود را برای کتابخانه تنظیم کنید.
 برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
