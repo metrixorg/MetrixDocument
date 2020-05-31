@@ -33,7 +33,7 @@ ionic cordova plugin add @metrixorg/cordova-metrix
 ```javascript
 let metrixConfig = new MetrixConfig('APP_ID'); // ساخت نمونه‌ای از کلاس `MetrixConfig`
 // تغییر پیکربندی (دلخواه)
-Metrix.onCreate(metrixConfig); // راه‌اندازی کردن کتابخانه
+Metrix.create(metrixConfig); // راه‌اندازی کردن کتابخانه
 ```
 
 `APP_ID`: کلید اپلیکیشن شما که از پنل متریکس آن را دریافت می‌کنید.

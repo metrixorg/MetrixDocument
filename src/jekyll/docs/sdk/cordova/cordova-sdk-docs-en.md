@@ -33,7 +33,7 @@ Check out the [SDK Configuration](#SDK-Configuration) section for more info.
 ```javascript
 let metrixConfig = new MetrixConfig('APP_ID');
 // set your configuration (optional)
-Metrix.onCreate(metrixConfig); // initialize the SDK
+Metrix.create(metrixConfig); // initialize the SDK
 ```
 
 Replace `APP_ID` with your application id. You can find that in your Metrix dashboard.
