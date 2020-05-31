@@ -25,9 +25,9 @@ npm install @ionic-native/metrix --save
 ionic cordova plugin add @metrixorg/cordova-metrix
 ```
 
-2\. In your `index.js` file after you have received the deviceready event, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
+2\. In your `index.js` file after you have received the deviceready event, create an instance of `MetrixConfig` and initialize Metrix by calling `create` method:
 
-**Note:** Before calling the `onCreate` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
+**Note:** Before calling the `create` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
 Check out the [SDK Configuration](#SDK-Configuration) section for more info.
 
 ```javascript
