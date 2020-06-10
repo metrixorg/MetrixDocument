@@ -1,3 +1,4 @@
+
 ---
 layout: classic-docs
 title: SDK iOS
@@ -177,3 +178,38 @@ MXConfig *metrixConfig = [MXConfig configWithAppId:yourAppId environment:environ
 ```objc
 Tracker token: 'abc123'
 ```
+### دریافت اطلاعات کمپین
+شما می‌توانید با تنظیم یک delegateاز تغییرات اطلاعات کمپین با خبر شوید. مراحل زیر را برای پیاده‌سازی delegate اختیاری مربوطه در `AppDelegate` خود طی نمایید:
+1. در فایل `AppDelegate.h`:
+    ```objc
+    @interface AppDelegate : UIResponder <UIApplicationDelegate, MetrixDelegate>
+    ```
+2. تابع زیر را به `AppDelegate.m` اضافه کنید:
+    ```objc
+    - (void)metrixAttributionChanged:(MXAttribution *)attribution {
+    }
+    ```
+3. تنظیم delegate در نمونه `MXConfig` خود:
+    ```objc
+    [metrixConfig setDelegate:self];
+    ```
+از آنجایی که delegate callback شما بر روی نمونه `MXConfig` تنظیم شده است، باید `setDelegate` قبل از `[Metrix appDidLaunch:metrix
+Config]` فراخوانی شود.
+در تابع delegate شما به پارامترهای کمپین دسترسی دارید:
+- `NSString trackerToken` 
+- `NSString acquisitionSource` شبکه تبلیغاتی
+- `NSString acquisitionCampaign` کمپین تبلیغاتی
+- `NSString acquisitionAdSet` گروه تبلیغاتی
+- `NSString acquisitionAd` نام تبلیغ
+- `NSString attributionStatus` وضعیت کاربر در کمپین
+
+مقدار `attributionStatus` شامل یکی از موارد زیر است:
+- `ATTRIBUTED`
+- `NOT_ATTRIBUTED_YET`
+- `ATTRIBUTION_NOT_NEEDED`
+- `UNKNOWN`
+
+پس از این شما می‌توانید بدین شکل برای اطلاعات کمپین درخواست نمایید:
+ ```objc
+    [Metrix requestAttribution];
+    ```

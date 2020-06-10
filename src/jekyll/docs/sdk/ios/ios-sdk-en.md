@@ -1,3 +1,4 @@
+
 ---
 layout: classic-docs
 title: SDK iOS
@@ -162,3 +163,45 @@ After running the app you should see a line like the following in XCode:
 ```objc
 Tracker token: 'abc123'
 ```
+### Get Attribution Info
+You can register a delegate callback to be notified of tracker attribution changes. Due to the different sources considered for attribution, this information can not be provided synchronously. Follow these steps to implement the optional delegate protocol in your app delegate:
+1. Open `AppDelegate.h` and add the import and the `MetrixDelegate` declaration.
+
+    ```objc
+    @interface AppDelegate : UIResponder <UIApplicationDelegate, MetrixDelegate>
+    ```
+
+2. Open `AppDelegate.m` and add the following delegate callback function to your app delegate implementation.
+
+    ```objc
+    - (void)metrixAttributionChanged:(MXAttribution *)attribution {
+    }
+    ```
+
+3. Set the delegate with your `MXConfig` instance:
+
+    ```objc
+    [metrixConfig setDelegate:self];
+    ```
+
+As the delegate callback is configured using the `MXConfig` instance, you should call `setDelegate` before calling `[Metrix appDidLaunch:metrix
+Config]`.
+
+The delegate function will be called after the SDK receives the final attribution data. Within the delegate function you have access to the `attribution` parameter. Here is a quick summary of its properties:
+- `NSString trackerToken` the tracker token of the current attribution.
+- `NSString acquisitionSource` the network grouping level of the current attribution.
+- `NSString acquisitionCampaign` the campaign grouping level of the current attribution.
+- `NSString acquisitionAdSet` the ad group grouping level of the current attribution.
+- `NSString acquisitionAd` the creative grouping level of the current attribution.
+- `NSString attributionStatus` the status of the current attribution.
+
+`attributionStatus` has one of the values below:
+- `ATTRIBUTED`
+- `NOT_ATTRIBUTED_YET`
+- `ATTRIBUTION_NOT_NEEDED`
+- `UNKNOWN`
+
+Then you can request for attribution info:
+ ```objc
+    [Metrix requestAttribution];
+    ```
