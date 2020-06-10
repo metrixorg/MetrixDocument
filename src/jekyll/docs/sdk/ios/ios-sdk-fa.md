@@ -1,3 +1,4 @@
+
 ---
 layout: classic-docs
 title: SDK iOS
@@ -180,15 +181,18 @@ Tracker token: 'abc123'
 ### دریافت اطلاعات کمپین
 شما می‌توانید با تنظیم یک delegateاز تغییرات اطلاعات کمپین با خبر شوید. مراحل زیر را برای پیاده‌سازی delegate اختیاری مربوطه در `AppDelegate` خود طی نمایید:
 1. در فایل `AppDelegate.h`:
+
 ```objc
     @interface AppDelegate : UIResponder <UIApplicationDelegate, MetrixDelegate>
 ```
 2. تابع زیر را به `AppDelegate.m` اضافه کنید:
+
 ```objc
-    - (void)metrixAttributionChanged:(MXAttribution *)attribution {
+    - (void)metrixAttributionChanged:(MXAttribution *)attribution{
     }
 ```
 3. تنظیم delegate در نمونه `MXConfig` خود:
+
 ```objc
     [metrixConfig setDelegate:self];
 ```
