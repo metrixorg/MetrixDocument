@@ -189,16 +189,16 @@ In the Metrix dashboard, navigate to your app and select your app settings. Sele
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
-- Find your Firebase APP ID
+<!-- - Find your Firebase APP ID
 
 In your Firebase console, select the settings (gear) icon > Project settings. Select General and locate your `App ID` token.
 
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/> -->
 
 - Configure the Metrix SDK to receive your app's push notification token
 
 ```java
-metrixConfig.setFirebaseAppId("your firebase app id");
+metrixConfig.setFirebaseId("firebase app id", "firebase project id", "firebase api key");
 ```
 
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.
