@@ -178,21 +178,21 @@ Metrix.newRevenue('my_event_slug', 12000, 0, '{orderId}');
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
-- پیدا کردن Firebase APP ID
+<!-- - پیدا کردن Firebase APP ID
 
 ابتدا به کنسول فایربیس خود رفته.
 دکمه settings را زده سپس به Project settings بروید
 تب General را انتخاب کنید
 حالا می‌توانید `App ID` را بردارید
 
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/> -->
 
 - تغییر پیکربندی کتابخانه متریکس
 
 با استفاده از دستور زیر در هنگام تعیین پیکربندی کتابخانه، آیدی فایربیس را به کتابخانه متریکس بدهید.
 
 ```dart
-metrixConfig.firebaseAppId = "yourfirebase app id";
+metrixConfig.setFirebaseId("firebase app id", "firebase project id", "firebase api key");
 ```
 
 **تذکر:** در این باره توضیحات مربوط به بخش
