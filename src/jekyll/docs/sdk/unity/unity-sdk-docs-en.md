@@ -11,7 +11,7 @@ toc: true # table of contents
 # Initial Implementation of the SDK in Your Project
 <br/>
 
-1\. Download the latest version of Metrix unity plugin from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.4.unitypackage).
+1\. Download the latest version of Metrix unity plugin from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.5.unitypackage).
 Open your project in the Unity Editor and navigate to Assets → Import Package → Custom Package and select the downloaded Unity package file.
 
 <!-- 2\. Add Metrix SDK dependency to your `mainTemplate.gradle` file:
@@ -23,7 +23,7 @@ dependencies {
     // ...
 
     // Adding Metrix
-    implementation 'ir.metrix:unity:0.15.2'
+ implementation 'ir.metrix:unity:0.15.5'
 **DEPS**}
 ```
 
