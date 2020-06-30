@@ -12,7 +12,7 @@ toc: true # table of contents
 ۱. کتابخانه را در قسمت `dependencies` فایل `gradle` اپلیکیشن خود اضافه کنید:
 
 ```groovy
- implementation 'ir.metrix:metrix:0.15.2'
+ implementation 'ir.metrix:metrix:0.15.5'
 ```
 
 ۲. کتابخانه متریکس را در متد `onCreate` کلاس `Application` اندروید `initialize` کنید. 
@@ -208,21 +208,21 @@ Metrix.getInstance().newRevenue("my_event_slug", 12000, MetrixCurrency.IRR, "{or
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
-- پیدا کردن Firebase APP ID
+<!-- - پیدا کردن Firebase APP ID
 
 ابتدا به کنسول فایربیس خود رفته.
 دکمه settings را زده سپس به Project settings بروید
 تب General را انتخاب کنید
 حالا می‌توانید `App ID` را بردارید
 
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/> -->
 
 - تغییر پیکربندی کتابخانه متریکس
 
-با استفاده از دستور زیر در هنگام تعیین پیکربندی کتابخانه، آیدی فایربیس را به کتابخانه متریکس بدهید.
+با استفاده از دستور زیر در هنگام تعیین پیکربندی کتابخانه، شناسه‌های فایربیس را به کتابخانه متریکس بدهید.
 
 ```java
-metrixConfig.setFirebaseAppId("your firebase app id");
+metrixConfig.setFirebaseId("firebase app id", "firebase project id", "firebase api key");
 ```
 **تذکر:** در این باره توضیحات مربوط به بخش
 [تغییر پیکربندی کتابخانه](#تغییر-پیکربندی-کتابخانه)

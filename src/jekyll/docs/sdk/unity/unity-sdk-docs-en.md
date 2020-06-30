@@ -11,10 +11,10 @@ toc: true # table of contents
 # Initial Implementation of the SDK in Your Project
 <br/>
 
-1\. Download the latest version of Metrix unity plugin from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.3.unitypackage).
+1\. Download the latest version of Metrix unity plugin from [our releases page](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.5.unitypackage).
 Open your project in the Unity Editor and navigate to Assets → Import Package → Custom Package and select the downloaded Unity package file.
 
-2\. Add Metrix SDK dependency to your `mainTemplate.gradle` file:
+<!-- 2\. Add Metrix SDK dependency to your `mainTemplate.gradle` file:
 
 ```groovy
 dependencies {
@@ -23,13 +23,13 @@ dependencies {
     // ...
 
     // Adding Metrix
-    implementation 'ir.metrix:unity:0.15.2'
+ implementation 'ir.metrix:unity:0.15.5'
 **DEPS**}
 ```
 
-**Note:** In case you don't have a `mainTemplate.gradle` file in your project, read [this document](https://docs.unity3d.com/Manual/android-gradle-overview.html) to learn how to add one.
+**Note:** In case you don't have a `mainTemplate.gradle` file in your project, read [this document](https://docs.unity3d.com/Manual/android-gradle-overview.html) to learn how to add one. -->
 
-3\. In the start of your application, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
+2\. In the start of your application, create an instance of `MetrixConfig` and initialize Metrix by calling `onCreate` method:
 
 **Note:** Before calling the `onCreate` method, you can configure Metrix in the `MetrixConfig` instance according to your requirements.
 Check out the [SDK Configuration](#SDK-Configuration) section for more info.:
@@ -132,16 +132,16 @@ In the Metrix dashboard, navigate to your app and select your app settings. Sele
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
-- Find your Firebase APP ID
+<!-- - Find your Firebase APP ID
 
 In your Firebase console, select the settings (gear) icon > Project settings. Select General and locate your `App ID` token.
 
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/> -->
 
 - Configure the Metrix SDK to receive your app's push notification token
 
 ```csharp
-metrixConfig.SetFirebaseAppId("your firebase app id");
+metrixConfig.setFirebaseId("firebase app id", "firebase project id", "firebase api key");
 ```
 
 **Note:** Please check out the [SDK Configuration](#SDK-Configuration) section for further considerations on configuring the SDK.

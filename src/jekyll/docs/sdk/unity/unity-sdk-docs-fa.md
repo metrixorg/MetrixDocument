@@ -10,9 +10,9 @@ toc: true # table of contents
 <br/>
 # راه‌اندازی کتابخانه در اپلیکیشن اندروید
 <br/>
-۱. ابتدا پلاگین متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.3.unitypackage) دانلود کنید و در پروژه خود import کنید.
+۱. ابتدا پلاگین متریکس را از [این لینک](https://github.com/metrixorg/MetrixSDK-UnityPlugin/raw/master/lib/MetrixSDK-v0.15.5.unitypackage) دانلود کنید و در پروژه خود import کنید.
 
-۲. وابستگی مربوط به کتابخانه متریکس را به dependencies در فایل `mainTemplate.gradle` پروژه خود اضافه کنید:
+<!-- ۲. وابستگی مربوط به کتابخانه متریکس را به dependencies در فایل `mainTemplate.gradle` پروژه خود اضافه کنید:
 
 ```groovy
 dependencies {
@@ -21,15 +21,15 @@ dependencies {
     // ...
 
     // Adding Metrix
-    implementation 'ir.metrix:unity:0.15.2'
+ implementation 'ir.metrix:unity:0.15.5'
 **DEPS**}
 ```
 
 **توجه:** در صورتی که در پروژه خود فایل `mainTemplate.gradle` ندارید، برای اضافه کردن این فایل 
 [این مطلب](https://docs.unity3d.com/Manual/android-gradle-overview.html)
-را مطالعه کنید.
+را مطالعه کنید. -->
 
-۳. در ابتدای برنامه‌ی خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
+۲. در ابتدای برنامه‌ی خود، مطابق قطعه کد زیر، نمونه‌ای از کلاس `MetrixConfig` بسازید و سپس با فراخوانی متد `onCreate`، کتابخانه متریکس را `initialize` کنید:
 
 **توجه:** شما می‌توانید پیش از فراخوانی متد `onCreate`، با استفاده از نمونه `MetrixConfig` خود، پیکربندی دلخواه خود را برای کتابخانه تنظیم کنید.
 برای دریافت اطلاعات بیشتر در این مورد به بخش مربوطه در 
@@ -145,21 +145,21 @@ Metrix.NewRevenue("my_event_slug", 12000, 0, "{orderId}");
 
 <img src="{{ '/images/push-configuration.png' | relative_url }}" alt="push configuration"/>
 
-- پیدا کردن Firebase APP ID
+<!-- - پیدا کردن Firebase APP ID
 
 ابتدا به کنسول فایربیس خود رفته.
 دکمه settings را زده سپس به Project settings بروید
 تب General را انتخاب کنید
 حالا می‌توانید `App ID` را بردارید
 
-<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/>
+<img src="{{ '/images/firebase-settings.png' | relative_url }}" alt="firebase app id"/> -->
 
 - تغییر پیکربندی کتابخانه متریکس
 
 با استفاده از دستور زیر در هنگام تعیین پیکربندی کتابخانه، آیدی فایربیس را به کتابخانه متریکس بدهید.
 
 ```csharp
-metrixConfig.SetFirebaseAppId("your firebase app id");
+metrixConfig.setFirebaseId("firebase app id", "firebase project id", "firebase api key");
 ```
 
 **تذکر:** در این باره توضیحات مربوط به بخش
