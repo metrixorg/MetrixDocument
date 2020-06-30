@@ -19,7 +19,7 @@ toc: true # table of contents
 اگر از CocoaPods استفاده می‌کنید، می‌توانید خط زیر را به Podfile خود اضافه کنید:
 
 ```ruby
-pod 'MetrixSdk', '>= 1.2.1', '< 2.0'
+pod 'MetrixSdk', '>= 1.2.2', '< 2.0'
 ```
 
 همچنین شما می‌توانید SDK متریکس را به عنوان یک framework به پروژه خود اضافه کنید.
@@ -212,6 +212,32 @@ Config]` فراخوانی شود.
 - `UNKNOWN`
 
 پس از این شما می‌توانید بدین شکل برای اطلاعات کمپین درخواست نمایید:
+
 ```objc
     [Metrix requestAttribution];
 ```
+
+### شناسه نشست متریکس
+
+کتابخانه متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
+شما می‌توانید با تنظیم یک delegateاز شناسه نشست متریکس با خبر شوید. مراحل زیر را برای پیاده‌سازی delegate اختیاری مربوطه در `AppDelegate` خود طی نمایید:
+1. در فایل `AppDelegate.h`:
+
+```objc
+	@interface AppDelegate : UIResponder <UIApplicationDelegate, MetrixDelegate>
+```
+
+2. تابع زیر را به `AppDelegate.m` اضافه کنید:
+
+```objc
+	- (void)metrixSessionIdChanged:(NSString *)sessionId{
+	}
+```
+3. تنظیم delegate در نمونه `MXConfig` خود:
+
+```objc
+    [metrixConfig setDelegate:self];
+```
+از آنجایی که delegate callback شما بر روی نمونه `MXConfig` تنظیم شده است، باید `setDelegate` قبل از `[Metrix appDidLaunch:metrix
+Config]` فراخوانی شود.
+

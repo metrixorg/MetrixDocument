@@ -13,7 +13,7 @@ toc: true # table of contents
 If you're using [CocoaPods](https://cocoapods.org), you can add the following line to your Podfile:
 
 ```ruby
-pod 'MetrixSdk', '>= 1.2.1', '< 2.0'
+pod 'MetrixSdk', '>= 1.2.2', '< 2.0'
 ```
 
 You can also choose to integrate the Metrix SDK by adding it to your project as a framework.
@@ -201,6 +201,30 @@ The delegate function will be called after the SDK receives the final attributio
 - `UNKNOWN`
 
 Then you can request for attribution info:
- ```objc
+```objc
     [Metrix requestAttribution];
-    ```
+```
+
+### Metrix Session Identifier
+For each session, our SDK generates a unique Metrix session identifier. Follow these steps to implement the optional delegate protocol in your app delegate:
+1. Open `AppDelegate.h` and add the import and the `MetrixDelegate` declaration.
+
+```objc
+    @interface AppDelegate : UIResponder <UIApplicationDelegate, MetrixDelegate>
+```
+
+2. Open `AppDelegate.m` and add the following delegate callback function to your app delegate implementation.
+
+```objc
+    - (void)metrixSessionIdChanged:(NSString *)sessionId {
+    }
+```
+
+3. Set the delegate with your `MXConfig` instance:
+
+```objc
+    [metrixConfig setDelegate:self];
+```
+
+As the delegate callback is configured using the `MXConfig` instance, you should call `setDelegate` before calling `[Metrix appDidLaunch:metrix
+Config]`.
