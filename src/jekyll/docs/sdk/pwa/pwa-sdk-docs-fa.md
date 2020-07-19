@@ -21,7 +21,10 @@ toc: true # table of contents
 `geoInfo`: لوکیشن کاربر.(غیر ضروری)
 
 ```javascript
-var _metrix = new MetrixAnalytics({
+import metrix from '<path-to-metrix.js>'
+
+
+var _metrix = metrix.initialize({
 	appId: 'zozazzcrpzaptaa',
 	uniqueDeviceId: 'fe3343ff444r4',
 	trackerToken: 'rebhyh',
