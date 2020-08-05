@@ -383,7 +383,7 @@ metrixConfig.setSessionTimeoutMillis(1800000);
 اگر بخواهید برای کاربرانی که نصب آنها organic بوده و از یک کلیک ناشی نمی‌شود ترکر داشته باشید، با استفاده از این تابع می‌توانید با یک `trackerToken` که از پنل دریافت می‌کنید، یک `tracker` پیش‌فرض برای اپلیکیشن خود قرار دهید:
 
 ```javascript
-metrixConfig.setDefaultTracker(trackerToken);
+metrixConfig.setDefaultTrackerToken(trackerToken);
 ```
 
 ### امضاء SDK

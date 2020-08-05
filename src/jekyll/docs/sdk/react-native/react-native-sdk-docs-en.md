@@ -362,7 +362,7 @@ The default value is 30 minutes.
 If you want to use the Metrix SDK to recognize users whose installation has not been triggered by an ad click, set the default tracker in your config using the method below. Replace `trackerToken` with the tracker token you created in the dashboard.
 
 ```javascript
-metrixConfig.setDefaultTracker(trackerToken);
+metrixConfig.setDefaultTrackerToken(trackerToken);
 ```
 
 ### SDK Signature
