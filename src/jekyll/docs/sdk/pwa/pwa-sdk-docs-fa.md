@@ -18,7 +18,6 @@ toc: true # table of contents
 
 `trackerToken`: توکنی که پس از ساخت ترکر از پنل دریافت میکنید.(غیر ضروری)
 
-`geoInfo`: لوکیشن کاربر.(غیر ضروری)
 
 ```javascript
 import metrix from '<path-to-metrix.js>'
@@ -27,14 +26,7 @@ import metrix from '<path-to-metrix.js>'
 var _metrix = metrix.initialize({
 	appId: 'zozazzcrpzaptaa',
 	uniqueDeviceId: 'fe3343ff444r4',
-	trackerToken: 'rebhyh',
-	geoInfo: {
-		country: "Iran",
-		admin_area: "Tehran Province",
-		sub_admin_area: "Tehran",
-		latitude: 35.7658549,
-		longitude: 51.4236146
-	}
+	trackerToken: 'rebhyh'
 });
 ```
  
@@ -47,12 +39,12 @@ var _metrix = metrix.initialize({
 ۱. یک رویداد سفارشی که فقط یک نامک مشخص دارد و آن را از داشبورد متریکس میگیرد، بسازید:
 
 ```javascript
-_metrix.sendCustomTrack('my_event_slug');
+_metrix.sendEvent('my_event_slug');
 ```
 
 ورودی این تابع از جنس String است و همان نامکی است که داشبورد دریافت می‌کنید.
 
-۲. یک رویداد سفارشی با تعداد دلخواه attribute و metric خاص سناریو خود بسازید، به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
+۲. یک رویداد سفارشی با تعداد دلخواه attribute خاص سناریو خود بسازید، به عنوان مثال فرض کنید در یک برنامه خرید آنلاین می‌خواهید یک رویداد سفارشی بسازید:
 
 ```javascript
 var attributes = {};
@@ -63,18 +55,24 @@ attributes['product_name'] = 'shirt';
 attributes['type'] = 'sport';
 attributes['size'] = 'large';
 
-var metrics = {};
-metrics['price'] = 100000;
-metrics['perchase_time'] = current_time;
-
-_metrix.sendCustomTrack('purchase_event_slug', attributes, metrics);
+_metrix.sendEvent('purchase_event_slug', attributes);
 ```
 
 ورودی‌های متد sendCustomTrack بدین شرح هستند:
 
 - **ورودی اول:** نامک رویداد مورد نظر شما که از جنس String است و آن را از داشبورد متریکس دریافت می‌کنید.
 - **ورودی دوم:** یک `Map<String, String>` که ویژگی‌های یک رویداد را مشخص می‌کند.
-- **ورودی سوم:** یک `Map<String, Double>` که شامل ویژگی های قابل اندازه گیری است.
+
+#### مشخص کردن Attribute‌های پیش‌فرض همه‌ی رویدادها
+
+با استفاده از این تابع می‌توانید به تعداد دلخواه `Attribute` به همه‌ی رویدادهای خود اضافه کنید:
+
+```javascript
+var attributes = {};
+attributes['manufacturer'] = 'Nike';
+
+_metrix.addUserAttributes(attributes);
+```
 
 ### ساختن رویداد درآمدی
 
@@ -99,3 +97,26 @@ _metrix.sendRevenue('my_event_slug', 12000, 'IRR', 'order id');
 3. `EUR` یورو
 
 ورودی چهارم که به صورت دلخواه است میتواند شماره سفارش شما باشد.
+
+
+### دریافت شناسه دستگاه‌های متریکس
+
+برای هر دستگاهی که اپلیکیشن شما را نصب کند، متریکس یک شناسه منحصر به فرد تولید می‌کند که شما می‌توانید این شناسه را به محض شناسایی دریافت نمایید.
+برای دسترسی به این شناسه از طریق متد زیر می‌توانید آن را دریافت کنید
+
+```javascript
+_metrix.setUserIdListener(metrixUserId => {
+  //TODO
+});
+```
+
+### شناسه نشست متریکس
+
+کتابخانه متریکس برای هر نشست یک شناسه منحصر به فرد تولید می‌کند.
+برای دسترسی به این شناسه از طریق متد زیر شنونده را تعریف نمایید:
+
+```javascript
+_metrix.setSessionIdListener(metrixSessionId => {
+  //TODO
+});
+```
